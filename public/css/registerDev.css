@@ -1,0 +1,42 @@
+.registerSection{
+     background-color: #deebdd;
+    background-image: linear-gradient(315deg, #deebdd 0%, #bbdbbe 74%); 
+
+   
+    
+}
+.heading-register{
+    color:#28a745;
+    text-align: center;
+    font-weight: 600;
+    /* padding-top: 3%; */
+}
+
+.subHeading-Register{
+    padding-top: 2%;
+    text-align: center;
+    font-weight: 450;
+    font-size: large;
+    color:black;
+}
+
+.formSection-register{
+    padding-top: 1%;
+}
+
+.infoHeading
+{
+    color:#212529;
+}
+
+.form-group
+{
+    padding-bottom: 2%;
+}
+
+.list-group-item{
+    color:#a2a2a2;
+    font-weight: 400;
+    
+}
+

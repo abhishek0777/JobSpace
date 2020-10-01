@@ -1,0 +1,21 @@
+.card{
+    background-color: transparent;
+}
+
+.section-2
+{
+    background-color: #f0f0f0;
+}
+
+.btn{
+    border-radius: 0%;
+}
+
+.footer-bar
+{
+    background-color:#a2a2a2;
+    color:black;
+    font-weight: 500;
+    text-align: center;
+    padding: 2%;
+}

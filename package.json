@@ -1,0 +1,20 @@
+{
+  "name": "jobspace",
+  "version": "1.0.0",
+  "description": "This is going to be a project under techfest of MNNIT 'Avishkar',using Node+express+MongoDB+bootstrap",
+  "main": "app.js",
+  "scripts": {
+    "start":"node app.js",
+    "dev":"nodemon app.js"
+  },
+  "author": "Abhishek Vaishnav",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "express-ejs-layouts": "^2.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
