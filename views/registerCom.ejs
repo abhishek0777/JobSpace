@@ -1,38 +1,39 @@
+
 <!-- navigation bar -->
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href=""><img src="/images/logo.jpg" alt="logo" ></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto pr-4">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Home</span></a>
-        </li>
-        
-        <li class="nav-item dropdown">
+  <a class="navbar-brand" href=""><img src="/images/logo.jpg" alt="logo" ></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto pr-4">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</span></a>
+      </li>
+      
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Sign Up
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/company/register">Company</a>
+          <a class="dropdown-item" href="/developer/register">Developer</a>
+      </li>
+
+      <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Sign Up
+            Login
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Company</a>
-            <a class="dropdown-item" href="#">Developer</a>
+            <a class="dropdown-item" href="/company/login">Company</a>
+            <a class="dropdown-item" href="/developer/login">Developer</a>
         </li>
-
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Login
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Company</a>
-              <a class="dropdown-item" href="#">Developer</a>
-          </li>
-        
-      </ul>
       
-    </div>
+    </ul>
+    
+  </div>
 </nav>
 
 <!-- navigation bar ends here -->
@@ -69,7 +70,11 @@
 
             <!--Right part for form section -->
             <div class="col-md-7 col-sm-12">
-                <form>
+
+                <!-- partial and flash messaging -->
+                <%- include ("./partials/messages") %>
+                
+                <form action='/company/register' method='POST'>
                     <div class="form-group d-flex justify-content-center">
                        
                       
@@ -79,7 +84,13 @@
                               <i class="fa fa-bank"></i>
                             </div>
                           </div> 
-                          <input id="name" name="name" placeholder="Company Name" type="text" class="form-control" required="required">
+                          <input
+                            name="name"
+                            placeholder="Company Name"
+                            type="name"
+                            class="form-control" 
+                            value="<%= typeof name!='undefined'? name:''%>"
+                            />
                         </div>
                       
                     </div>
@@ -91,13 +102,19 @@
                               <i class="fa fa-envelope"></i>
                             </div>
                           </div> 
-                          <input id="email" name="email" placeholder="Business Email" type="text" class="form-control" required="required">
+                          <input
+                            name="email"
+                            placeholder="Business Email" 
+                            type="email"
+                            class="form-control" 
+                            value="<%= typeof email !='undefined'? email:''%>"
+                            />
                         </div>
                     </div>
 
                     <div class="form-group d-flex justify-content-center">
                         
-                        <select id="companySize" name="companySize" class="custom-select" placeholder="Company Size" required="required" style="width:70%">
+                        <select name="size" class="custom-select" placeholder="Company Size" required="required" style="width:70%">
                             <option value="1000"><1000 Employees</option>
                             <option value="2000"><2000 Employees</option>
                             <option value="5000"><5000 Employees</option>
@@ -109,7 +126,7 @@
 
                     <div class="form-group d-flex justify-content-center">
 
-                      <select id="country" name="country" class="form-control" required="required" style="width:70%">
+                      <select name="country" class="form-control" required="required" style="width:70%">
                         <option value="Afghanistan">Afghanistan</option>
                         <option value="Åland Islands">Åland Islands</option>
                         <option value="Albania">Albania</option>
@@ -366,7 +383,13 @@
                               <i class="fa fa-key"></i>
                             </div>
                           </div> 
-                          <input id="password1" name="password1" placeholder="Password" type="text" class="form-control" required="required">
+                          <input 
+                            name="password1"
+                            placeholder="Password"
+                            type="password"
+                            class="form-control"
+                            value="<%= typeof password1 !='undefined'? password1:''%>"
+                          />
                         </div>
                     </div>
             
@@ -377,7 +400,13 @@
                               <i class="fa fa-user-secret"></i>
                             </div>
                           </div> 
-                          <input id="password2" name="password2" placeholder="Confirm Password" type="text" class="form-control" required="required">
+                          <input
+                            name="password2"
+                            placeholder="Confirm Password"
+                            type="password"
+                            class="form-control"
+                            value="<%= typeof password1 !='undefined'? password1:''%>"
+                          />
                         </div>
                     </div>
 
@@ -395,6 +424,10 @@
             
                     <div class="form-group  d-flex justify-content-center">
                         <button  style="width:70%" name="submit" type="submit" class="btn btn-success">Sign Up</button>
+                    </div>
+
+                    <div class="form-group  d-flex justify-content-center">
+                      <p>Have an Account? <a href="/developer/login" style="color:#009933">Login</a></p>
                     </div>
                 </form>
             </div>

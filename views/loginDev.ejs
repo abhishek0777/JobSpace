@@ -1,40 +1,39 @@
 <!-- navigation bar -->
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href=""><img src="/images/logo.jpg" alt="logo" ></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto pr-4">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Home</span></a>
-        </li>
-        
-        <li class="nav-item dropdown">
+  <a class="navbar-brand" href=""><img src="/images/logo.jpg" alt="logo" ></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto pr-4">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</span></a>
+      </li>
+      
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Sign Up
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/company/register">Company</a>
+          <a class="dropdown-item" href="/developer/register">Developer</a>
+      </li>
+
+      <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Sign Up
+            Login
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Company</a>
-            <a class="dropdown-item" href="#">Developer</a>
+            <a class="dropdown-item" href="/company/login">Company</a>
+            <a class="dropdown-item" href="/developer/login">Developer</a>
         </li>
-
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Login
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Company</a>
-              <a class="dropdown-item" href="#">Developer</a>
-          </li>
-        
-      </ul>
       
-    </div>
+    </ul>
+    
+  </div>
 </nav>
-
 <!-- navigation bar ends here -->
 
 
@@ -47,9 +46,12 @@
     <p class="subHeading">Only Developers can login. </p>
 
     <div class="container formSection">
-        <form>
+
+        <!-- partial and flash messaging -->
+        <%- include ("./partials/messages") %>
+
+        <form action='/developer/login' method="POST">
            
-    
             <div class="form-group d-flex justify-content-center">
                 <div class="input-group" style="width:50%">
                   <div class="input-group-prepend">
@@ -57,7 +59,7 @@
                       <i class="fa fa-envelope"></i>
                     </div>
                   </div> 
-                  <input id="email" name="email" placeholder="Email" type="text" class="form-control" required="required">
+                  <input id="email" name="email" placeholder="Email" type="email" class="form-control" required="required">
                 </div>
             </div>
     
@@ -68,7 +70,7 @@
                       <i class="fa fa-key"></i>
                     </div>
                   </div> 
-                  <input id="password" name="password" placeholder="Password" type="text" class="form-control" required="required">
+                  <input id="password" name="password" placeholder="Password" type="password" class="form-control" required="required">
                 </div>
             </div>
     
@@ -91,7 +93,7 @@
 
             <br>
             <div class="form-group  d-flex justify-content-center">
-                <p style="width: 50%; color:white">Don't have an Account? <a href="#" style="color:#009933">Sign Up</a></p>
+                <p style="width: 50%; color:white">Don't have an Account? <a href="/developer/register" style="color:#009933">Sign Up</a></p>
             </div>
 
         </form>
