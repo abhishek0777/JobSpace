@@ -8,17 +8,21 @@ const passport=require('passport');
 const Developer=require('../models/Developer');
 const Company=require('../models/Company');
 
+
+//bring auth-config file
+const {forwardAuthenticated,ensureAuthenticated}=require('../config/auth');
+
 // set public folder
 router.use(express.static(path.join("public")));
 
 //Handle req for registration form
-router.get('/register',(req,res)=>{
+router.get('/register',forwardAuthenticated,(req,res)=>{
     res.render("registerCom");
 });
 
 
 //Handle req for login form
-router.get('/login',(req,res)=>{
+router.get('/login',forwardAuthenticated,(req,res)=>{
     res.render('loginCom');
 })
 
@@ -149,7 +153,7 @@ router.post('/login',(req,res,next)=>{
     })(req,res,next)
 })
 
-router.get('/dashboard',(req,res)=>{
+router.get('/dashboard',ensureAuthenticated,(req,res)=>{
     res.render('dashboard',{
         names:req.user.name
     })

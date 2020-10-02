@@ -10,6 +10,10 @@ const Developer=require('../models/Developer');
 const Company=require('../models/Company');
 
 
+//bring auth-config file
+const {forwardAuthenticated,ensureAuthenticated}=require('../config/auth');
+
+
 
 
 // set public folder for mainly CSS files to render
@@ -17,12 +21,12 @@ router.use(express.static(path.join("public")));
 
 
 //route for registration form
-router.get('/register',(req,res)=>{
+router.get('/register',forwardAuthenticated,(req,res)=>{
     res.render("registerDev");
 });
 
 //route for login form
-router.get('/login',(req,res)=>{
+router.get('/login',forwardAuthenticated,(req,res)=>{
     res.render('loginDev');
 })
 
@@ -156,7 +160,7 @@ router.post('/login',(req,res,next)=>{
 })
 
 
-router.get('/dashboard',(req,res)=>{
+router.get('/dashboard',ensureAuthenticated,(req,res)=>{
     
     res.render('dashboard',{
         names:req.user.name,
