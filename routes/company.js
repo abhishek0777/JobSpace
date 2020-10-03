@@ -153,11 +153,29 @@ router.post('/login',(req,res,next)=>{
     })(req,res,next)
 })
 
+// -------------------------Routes after login can be accessed ----------------------------------
+
 router.get('/dashboard',ensureAuthenticated,(req,res)=>{
-    res.render('dashboard',{
-        names:req.user.name
+    res.render('company/dashboard',{
+        user:req.user
     })
 })
+
+
+router.get('/profile',(req,res)=>{
+    res.render('company/profile',{
+        user:req.user
+    })
+})
+
+router.get('/addPost',(req,res)=>{
+    res.render('company/addPost',{
+        user:req.user
+    });
+})
+
+
+
 
 router.get('/logout',(req,res)=>{
     req.logout();
