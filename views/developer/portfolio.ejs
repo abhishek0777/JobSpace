@@ -1,0 +1,300 @@
+<!-- navigation bar -->
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href=""><img src="/images/logo.jpg" alt="logo" ></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto pr-4">
+        <li class="nav-item">
+          
+          <a class="nav-link" href="/">
+            <i class="fa fa-bullhorn"></i>
+            Job Posts
+          </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/">
+                <i class="fa fa-bar-chart"></i>
+                Statistics
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/">
+                <i class="fa fa-calendar-check-o"></i>
+                Notifications
+            </a>
+        </li>
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-user-circle-o"></i>
+                <%= user.name %>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/developer/portfolio">PortFolio</a>
+              <a class="dropdown-item" href="/developer/logout">Logout</a>
+        </li>
+      </ul>
+    </div>
+</nav>
+
+<!-- navigation bar ends here -->
+
+<!-- ---------------------------PORTFOLIO SECTION--------------------------------------- -->
+
+<!-- Portfolio starts here  -->
+<div class="container">
+    <div class="fluid-container portfolioHeading">
+        <h1 class="btn-primary"><%= user.name %></h1>
+        <h4>PORTFOLIO</h4>
+    </div>
+    <form class="portfolioForm">
+
+        <div class="row">
+            <!-- Column for -> image + bio  -->
+            <div class="col-md-5 col-sm-12">
+                <div class="d-flex justify-content-center">
+                    <img  class="profilePhoto" src="/images/corporate.png" alt="Profile">
+                </div>
+
+                <!-- button to upload profile image -->
+                <div class=" d-flex justify-content-center mt-2">
+                    <button href='' class="btn btn-primary" type='submit'>Upload</button>
+                </div>
+
+                
+                <!-- email -->
+                <div class="form-group d-flex justify-content-center mt-3">
+                    <div class="input-group" stlye="width:80%">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                              Email
+                            </div>
+                        </div>
+                        <input
+                            name="email"
+                            type="email"
+                            class="form-control"
+                            required="required"
+                            value="<%= typeof user.email !='undefined'? user.email:'Email' %>"
+                            disabled
+                        />
+                    </div>
+                </div>
+
+                <!--bio input  -->
+                <div class="form-group d-flex justify-content-center mt-3">
+                    <div class="input-group" stlye="width:80%">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                              Bio
+                            </div>
+                        </div>
+                        <input
+                            name="bio"
+                            type="bio"
+                            class="form-control"
+                            required="required"
+                            value="<%= typeof bio !='undefined'? bio:'Write about yourself...' %>"
+                        />
+                    </div>
+                </div>
+                
+            </div>
+
+
+            <!-- gap,front-end part -->
+            <div class="col-md-2"></div>
+
+
+            <!-- COlumn for other details -->
+            <div class="col-md-5 col-sm-12">
+
+
+                <!-- skills -->
+                <h4>Select Top 3 skills :</h4>
+                <div class="form-group d-flex justify-content-center">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          Skill-1
+                        </div>
+                    </div>
+                    <select name="skills[]" class="form-control" required="required" style="width:90%">
+                      <option value="JavaScript">JavaScript</option>
+                      <option value="HTML/CSS">HTML/CSS</option>
+                      <option value="SQL">SQL</option>
+                      <option value="Python">Python</option>
+                      <option value="Bash">Bash</option>
+                      <option value="C#">C#</option>
+                      <option value="PHP">PHP</option>
+                      <option value="Node">Node</option>
+                      <option value="MongoDB">MongoDB</option>
+                      <option value="React">React</option>
+                      <option value="C++">C++</option>
+                      <option value="TypeScript">TypeScript</option>
+                      <option value="C">C</option>
+                      <option value="Ruby">Ruby</option>
+                      <option value="Go">Go</option>
+                      <option value="Blockchain">Blockchain</option>
+                      <option value="Machine Learning">Machine Learning</option>
+                      <option value="Artificial Intelligence">Artificial Intelligence</option>
+                      <option value="System Designing">System Designing</option>
+                    </select>
+                </div>
+
+                <div class="form-group d-flex justify-content-center">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          Skill-2
+                        </div>
+                    </div>
+                    <select name="skills[]" class="form-control" required="required" style="width:90%">
+                        <option value="JavaScript">JavaScript</option>
+                        <option value="HTML/CSS">HTML/CSS</option>
+                        <option value="SQL">SQL</option>
+                        <option value="Python">Python</option>
+                        <option value="Bash">Bash</option>
+                        <option value="C#">C#</option>
+                        <option value="PHP">PHP</option>
+                        <option value="Node">Node</option>
+                        <option value="MongoDB">MongoDB</option>
+                        <option value="React">React</option>
+                        <option value="C++">C++</option>
+                        <option value="TypeScript">TypeScript</option>
+                        <option value="C">C</option>
+                        <option value="Ruby">Ruby</option>
+                        <option value="Go">Go</option>
+                        <option value="Blockchain">Blockchain</option>
+                        <option value="Machine Learning">Machine Learning</option>
+                        <option value="Artificial Intelligence">Artificial Intelligence</option>
+                        <option value="System Designing">System Designing</option>
+                      </select>
+                    </select>
+                </div>
+
+                <div class="form-group d-flex justify-content-center">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          Skill-3
+                        </div>
+                    </div>
+                    <select name="skills[]" class="form-control" required="required" style="width:90%">
+                        <option value="JavaScript">JavaScript</option>
+                        <option value="HTML/CSS">HTML/CSS</option>
+                        <option value="SQL">SQL</option>
+                        <option value="Python">Python</option>
+                        <option value="Bash">Bash</option>
+                        <option value="C#">C#</option>
+                        <option value="PHP">PHP</option>
+                        <option value="Node">Node</option>
+                        <option value="MongoDB">MongoDB</option>
+                        <option value="React">React</option>
+                        <option value="C++">C++</option>
+                        <option value="TypeScript">TypeScript</option>
+                        <option value="C">C</option>
+                        <option value="Ruby">Ruby</option>
+                        <option value="Go">Go</option>
+                        <option value="Blockchain">Blockchain</option>
+                        <option value="Machine Learning">Machine Learning</option>
+                        <option value="Artificial Intelligence">Artificial Intelligence</option>
+                        <option value="System Designing">System Designing</option>
+                      </select>
+                    </select>
+                </div>
+
+                <!-- years of exerience -->
+                <h4>Year of Experience :</h4>
+                <div class="form-group d-flex justify-content-center">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          Years
+                        </div>
+                    </div>
+                    <select name="skills[]" class="form-control" required="required" style="width:90%">
+                      <option value="0">Fresher</option>
+                      <option value="1">One years</option>
+                      <option value="2">Two years</option>
+                      <option value="3">Three or more</option>
+                    </select>
+                </div>
+
+                <!-- college -->
+                <h4>College :</h4>
+                <div class="form-group d-flex justify-content-center mt-3">
+                    <div class="input-group" stlye="width:80%">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                              Education @
+                            </div>
+                        </div>
+                        <input
+                            name="college"
+                            type="college"
+                            class="form-control"
+                            required="required"
+                            value="<%= typeof college !='undefined'? college:'College' %>"
+                        />
+                    </div>
+                </div>
+
+
+                <!-- degree -->
+                <h4>Degree :</h4>
+                <div class="form-group d-flex justify-content-center">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          Degree
+                        </div>
+                    </div>
+                    <select name="degree" class="form-control" required="required" style="width:90%">
+                      <option value="Bachelor">Bachelors</option>
+                      <option value="Master">Masters</option>
+                      <option value="Ph.D">Ph.D</option>
+                      <option value="Professional">Professional</option>
+                    </select>
+                </div>
+                
+
+                <!-- last job  -->
+                <h4>Last Job(if any)</h4>
+                <div class="form-group d-flex justify-content-center mt-3">
+                    <div class="input-group" stlye="width:80%">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                              Last Job
+                            </div>
+                        </div>
+                        <input
+                            name="lastJob"
+                            type="lastJob"
+                            class="form-control"
+                            required="required"
+                            value="<%= typeof lastJob !='undefined'? lastJob:'NA' %>"
+                        />
+                    </div>
+                </div>
+
+                <!-- not lying argument -->
+                <div class="form-group d-flex justify-content-center">
+                    <div class="custom-controls-stacked" style="width:100%">
+                        <div class="custom-control custom-checkbox">
+                          <input type="checkbox" checked="checked" class="custom-control-input" onclick="return false"> 
+                          <label for="agree_0" class="custom-control-label">All the details ,I have provided are true and agree to terms of policy</label>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <!-- save changes button of portfolio -->
+                <div class="form-group  d-flex justify-content-center">
+                    <button  style="width:100%" name="submit" type="submit" class="btn btn-success">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

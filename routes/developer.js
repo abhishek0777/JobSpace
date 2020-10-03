@@ -20,15 +20,21 @@ const {forwardAuthenticated,ensureAuthenticated}=require('../config/auth');
 router.use(express.static(path.join("public")));
 
 
+
+
 //route for registration form
 router.get('/register',forwardAuthenticated,(req,res)=>{
     res.render("registerDev");
 });
 
+
+
 //route for login form
 router.get('/login',forwardAuthenticated,(req,res)=>{
     res.render('loginDev');
 })
+
+
 
 //route for POST req of registration/Sign Up
 router.post('/register',(req,res)=>{
@@ -150,6 +156,7 @@ router.post('/register',(req,res)=>{
 })
 
 
+
 //handle post request for developer login page
 router.post('/login',(req,res,next)=>{
     passport.authenticate('local.developer',{
@@ -160,19 +167,60 @@ router.post('/login',(req,res,next)=>{
 })
 
 
+//-------------------------------After Login by developer-------------------------------
+
+//all routes afterwards can be accessed only if developer login
+
 router.get('/dashboard',ensureAuthenticated,(req,res)=>{
     
-    res.render('dashboard',{
-        names:req.user.name,
-        email:req.user.email
+    res.render('developer/dashboard',{
+        user:req.user
     })
 })
 
 
+//route to portfolio of developer
+router.get('/portfolio',ensureAuthenticated,(req,res)=>{
+
+    res.render('developer/portfolio',{
+        user:req.user
+    });
+})
+
+
+//route to job Posts
+router.get('/jobPosts',(req,res)=>{
+    res.render('developer/jobPosts',{
+        user:req.user
+    });
+})
+
+
+//route to statistics ,for which companies
+//developer have applied
+router.get('/statistics',(req,res)=>{
+    res.render('developer/statistics',{
+        user:req.user
+    });
+})
+
+
+//route to notifications for developer
+router.get('/notifications',(req,res)=>{
+    res.render('developer/notifications',{
+        user:req.user
+    });
+})
+
+
+
+
+//route to logout developer ,
+//it redirect to login page with success message
 router.get('/logout',(req,res)=>{
     req.logout();
     req.flash('success_msg','You are logged out');
-    res.redirect('/company/login');
+    res.redirect('/developer/login');
 })
 
 module.exports=router;
