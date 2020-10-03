@@ -52,8 +52,23 @@
     <div class="fluid-container portfolioHeading">
         <h1 class="btn-primary"><%= user.name %></h1>
         <h4>PORTFOLIO</h4>
+
+
+        <!-- messaging for portfolio changes -->
+        <% if(msg!='') { %>
+            <div class="form-group d-flex justify-content-center" style="padding-bottom: 0%; padding-top: 0%;">
+                <div class="alert alert-success alert-dismissible fade show " role="alert" style="width: 90%;">
+                    <%= msg %>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        <% } %>
+
+
     </div>
-    <form class="portfolioForm">
+    <form action='/developer/portfolio' method='POST' class="portfolioForm">
 
         <div class="row">
             <!-- Column for -> image + bio  -->
@@ -63,9 +78,9 @@
                 </div>
 
                 <!-- button to upload profile image -->
-                <div class=" d-flex justify-content-center mt-2">
-                    <button href='' class="btn btn-primary" type='submit'>Upload</button>
-                </div>
+                <!-- <div class=" d-flex justify-content-center mt-2">
+                   <input class=" btn btn-primary" type="file" name='image' value='' required>
+                </div> -->
 
                 
                 <!-- email -->
@@ -82,7 +97,7 @@
                             class="form-control"
                             required="required"
                             value="<%= typeof user.email !='undefined'? user.email:'Email' %>"
-                            disabled
+                            readonly
                         />
                     </div>
                 </div>
@@ -98,9 +113,10 @@
                         <input
                             name="bio"
                             type="bio"
+                            placeholder="Write about yourself"
                             class="form-control"
                             required="required"
-                            value="<%= typeof bio !='undefined'? bio:'Write about yourself...' %>"
+                            value="<%= typeof portfolio.bio !='undefined'? portfolio.bio :'' %>"
                         />
                     </div>
                 </div>
@@ -118,13 +134,16 @@
 
                 <!-- skills -->
                 <h4>Select Top 3 skills :</h4>
+                <%= typeof portfolio.skill_1 !=undefined ? portfolio.skill_1 : '' %>
                 <div class="form-group d-flex justify-content-center">
                     <div class="input-group-prepend">
                         <div class="input-group-text">
                           Skill-1
                         </div>
                     </div>
-                    <select name="skills[]" class="form-control" required="required" style="width:90%">
+                    <select
+                        name="skill_1" class="form-control" required="required" style="width:90%"
+                    >
                       <option value="JavaScript">JavaScript</option>
                       <option value="HTML/CSS">HTML/CSS</option>
                       <option value="SQL">SQL</option>
@@ -145,15 +164,19 @@
                       <option value="Artificial Intelligence">Artificial Intelligence</option>
                       <option value="System Designing">System Designing</option>
                     </select>
+                    
                 </div>
 
+                <%= typeof portfolio.skill_2 !=undefined ? portfolio.skill_2 : '' %>
                 <div class="form-group d-flex justify-content-center">
                     <div class="input-group-prepend">
                         <div class="input-group-text">
                           Skill-2
                         </div>
                     </div>
-                    <select name="skills[]" class="form-control" required="required" style="width:90%">
+                    <select
+                        name="skill_2" class="form-control" required="required" style="width:90%"
+                    >
                         <option value="JavaScript">JavaScript</option>
                         <option value="HTML/CSS">HTML/CSS</option>
                         <option value="SQL">SQL</option>
@@ -177,13 +200,16 @@
                     </select>
                 </div>
 
+                <%= typeof portfolio.skill_3 !=undefined ? portfolio.skill_3 : '' %>
                 <div class="form-group d-flex justify-content-center">
                     <div class="input-group-prepend">
                         <div class="input-group-text">
                           Skill-3
                         </div>
                     </div>
-                    <select name="skills[]" class="form-control" required="required" style="width:90%">
+                    <select
+                        name="skill_3" class="form-control" required="required" style="width:90%"
+                    >
                         <option value="JavaScript">JavaScript</option>
                         <option value="HTML/CSS">HTML/CSS</option>
                         <option value="SQL">SQL</option>
@@ -215,7 +241,10 @@
                           Years
                         </div>
                     </div>
-                    <select name="skills[]" class="form-control" required="required" style="width:90%">
+                    <select
+                        name="experience" class="form-control" required="required" style="width:90%"
+                        value="<%= typeof portfolio.experience !=undefined ? portfolio.experience : '' %> "    
+                    >
                       <option value="0">Fresher</option>
                       <option value="1">One years</option>
                       <option value="2">Two years</option>
@@ -237,7 +266,7 @@
                             type="college"
                             class="form-control"
                             required="required"
-                            value="<%= typeof college !='undefined'? college:'College' %>"
+                            value="<%= typeof portfolio.college !=undefined ? portfolio.college : '' %> "
                         />
                     </div>
                 </div>
@@ -251,7 +280,10 @@
                           Degree
                         </div>
                     </div>
-                    <select name="degree" class="form-control" required="required" style="width:90%">
+                    <select
+                        name="degree" class="form-control" required="required" style="width:90%"
+                        value="<%= typeof portfolio.degree !=undefined ? portfolio.degree : '' %> "
+                    >
                       <option value="Bachelor">Bachelors</option>
                       <option value="Master">Masters</option>
                       <option value="Ph.D">Ph.D</option>
@@ -261,7 +293,7 @@
                 
 
                 <!-- last job  -->
-                <h4>Last Job(if any)</h4>
+                <h4>Last Job(if any) :</h4>
                 <div class="form-group d-flex justify-content-center mt-3">
                     <div class="input-group" stlye="width:80%">
                         <div class="input-group-prepend">
@@ -272,9 +304,10 @@
                         <input
                             name="lastJob"
                             type="lastJob"
+                            placeholder="Did you work in any org"
                             class="form-control"
                             required="required"
-                            value="<%= typeof lastJob !='undefined'? lastJob:'NA' %>"
+                            value="<%= typeof portfolio.lastJob !='undefined'? portfolio.lastJob:'' %>"
                         />
                     </div>
                 </div>

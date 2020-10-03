@@ -3,15 +3,22 @@ const path=require('path');
 const router=express.Router();
 const bcrypt=require('bcryptjs');
 const passport=require('passport');
+const fs=require('fs');
 
 
 //bring in models
 const Developer=require('../models/Developer');
 const Company=require('../models/Company');
+const Portfolio=require('../models/Portfolio');
 
 
 //bring auth-config file
 const {forwardAuthenticated,ensureAuthenticated}=require('../config/auth');
+
+
+//bring in middleware for image uploading in portfolioi
+// that is 'Multer'
+const upload=require('../middleware/multer');
 
 
 
@@ -182,9 +189,18 @@ router.get('/dashboard',ensureAuthenticated,(req,res)=>{
 //route to portfolio of developer
 router.get('/portfolio',ensureAuthenticated,(req,res)=>{
 
-    res.render('developer/portfolio',{
-        user:req.user
-    });
+    //let find portfolio this developer
+    Portfolio.findOne({email:req.user.email})
+    .then(portfolio=>{
+        
+            res.render('developer/portfolio',{
+                user:req.user,
+                portfolio:portfolio ? portfolio:"",
+                msg:""
+            })
+        
+    })
+    .catch(err=>console.log(err));
 })
 
 
@@ -212,6 +228,87 @@ router.get('/notifications',(req,res)=>{
     });
 })
 
+
+router.post('/portfolio',(req,res)=>{
+    
+    
+   
+    Portfolio.findOne({email:req.body.email})
+    .then(devfolio=>{
+        //if portfolio already existed 
+        //then update the existed one
+        //otherwise create a new one
+        if(!devfolio)
+        {
+           
+
+            //create a new object
+            const newPortfolio=new Portfolio({
+                email:req.body.email,
+                bio:req.body.bio,
+                skill_1:req.body.skill_1,
+                skill_2:req.body.skill_2,
+                skill_3:req.body.skill_3,
+                experience:req.body.experience,
+                college:req.body.college,
+                degree:req.body.degree,
+                lastJob:req.body.lastJob,
+                date:Date.now()
+            })
+
+            newPortfolio.save()
+            .then(portfolio=>{
+                
+                res.render('developer/portfolio',{
+                    user:req.user,
+                    portfolio:portfolio,
+                    msg:"Portfolio is created, now you can apply for Jobs"
+                });
+            })
+            .catch(err=>console.log(err));
+        }
+        else
+        {
+            Portfolio.findOne({email:req.body.email})
+            .then(portfolio=>{
+
+                //just update each field
+                portfolio.email=req.body.email;
+                portfolio.bio=req.body.bio;
+                portfolio.skill_1=req.body.skill_1;
+                portfolio.skill_2=req.body.skill_2;
+                portfolio.skill_3=req.body.skill_3;
+                portfolio.experience=req.body.experience;
+                portfolio.college=req.body.college;
+                portfolio.degree=req.body.degree;
+                portfolio.lastJob=req.body.lastJob;
+                portfolio.date=Date.now()
+
+                let query={email:req.body.email};
+
+                //and then update in a database
+                Portfolio.updateOne(query,portfolio,(err)=>{
+                    if(err)
+                    {
+                        console.log(err);
+                        return;
+                    } 
+                    else
+                    {
+                        res.render('developer/portfolio',{
+                            user:req.user,
+                            portfolio:portfolio,
+                            msg:"Portfolio is updated now"
+                            
+                        })
+                    }
+                })
+            })
+        }
+    })
+
+    
+})
 
 
 
