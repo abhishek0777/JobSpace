@@ -27,13 +27,14 @@
     border-radius: 50%;
 }
 
-.heading{
+.Profileheading{
     text-align: center;
     color:#a0a0a0;
 }
 
 .details{
-    padding-top: 0%;
+    padding-bottom: 2%;
     text-align: center;
     text-transform: uppercase;
+    font-size: large;
 }

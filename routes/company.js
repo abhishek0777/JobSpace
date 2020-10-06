@@ -7,6 +7,7 @@ const passport=require('passport');
 //Bring the Company model
 const Developer=require('../models/Developer');
 const Company=require('../models/Company');
+const JobPost=require('../models/JobPost');
 
 
 //bring auth-config file
@@ -156,8 +157,16 @@ router.post('/login',(req,res,next)=>{
 // -------------------------Routes after login can be accessed ----------------------------------
 
 router.get('/dashboard',ensureAuthenticated,(req,res)=>{
-    res.render('company/dashboard',{
-        user:req.user
+    //check whether this company has posted any job or not yet
+    //if didn't then show a message to post a job 
+    //else show all posted jobs by company
+
+    JobPost.find({companyName:req.user.name},(err,post)=>{
+        //note that 'posts' is an array of objectes ,not a single object
+        res.render('company/dashboard',{
+            user:req.user,
+            posts:post
+        })
     })
 })
 
@@ -174,6 +183,31 @@ router.get('/addPost',(req,res)=>{
     });
 })
 
+
+//post a job
+router.post('/addPost',(req,res)=>{
+    // res.send('form is submitted');
+
+    //in this case ,we just have to directly post the POST
+    
+    const newpost=new JobPost({
+        companyName:req.user.name,
+        jobName:req.body.jobName,
+        jobRole:req.body.jobRole,
+        skillsReq:req.body.skillsReq,
+        jobType:req.body.jobType,
+        expReq:req.body.expReq,
+        date:Date.now()
+    })
+
+    newpost.save()
+    .then(post=>{
+        req.flash('success_msg','Job Application Posted');
+        res.redirect('/company/addPost');
+    })
+    .catch(err=>console.log(err));
+
+})
 
 
 

@@ -10,7 +10,7 @@
       <ul class="navbar-nav ml-auto pr-4">
         <li class="nav-item">
           
-          <a class="nav-link" href="/company/posts">
+          <a class="nav-link" href="/company/dashboard">
             <i class="fa fa-bar-chart"></i>
             Timeline
           </a>
@@ -56,13 +56,13 @@
             <h1 class="btn-primary"><%= user.name %></h1>
         </div>
         
-        <h5 class="heading">COMPANY NAME</h5>
+        <h5 class="Profileheading">COMPANY NAME</h5>
         <h2 class="details"><%= user.name %></h1>
 
-        <h5 class="heading">BUSINESS EMAIL</h5>
+        <h5 class="Profileheading">BUSINESS EMAIL</h5>
         <h2 class="details" style="text-transform: lowercase;"><%= user.email %></h2>
 
-        <h5 class="heading">COMPANY SIZE</h5>
+        <h5 class="Profileheading">COMPANY SIZE</h5>
         <h2 class="details">
             <% if(user.size==1000||user.size==2000||user.size==5000) { %>
                 less than <%= user.size %> employees
@@ -72,7 +72,7 @@
             <% } %>
         </h1>
 
-        <h5 class="heading">COUNTRY</h5>
+        <h5 class="Profileheading">COUNTRY</h5>
         <h2 class="details"><%= user.country %></h2>
 
     </div>

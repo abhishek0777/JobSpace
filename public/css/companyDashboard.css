@@ -1,0 +1,65 @@
+.postTimeline{
+    background-color: #2d3436;
+    background-image: linear-gradient(315deg, #2d3436 0%, #000000 74%);
+}
+.postbox{
+     -webkit-box-shadow: -2px 4px 24px -2px rgba(10,10,10,1);
+    -moz-box-shadow: -2px 4px 24px -2px rgba(10,10,10,1);
+    box-shadow: -2px 4px 24px -2px rgba(10,10,10,1); 
+
+    background: linear-gradient(to right, #ffffff 44%, #fac7c7 100%);
+    padding:3% 3%;
+    margin-top: 1.5%;
+    margin-bottom: 1.5%;
+    width:60%;
+}
+
+.companyName{
+    text-transform: uppercase;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    
+}
+
+.jobName{
+    text-transform: uppercase;
+    font-weight: 500;
+    text-align: center;
+    color:#009bff;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.jobType{
+    text-align: center;
+    color:gray;
+}
+
+.jobRole{
+    padding-top: 2%;
+    display: flex;
+}
+
+.skillsReq{
+    display: flex;
+}
+
+.experience{
+    display: flex;
+}
+
+.applied{
+    padding-top: 1.5%;
+    display:flex;
+}
+
+.postTime{
+    text-align: right;
+    color:gray;
+}
+
+.btn-danger{
+    border-radius: 5px;
+}
+
+.btn-info{
+    border-radius: 5px;
+}
