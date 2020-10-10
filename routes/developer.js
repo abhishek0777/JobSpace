@@ -10,6 +10,7 @@ const fs=require('fs');
 const Developer=require('../models/Developer');
 const Company=require('../models/Company');
 const Portfolio=require('../models/Portfolio');
+const JobPost = require("../models/JobPost");
 
 
 //bring auth-config file
@@ -19,7 +20,7 @@ const {forwardAuthenticated,ensureAuthenticated}=require('../config/auth');
 //bring in middleware for image uploading in portfolioi
 // that is 'Multer'
 const upload=require('../middleware/multer');
-const JobPost = require("../models/JobPost");
+
 
 
 
@@ -180,10 +181,26 @@ router.post('/login',(req,res,next)=>{
 //all routes afterwards can be accessed only if developer login
 
 router.get('/dashboard',(req,res)=>{
+
+    // check user portfolio is created or not,
+    // because according to it,dashboard will be shown
+    var isCreated=0;
+    Portfolio.findOne({email:req.user.email})
+    .then(portfolio=>{
+        if(portfolio){
+            isCreated=1;
+        }
+        else
+        isCreated=0;
+    })
+    .catch(err=>console.log(err));
+
+
     JobPost.find({},(err,posts)=>{
         res.render('developer/dashboard',{
             user:req.user,
-            posts:posts
+            posts:posts,
+            isCreated:isCreated
         })
     })
 })
@@ -207,13 +224,6 @@ router.get('/portfolio',ensureAuthenticated,(req,res)=>{
 })
 
 
-//route to job Posts
-router.get('/jobPosts',(req,res)=>{
-    res.render('developer/jobPosts',{
-        user:req.user
-    });
-})
-
 
 //route to statistics ,for which companies
 //developer have applied
@@ -233,9 +243,7 @@ router.get('/notifications',(req,res)=>{
 
 
 router.post('/portfolio',(req,res)=>{
-    
-    
-   
+     
     Portfolio.findOne({email:req.body.email})
     .then(devfolio=>{
         //if portfolio already existed 
@@ -314,6 +322,31 @@ router.post('/portfolio',(req,res)=>{
 })
 
 
+router.post('/clicked/:id',(req,res)=>{
+    var postID=req.params.id;
+    console.log(postID);
+    JobPost.find({"_id":postID})
+    .then(post=>{
+
+      if(post){
+        var Post=new JobPost();
+        Post=post;
+        Post.appliedDev.push(req.user.email);
+        console.log(Post.appliedDev);
+        JobPost.updateOne({_id:postID},Post,(err)=>{
+            if(err){
+                return console.log(err);
+            }
+            else{
+               res.sendStatus(201);
+            }
+        })
+        }
+      
+    })
+    .catch(err=>console.log(err));
+    console.log('clicked');
+})
 
 
 

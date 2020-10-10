@@ -1,0 +1,1 @@
+<code><img width="1000" src="npm-i-confidence.jpg"></code>

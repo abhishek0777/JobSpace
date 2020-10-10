@@ -28,8 +28,7 @@ const JobPostSchema=new mongoose.Schema({
     },
     appliedDev:[
         {
-            type:Schema.Types.ObjectId,
-            ref:'Developer'
+            email:String
         }
     ],
     date:{

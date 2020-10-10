@@ -49,6 +49,7 @@
 
 
 <!-- ---------------------------Profile section starts here----------------------- -->
+
 <div class="fluid-container profileSection">
     <div class="container profileForm mt-3">
         <div class="fluid-container profileHeading">
@@ -68,7 +69,7 @@
                 less than <%= user.size %> employees
             <% } 
             else { %>
-                more than <% user.size %> employees
+                more than <%= user.size-1 %> employees
             <% } %>
         </h1>
 

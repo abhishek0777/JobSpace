@@ -1,6 +1,7 @@
 .postTimeline{
     background-color: #2d3436;
     background-image: linear-gradient(315deg, #2d3436 0%, #000000 74%);
+    padding:2%;
 }
 .postbox{
      -webkit-box-shadow: -2px 4px 24px -2px rgba(10,10,10,1);
@@ -17,7 +18,6 @@
 .companyName{
     text-transform: uppercase;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    
 }
 
 .jobName{

@@ -203,11 +203,14 @@ router.post('/addPost',(req,res)=>{
     newpost.save()
     .then(post=>{
         req.flash('success_msg','Job Application Posted');
-        res.redirect('/company/addPost');
+        res.redirect('/company/dashboard');
     })
     .catch(err=>console.log(err));
 
 })
+
+
+//deleting the posted job
 
 
 
