@@ -19,6 +19,7 @@ const {forwardAuthenticated,ensureAuthenticated}=require('../config/auth');
 //bring in middleware for image uploading in portfolioi
 // that is 'Multer'
 const upload=require('../middleware/multer');
+const JobPost = require("../models/JobPost");
 
 
 
@@ -178,10 +179,12 @@ router.post('/login',(req,res,next)=>{
 
 //all routes afterwards can be accessed only if developer login
 
-router.get('/dashboard',ensureAuthenticated,(req,res)=>{
-    
-    res.render('developer/dashboard',{
-        user:req.user
+router.get('/dashboard',(req,res)=>{
+    JobPost.find({},(err,posts)=>{
+        res.render('developer/dashboard',{
+            user:req.user,
+            posts:posts
+        })
     })
 })
 
@@ -309,6 +312,10 @@ router.post('/portfolio',(req,res)=>{
 
     
 })
+
+
+
+
 
 
 

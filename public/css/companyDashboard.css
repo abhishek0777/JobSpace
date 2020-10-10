@@ -63,3 +63,8 @@
 .btn-info{
     border-radius: 5px;
 }
+
+/* developer dashboard  inherit*/
+.applyHere{
+    text-align: right;
+}
