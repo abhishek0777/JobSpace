@@ -18,7 +18,7 @@ function SessionConstructor(userID,userGroup,details)
 
 module.exports=function(passport){
 
-    //serialize and deserialize
+    //--------serialize and deserialize---------
     passport.serializeUser((userObject,done)=>{
         //userObject could be of any model
         let userGroup='developer-model';
@@ -46,7 +46,6 @@ module.exports=function(passport){
             Developer.findOne({
                 _id:sessionConstructor.userID
             },(err,user)=>{
-                // When using string syntax, prefixing a path with - will flag that path as excluded.
                 done(err,user);
             })
         }
@@ -55,7 +54,6 @@ module.exports=function(passport){
             Company.findOne({
                 _id:sessionConstructor.userID
             },(err,user)=>{
-                // When using string syntax, prefixing a path with - will flag that path as excluded.
                 done(err,user);
             })
         }

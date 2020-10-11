@@ -180,7 +180,7 @@ router.post('/login',(req,res,next)=>{
 
 //all routes afterwards can be accessed only if developer login
 
-router.get('/dashboard',(req,res)=>{
+router.get('/dashboard',ensureAuthenticated,(req,res)=>{
 
     // check user portfolio is created or not,
     // because according to it,dashboard will be shown
@@ -227,7 +227,7 @@ router.get('/portfolio',ensureAuthenticated,(req,res)=>{
 
 //route to statistics ,for which companies
 //developer have applied
-router.get('/statistics',(req,res)=>{
+router.get('/statistics',ensureAuthenticated,(req,res)=>{
     res.render('developer/statistics',{
         user:req.user
     });
@@ -235,7 +235,7 @@ router.get('/statistics',(req,res)=>{
 
 
 //route to notifications for developer
-router.get('/notifications',(req,res)=>{
+router.get('/notifications',ensureAuthenticated,(req,res)=>{
     res.render('developer/notifications',{
         user:req.user
     });
@@ -257,15 +257,15 @@ router.post('/portfolio',(req,res)=>{
             const newPortfolio=new Portfolio({
                 email:req.body.email,
                 bio:req.body.bio,
-                skill_1:req.body.skill_1,
-                skill_2:req.body.skill_2,
-                skill_3:req.body.skill_3,
                 experience:req.body.experience,
                 college:req.body.college,
                 degree:req.body.degree,
                 lastJob:req.body.lastJob,
                 date:Date.now()
             })
+            newPortfolio.skills.push(req.body.skill_1)
+            newPortfolio.skills.push(req.body.skill_2)
+            newPortfolio.skills.push(req.body.skill_3)
 
             newPortfolio.save()
             .then(portfolio=>{
@@ -286,9 +286,7 @@ router.post('/portfolio',(req,res)=>{
                 //just update each field
                 portfolio.email=req.body.email;
                 portfolio.bio=req.body.bio;
-                portfolio.skill_1=req.body.skill_1;
-                portfolio.skill_2=req.body.skill_2;
-                portfolio.skill_3=req.body.skill_3;
+                portfolio.skills=[req.body.skill_1,req.body.skill_2,req.body.skill_3];
                 portfolio.experience=req.body.experience;
                 portfolio.college=req.body.college;
                 portfolio.degree=req.body.degree;
@@ -354,7 +352,7 @@ router.post('/clicked/:id',(req,res)=>{
 
 //route to logout developer ,
 //it redirect to login page with success message
-router.get('/logout',(req,res)=>{
+router.get('/logout',ensureAuthenticated,(req,res)=>{
     req.logout();
     req.flash('success_msg','You are logged out');
     res.redirect('/developer/login');

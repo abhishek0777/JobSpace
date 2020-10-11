@@ -12,7 +12,18 @@ const DeveloperSchema=new mongoose.Schema({
     password:{
         type:String,
         required:true
-    }
+    },
+    //to filter by recruiters during job applications
+    hiddenScore:{
+        type:String
+    },
+    // subscribed companies to get their latest updates
+    subscribed:[
+        {
+            type:String
+        }
+    ]
+
 });
 
 const Developer=mongoose.model('Developer',DeveloperSchema);
