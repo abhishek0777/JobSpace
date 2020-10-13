@@ -1,4 +1,5 @@
 const mongoose =require('mongoose');
+const Schema=mongoose.Schema;
 
 const JobPostSchema=new mongoose.Schema({
     companyName:{
@@ -25,11 +26,7 @@ const JobPostSchema=new mongoose.Schema({
         type:String,
         required:true
     },
-    appliedDev:[
-        {
-            email:String
-        }
-    ],
+    appliedDev:[Schema.Types.ObjectId],
     date:{
         type:Date,
         default:Date.now

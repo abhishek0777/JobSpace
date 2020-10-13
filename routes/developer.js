@@ -323,27 +323,43 @@ router.post('/portfolio',(req,res)=>{
 router.post('/clicked/:id',(req,res)=>{
     var postID=req.params.id;
     console.log(postID);
-    JobPost.find({"_id":postID})
-    .then(post=>{
 
-      if(post){
-        var Post=new JobPost();
-        Post=post;
-        Post.appliedDev.push(req.user.email);
-        console.log(Post.appliedDev);
-        JobPost.updateOne({_id:postID},Post,(err)=>{
-            if(err){
-                return console.log(err);
-            }
-            else{
-               res.sendStatus(201);
-            }
-        })
-        }
-      
+    JobPost.findOne({_id:postID})
+    .then(post=>{
+                if(post){
+                    //   adding the developer ID to 
+                    //   applied developer to a specific job
+                    var appliedDevelopers=[];
+                    appliedDevelopers=post.appliedDev;
+                    
+                    appliedDevelopers.forEach(function(id){
+                        if(id.name==req.user.name){
+                            return res.status(200).end();
+                        }
+                    })
+                    appliedDevelopers.push(req.user._id);
+                    post.appliedDev=appliedDevelopers;
+
+
+
+                    //update the appliedDev array
+                    JobPost.updateOne({'_id':postID},post,(err)=>{
+                        if(err){
+                            console.log(err);
+                            return;
+                        }
+                        else{
+                            return res.status(200).end();
+                        }
+                    })
+                    
+                    
+                }
     })
     .catch(err=>console.log(err));
-    console.log('clicked');
+
+    console.log(postID);
+    
 })
 
 

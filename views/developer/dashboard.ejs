@@ -64,11 +64,14 @@
       reversing the array,
       so that latest post can be the first on screen
    -->
+   <!-- is created variable checks whether Portfolio is created or not -->
   <% if(isCreated==1) { %>
     <% 
       var Posts=[];
       Posts=posts;
       Posts.reverse();
+    %>
+    <%
       Posts.forEach(function(post){    
     %>
     
@@ -107,8 +110,9 @@
           <h5 class="ml-3"> 5 </h5>
         </div>    
 
+        
         <div class="container applyHere">
-          <button class="btn btn-success" id='applyButton' value= <%= post._id %> >Apply</button>
+          <button class="btn btn-success" id='applyButton' onclick='applyFunction("<%= post._id %>")' >Apply</button>
         </div>
     
         <div class="container postTime">
