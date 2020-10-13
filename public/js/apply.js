@@ -6,6 +6,8 @@ function applyFunction(PostID){
   button.innerHTML='Applied';
   button.classList.remove('btn-primary');
   button.classList.add('btn-danger');
+
+  
   console.log(PostID);
  
   var xhr=new window.XMLHttpRequest();

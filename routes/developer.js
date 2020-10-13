@@ -191,7 +191,7 @@ router.get('/dashboard',ensureAuthenticated,(req,res)=>{
             isCreated=1;
         }
         else
-        isCreated=0;
+        {isCreated=0;}
     })
     .catch(err=>console.log(err));
 
