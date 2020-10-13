@@ -330,14 +330,16 @@ router.post('/clicked/:id',(req,res)=>{
                     //   adding the developer ID to 
                     //   applied developer to a specific job
                     var appliedDevelopers=[];
-                    appliedDevelopers=post.appliedDev;
                     
-                    appliedDevelopers.forEach(function(id){
-                        if(id.name==req.user.name){
-                            return res.status(200).end();
+
+                    post.appliedDev.forEach(function(email){
+                        if(email!=req.user.email)
+                        {
+                            appliedDevelopers.push(email);
                         }
                     })
-                    appliedDevelopers.push(req.user._id);
+                    
+                    appliedDevelopers.push(req.user.email);
                     post.appliedDev=appliedDevelopers;
 
 
@@ -358,7 +360,6 @@ router.post('/clicked/:id',(req,res)=>{
     })
     .catch(err=>console.log(err));
 
-    console.log(postID);
     
 })
 

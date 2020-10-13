@@ -26,7 +26,7 @@ const JobPostSchema=new mongoose.Schema({
         type:String,
         required:true
     },
-    appliedDev:[Schema.Types.ObjectId],
+    appliedDev:[String], //String=email
     date:{
         type:Date,
         default:Date.now

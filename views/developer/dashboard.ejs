@@ -104,16 +104,34 @@
           <button class="btn-danger">Experience</button>
           <h5 class="ml-3"> <%= post.expReq %></h6>
         </div>
-    
+        
         <div class="container applied">
           <button class="btn-info">DevOps Applied</button>
-          <h5 class="ml-3"> 5 </h5>
-        </div>    
-
-        
-        <div class="container applyHere">
-          <button class="btn btn-success" id='applyButton' onclick='applyFunction("<%= post._id %>")' >Apply</button>
+          <h5 class="ml-3"> <%= post.appliedDev.length %> </h5>
         </div>
+
+        <% var flag=1; 
+        post.appliedDev.forEach(function(email){
+          if(email==user.email){
+            flag=-1;
+          }
+        })
+
+        if(flag==-1){ %> 
+
+          <div class="container applyHere">
+            <button class="btn btn-danger">Applied</button>
+          </div>
+
+           <% } else { %> 
+            
+            <div class="container applyHere">
+              <button class="btn btn-success" id='applyButton' onclick='applyFunction("<%= post._id %>")' >Apply</button>
+            </div>
+
+            <%}
+        %>
+        
     
         <div class="container postTime">
           <p>Posted at : <%= post.date %> </p>
