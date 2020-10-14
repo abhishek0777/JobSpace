@@ -1,0 +1,141 @@
+<!-- navigation bar -->
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href=""><img src="/images/logo.jpg" alt="logo" ></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto pr-4">
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/developer/recommended">
+              <i class="fa fa-bullhorn"></i>
+              Recommended
+            </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/developer/dashboard">
+            <i class="fa fa-bullhorn"></i>
+            Job Posts
+          </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/developer/statistics">
+                <i class="fa fa-bar-chart"></i>
+                Statistics
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/developer/companies">
+                <i class="fa fa-bar-chart"></i>
+                Companies
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/developer/notifications">
+                <i class="fa fa-calendar-check-o"></i>
+                Notifications
+            </a>
+        </li>
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-user-circle-o"></i>
+                <%= user.name %>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/developer/portfolio">PortFolio</a>
+              <a class="dropdown-item" href="/developer/logout">Logout</a>
+        </li>
+        
+        
+        
+      </ul>
+      
+    </div>
+</nav>
+
+<!-- navigation bar ends here -->
+
+<div class="postTimeline">
+
+    <% user.subscribed.forEach(function(emailID){
+        posts.forEach(function(post){
+            if(emailID==post.companyEmail){ %>
+
+                <div class="container justify-content-center postbox">
+        
+        
+                    <div class="container jobName">
+                      <h2> <%= post.jobName %> </h2>
+                    </div>
+                
+                    <div class="container jobType">
+                      <h4> <%= post.jobType %> </h4>
+                    </div>
+                
+                    <div class="container companyName">
+                      <h3><%= post.companyName %></h3>
+                    </div>
+                
+                    <div class="container jobRole mb-2">
+                      <button class="btn-danger">Job Role </button>
+                      <h5  class="ml-3"> <%= post.jobRole %></h5>
+                    </div>
+                
+                    <div class="container skillsReq  mb-2">
+                      <button class="btn-danger">Skills</button>
+                      <h5 class="ml-3"> <%= post.skillsReq %></h5>
+                    </div>
+                
+                    <div class="container experience  mb-2">
+                      <button class="btn-danger">Experience</button>
+                      <h5 class="ml-3"> <%= post.expReq %></h6>
+                    </div>
+                    
+            
+                    <% var flag=1; 
+                    post.appliedDev.forEach(function(email){
+                      if(email==user.email){
+                        flag=-1;
+                      }
+                    })
+            
+                    if(flag==-1){ %> 
+            
+                      <div class="container applyHere">
+                        <button class="btn btn-danger">Applied</button>
+                      </div>
+            
+                       <% } else { %> 
+                        
+                        <div class="container applyHere">
+                          <button class="btn btn-success" id='applyButton' onclick='applyFunction("<%= post._id %>")' >Apply</button>
+                        </div>
+            
+                        <%}
+                    %>
+                    
+                
+                    <div class="container postTime">
+                      <p>Posted at : <%= post.date %> </p>
+                    </div>
+                    
+                    
+                </div>
+            
+            
+
+            <% }
+        })
+    }) %>
+</div>   
+
+<!-- on click function for apply button  -->
+<script src="/js/apply.js"></script>

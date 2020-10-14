@@ -223,6 +223,16 @@ router.get('/portfolio',ensureAuthenticated,(req,res)=>{
     .catch(err=>console.log(err));
 })
 
+//recommended jobs shows according what developers subscribed
+router.get('/recommended',ensureAuthenticated,(req,res)=>{
+    JobPost.find({},(err,posts)=>{
+        res.render('developer/recommended',{
+            user:req.user,
+            posts:posts
+        })
+    })
+    
+})
 
 
 //route to statistics ,for which companies
@@ -231,6 +241,43 @@ router.get('/statistics',ensureAuthenticated,(req,res)=>{
     res.render('developer/statistics',{
         user:req.user
     });
+})
+
+//from here,user can subscribe companies
+router.get('/companies',ensureAuthenticated,(req,res)=>{
+    Company.find({},(err,companies)=>{
+        res.render('developer/companies',{
+            user:req.user,
+            companies:companies
+        });
+    })
+})
+
+//on click ,subscribe the companies
+router.post('/subscribed/:id',(req,res)=>{
+    var emailID=req.params.id;
+    console.log(emailID);
+
+    var subscribeDev=[];
+    req.user.subscribed.forEach(function(email){
+        if(email!=emailID){
+            subscribeDev.push(email);
+        }
+    })
+    subscribeDev.push(emailID);
+    req.user.subscribed=subscribeDev;
+
+    Developer.updateOne({email:req.user.email},req.user,(err)=>{
+        if(err){
+            console.log(err);
+            return;
+        }
+        else{
+            return res.status(200).end();
+        }
+    })
+
+    return res.status(200).end();
 })
 
 
@@ -320,6 +367,7 @@ router.post('/portfolio',(req,res)=>{
 })
 
 
+//on click ,apply to jobs route
 router.post('/clicked/:id',(req,res)=>{
     var postID=req.params.id;
     console.log(postID);

@@ -18,11 +18,8 @@ const DeveloperSchema=new mongoose.Schema({
         type:String
     },
     // subscribed companies to get their latest updates
-    subscribed:[
-        {
-            type:String
-        }
-    ]
+    //store email
+    subscribed:[String]
 
 });
 

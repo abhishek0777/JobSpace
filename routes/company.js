@@ -192,6 +192,7 @@ router.post('/addPost',(req,res)=>{
     
     const newpost=new JobPost({
         companyName:req.user.name,
+        companyEmail:req.user.email,
         jobName:req.body.jobName,
         jobRole:req.body.jobRole,
         skillsReq:req.body.skillsReq,
