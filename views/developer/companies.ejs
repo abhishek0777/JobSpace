@@ -86,7 +86,7 @@
                             <button class="btn btn-danger">Subscribed</button>
                       <% } 
                       else { %>
-                            <button id="subscribe" onclick="subscribeFunction('<%= company.email %>')" class="btn btn-primary">Subscribe</button>
+                            <button id="subscribe/<%= company.email %>" onclick="subscribeFunction('<%= company.email %>')" class="btn btn-primary"  >Subscribe</button>
                         <% } %>
                     </div>
                 </div>

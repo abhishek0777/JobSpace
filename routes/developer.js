@@ -182,25 +182,10 @@ router.post('/login',(req,res,next)=>{
 
 router.get('/dashboard',ensureAuthenticated,(req,res)=>{
 
-    // check user portfolio is created or not,
-    // because according to it,dashboard will be shown
-    var isCreated=0;
-    Portfolio.findOne({email:req.user.email})
-    .then(portfolio=>{
-        if(portfolio){
-            isCreated=1;
-        }
-        else
-        {isCreated=0;}
-    })
-    .catch(err=>console.log(err));
-
-
     JobPost.find({},(err,posts)=>{
         res.render('developer/dashboard',{
             user:req.user,
-            posts:posts,
-            isCreated:isCreated
+            posts:posts
         })
     })
 })
@@ -254,7 +239,7 @@ router.get('/companies',ensureAuthenticated,(req,res)=>{
 })
 
 //on click ,subscribe the companies
-router.post('/subscribed/:id',(req,res)=>{
+router.get('/subscribed/:id',(req,res)=>{
     var emailID=req.params.id;
     console.log(emailID);
 
@@ -273,11 +258,11 @@ router.post('/subscribed/:id',(req,res)=>{
             return;
         }
         else{
-            return res.status(200).end();
+            res.status(200).end();
         }
     })
 
-    return res.status(200).end();
+    
 })
 
 
