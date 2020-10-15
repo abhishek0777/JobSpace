@@ -8,6 +8,7 @@ const passport=require('passport');
 const Developer=require('../models/Developer');
 const Company=require('../models/Company');
 const JobPost=require('../models/JobPost');
+const Portfolio=require('../models/Portfolio');
 
 
 //bring auth-config file
@@ -210,9 +211,71 @@ router.post('/addPost',(req,res)=>{
 
 })
 
+router.get('/statistics',(req,res)=>{
+    JobPost.find({companyEmail:req.user.email},(err,posts)=>{
+        res.render('company/statistics',{
+            user:req.user,
+            posts:posts
+        })
+    })
+    
+})
 
-//deleting the posted job
+router.post('/devProfile',(req,res)=>{
 
+    //dev email id
+    const email=req.body.submit;
+    Developer.findOne({'email':email})
+    .then(developer=>{
+        if(developer){
+            Portfolio.findOne({'email':email},(err,portfolio)=>{
+                res.render('company/devProfile',{
+                    user:req.user,
+                    portfolio:portfolio,
+                    developer:developer
+                })
+            })
+        }
+    })
+    
+})
+
+router.get('/declineRequest/:id1/:id2',(req,res)=>{
+    const jobID=req.params.id1;
+    const dev=req.params.id2;
+    console.log(jobID);
+    console.log(dev);
+    JobPost.findOne({"_id":jobID},(err,post)=>{
+        appliedDevelopers=[];
+        post.appliedDev.forEach(function(email){
+            if(email!=dev){
+                appliedDevelopers.push(email);
+            }
+        })
+
+        post.appliedDev=appliedDevelopers;
+
+        JobPost.updateOne({"_id":jobID},post,(err)=>{
+
+            if(err){
+                console.log(err);
+                return;
+            }
+            else{
+                console.log("Update ho gya");
+                return res.status(200).end();
+            }
+        })
+
+    })
+
+})
+
+router.get('/notifications',(req,res)=>{
+    res.render('company/notifications',{
+        user:req.user
+    });
+})
 
 
 router.get('/logout',(req,res)=>{

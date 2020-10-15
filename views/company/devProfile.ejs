@@ -1,0 +1,216 @@
+
+<!-- navigation bar -->
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href=""><img src="/images/logo.jpg" alt="logo" ></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto pr-4">
+
+        <li class="nav-item"> 
+          <a class="nav-link" href="/company/dashboard">
+            <i class="fa fa-bar-chart"></i>
+            Timeline
+          </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/company/addPost">
+                <i class="fa fa-bullhorn"></i>
+                Add Post
+            </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/company/statistics">
+              <i class="fa fa-bullhorn"></i>
+              Statistics
+          </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/company/notifications">
+                <i class="fa fa-calendar-check-o"></i>
+                Notifications
+            </a>
+        </li>
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-user-circle-o"></i>
+                <%= user.name %>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/company/profile">Profile</a>
+              <a class="dropdown-item" href="/company/logout">Logout</a>
+        </li>
+        
+        
+        
+      </ul>
+      
+    </div>
+</nav>
+<!---------- navigation bar ends here ------------>
+
+<div class="container">
+  <div class="fluid-container portfolioHeading">
+      <h1 class="btn-primary"><%= developer.name %></h1>
+      <h4>DEVELOPER</h4>
+
+
+  </div>
+  <form class="portfolioForm">
+
+        <div class="row">
+          <!-- Column for -> image + bio  -->
+          <div class="col-md-5 col-sm-12">
+              <div class="d-flex justify-content-center">
+                  <img  class="profilePhoto" src="/images/corporate.png" alt="Profile">
+              </div>
+
+              <!-- button to upload profile image -->
+              <!-- <div class=" d-flex justify-content-center mt-2">
+                 <input class=" btn btn-primary" type="file" name='image' value='' required>
+              </div> -->
+
+              
+              <!-- email -->
+              <div class="form-group d-flex justify-content-center mt-3">
+                  <div class="input-group" stlye="width:80%">
+                      <div class="input-group-prepend">
+                          <div class="input-group-text">
+                            Email
+                          </div>
+                      </div>
+                      <input
+                          class="form-control"
+                          value="<%= typeof portfolio.email !='undefined'? portfolio.email:'NA' %>"
+                          readonly
+                      />
+                  </div>
+              </div>
+
+              <!--bio input  -->
+              <div class="form-group d-flex justify-content-center mt-3">
+                  <div class="input-group" stlye="width:80%">
+                      <div class="input-group-prepend">
+                          <div class="input-group-text">
+                            Bio
+                          </div>
+                      </div>
+                      <input
+                          class="form-control"
+                          value="<%= typeof portfolio.bio !='undefined'? portfolio.bio :'NA' %>"
+                          readonly
+                      />
+                  </div>
+              </div>
+              
+          </div>
+
+
+          <!-- gap,front-end part -->
+          <div class="col-md-2"></div>
+
+
+          <!-- COlumn for other details -->
+          <div class="col-md-5 col-sm-12">
+
+
+              <!-- skills -->
+              <h4>Top skills :</h4>
+              
+              <div class="form-group d-flex justify-content-center">
+                <% portfolio.skills.forEach(function(skill){ %>
+                  <div class="input-group" stlye="width:80%">
+                    <input
+                        class="form-control"
+                        value="<%= typeof skill !='undefined'? skill :'NA' %>"
+                        readonly
+                    />
+                  </div>
+                <% }) %>  
+              </div>
+
+              
+              
+              <!-- years of exerience -->
+              <h4>Year of Experience :</h4>
+              <div class="form-group d-flex justify-content-center">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          Years
+                        </div>
+                    </div>
+                      <div class="input-group" stlye="width:80%">
+                        <input
+                            class="form-control"
+                            value="<%= typeof portfolio.experience !='undefined'? portfolio.experience :'NA' %>"
+                            readonly
+                        />
+                      </div>
+              </div>
+        
+
+              <!-- college -->
+              <h4>College :</h4>
+              <div class="form-group d-flex justify-content-center mt-3">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      Education @
+                    </div>
+                  </div>
+                  <div class="input-group" stlye="width:80%">
+                      <input
+                          class="form-control"
+                          value="<%= typeof portfolio.college !=undefined ? portfolio.college : 'NA' %> "
+                          readonly
+                      />
+                  </div>
+              </div>
+
+
+              <!-- degree -->
+              <h4>Degree :</h4>
+              <div class="form-group d-flex justify-content-center">
+                  <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        Degree
+                      </div>
+                  </div>
+                  <div class="input-group" stlye="width:80%">
+                    <input
+                        class="form-control"
+                        value="<%= portfolio.degree !='undefined'? portfolio.degree :'NA' %>"
+                        readonly
+                    />
+                  </div>
+              </div>
+              
+
+              <!-- last job  -->
+              <h4>Last Job(if any) :</h4>
+              <div class="form-group d-flex justify-content-center mt-3">
+                  <div class="input-group" stlye="width:80%">
+                      <div class="input-group-prepend">
+                          <div class="input-group-text">
+                            Last Job
+                          </div>
+                      </div>
+                      <input
+                          class="form-control"
+                          value="<%= typeof portfolio.lastJob !='undefined'? portfolio.lastJob:'NA' %>"
+                          readonly
+                      />
+                  </div>
+              </div>
+
+              
+          </div>
+        </div>
+  </form>
+</div>

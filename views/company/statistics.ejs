@@ -8,7 +8,7 @@
   
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto pr-4">
-
+          
         <li class="nav-item">
           <a class="nav-link" href="/company/dashboard">
             <i class="fa fa-bar-chart"></i>
@@ -46,42 +46,46 @@
               <a class="dropdown-item" href="/company/profile">Profile</a>
               <a class="dropdown-item" href="/company/logout">Logout</a>
         </li>
-        
-          
-      </ul>
-      
+               
+      </ul>   
     </div>
 </nav>
 
+<!-- naviagation bar ends here -->
 
+<!-- statistics section start from here -->
+<div class="container">
+  <div id="accordion">
 
-<!-- ---------------------------Profile section starts here----------------------- -->
-
-<div class="fluid-container profileSection">
-    <div class="container profileForm mt-3">
-        <div class="fluid-container profileHeading">
-            <h5>RECRUITER</h5>
-            <h1 class="btn-primary"><%= user.name %></h1>
-        </div>
-        
-        <h5 class="Profileheading">COMPANY NAME</h5>
-        <h2 class="details"><%= user.name %></h1>
-
-        <h5 class="Profileheading">BUSINESS EMAIL</h5>
-        <h2 class="details" style="text-transform: lowercase;"><%= user.email %></h2>
-
-        <h5 class="Profileheading">COMPANY SIZE</h5>
-        <h2 class="details">
-            <% if(user.size==1000||user.size==2000||user.size==5000) { %>
-                less than <%= user.size %> employees
-            <% } 
-            else { %>
-                more than <%= user.size-1 %> employees
-            <% } %>
-        </h1>
-
-        <h5 class="Profileheading">COUNTRY</h5>
-        <h2 class="details"><%= user.country %></h2>
-
-    </div>
+      <% posts.forEach(function(post){ %>
+          <div class="card mt-2 mb-2">
+              <div class="card-header">
+                <div class="d-inline"><%= post.jobName %></div> 
+                <div class="d-inline d-flex flex-row-reverse">
+                  <button class="btn btn-success">Done</button>
+                </div>      
+              </div>
+              <% post.appliedDev.forEach(function(email){ %>
+                    <div class="card-body row">
+                      <div class="">
+                        <form action="/company/devProfile" method="POST">
+                          <button class="btn btn-primary" id="declineEmail/<%= post._id %>/<%= email %>" type="submit" name="submit" value="<%= email %>"><%= email %></button>
+                        </form>
+                      </div>
+                      <div class="col-md-6 col-xs-12 justify-content-right"> 
+                        <button class="btn btn-danger" id="decline/<%= post._id %>/<%= email %>" onclick="declineFunction('<%= post._id %>/<%= email %>')" value="<%= email %>">
+                          <i class="fa fa-minus-circle"></i>
+                        </button>
+                      </div>
+                    </div>
+                      
+              <% }) %>
+              
+          </div>
+      <% }) %>
+  
+  </div>
 </div>
+
+<!-- decline Javascript file -->
+<script src="/js/decline.js"></script>
