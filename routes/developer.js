@@ -353,13 +353,11 @@ router.post('/portfolio',(req,res)=>{
 
 
 //on click ,apply to jobs route
-router.post('/clicked/:id',(req,res)=>{
+router.get('/clicked/:id',(req,res)=>{
     var postID=req.params.id;
     console.log(postID);
 
-    JobPost.findOne({_id:postID})
-    .then(post=>{
-                if(post){
+    JobPost.findOne({_id:postID},(err,post)=>{
                     //   adding the developer ID to 
                     //   applied developer to a specific job
                     var appliedDevelopers=[];
@@ -384,14 +382,12 @@ router.post('/clicked/:id',(req,res)=>{
                             return;
                         }
                         else{
+                            console.log("update ho gya");
                             return res.status(200).end();
                         }
                     })
-                    
-                    
-                }
     })
-    .catch(err=>console.log(err));
+
 
     
 })
