@@ -1,4 +1,8 @@
+// Implementing authentication for login,
+//using 'Local Strategy' of Passport.js
 const LocalStrategy=require('passport-local').Strategy;
+
+//bcrypt module use to encrypt the password , for security purpose of accounts
 const bcrypt=require('bcryptjs');
 
 // Bring Developer Model
@@ -8,6 +12,9 @@ const Developer=require('../models/Developer');
 const Company = require('../models/Company');
 
 
+//Since,two authentication,
+// (i)Developer login
+// (ii)Company login
 function SessionConstructor(userID,userGroup,details)
 {
     this.userID=userID;
@@ -18,9 +25,12 @@ function SessionConstructor(userID,userGroup,details)
 
 module.exports=function(passport){
 
-    //--------serialize and deserialize---------
+    //--------------serialize and deserialize---------------
+
+    // Serializing the user login
     passport.serializeUser((userObject,done)=>{
-        //userObject could be of any model
+
+        //userObject could be of any model,let it be any
         let userGroup='developer-model';
         let userPrototype=Object.getPrototypeOf(userObject);
 
@@ -38,7 +48,7 @@ module.exports=function(passport){
     })
 
 
-    //deserialize
+    //deserializing the user login
 
     passport.deserializeUser((sessionConstructor,done)=>{
         if(sessionConstructor.userGroup=='developer-model')
@@ -61,7 +71,7 @@ module.exports=function(passport){
 
 
 
-    //login authentication for developer login
+    //------------------Login authentication for Developer login-----------------------
     passport.use('local.developer',
         new LocalStrategy({usernameField:'email'},(email,password,done)=>{
             //match account
@@ -90,14 +100,18 @@ module.exports=function(passport){
     );
 
 
-    //login authentication for Company login
+    //------------------------Login authentication for Company login--------------------------
+
     passport.use('local.company',
         new LocalStrategy({usernameField:'email'},(email,password,done)=>{
             //match account
             Company.findOne({email:email})
             .then(company=>{
+
+                //check if there is company with given email or not
                 if(!company)
                 {
+                    //return with a flash messaging
                      return done(null,false,{message:'This email is not registered yet'});  
                 }
 
@@ -105,6 +119,8 @@ module.exports=function(passport){
                 //now check for password
                 bcrypt.compare(password,company.password,(err,isMatch)=>{
                     if(err) throw err;
+                    
+                    //check does password matches or not
                     if(isMatch)
                     {
                         return done(null,company);

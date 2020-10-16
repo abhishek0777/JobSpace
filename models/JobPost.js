@@ -1,3 +1,16 @@
+//his is schema of 'Post',it have
+//   (i) Company name which posted it
+//  (ii) Company email
+// (iii) Job name
+//  (iv) Job Role
+//   (v) Skills required
+//  (vi) Job type : Internship or Full-time
+// (vii) Experience Required
+//(viii) array of emails of developers who applied for job
+
+
+//ORM used is this project is mongoose,for simplicity
+//and each of interaction with Mongodb database
 const mongoose =require('mongoose');
 const Schema=mongoose.Schema;
 
@@ -30,7 +43,10 @@ const JobPostSchema=new mongoose.Schema({
         type:String,
         required:true
     },
-    appliedDev:[String], //String=email
+
+    //String=email
+    appliedDev:[String], 
+    
     date:{
         type:Date,
         default:Date.now
