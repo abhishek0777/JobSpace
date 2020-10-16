@@ -1,27 +1,38 @@
+//-----------------------------This route file for Developer,so all routes related to developer are defined here------------
+//---------------------------------------/developer/<someRoutePath>-----------------
+
+
+//------------List of all the required modules------
+
+//Express framework for server side programming
 const express=require("express");
 const path=require('path');
+
 const router=express.Router();
+
+//module for encryption of password
 const bcrypt=require('bcryptjs');
+
+//module for login authentication
 const passport=require('passport');
-const fs=require('fs');
 
 
-//bring in models
+//--------------Bring in all the models----------------
 const Developer=require('../models/Developer');
 const Company=require('../models/Company');
+const JobPost=require('../models/JobPost');
 const Portfolio=require('../models/Portfolio');
-const JobPost = require("../models/JobPost");
 
 
 //bring auth-config file
+// =>ensureAuthenticated : Use to protect the routes 
+// =>forwardAuthenticated : by pass the routes without having authentication
 const {forwardAuthenticated,ensureAuthenticated}=require('../config/auth');
 
 
-//bring in middleware for image uploading in portfolioi
+//bring in middleware for image uploading in portfolio
 // that is 'Multer'
 const upload=require('../middleware/multer');
-
-
 
 
 
@@ -167,6 +178,8 @@ router.post('/register',(req,res)=>{
 
 
 //handle post request for developer login page
+//Using Local strategy to authenticate user
+//we have defined strategy named 'local.developer' for developers to authenticate
 router.post('/login',(req,res,next)=>{
     passport.authenticate('local.developer',{
         successRedirect:'/developer/dashboard',
@@ -178,9 +191,12 @@ router.post('/login',(req,res,next)=>{
 
 //-------------------------------After Login by developer-------------------------------
 
-//all routes afterwards can be accessed only if developer login
+//all routes afterwards can be accessed only if developer have loggedin
 
 router.get('/dashboard',ensureAuthenticated,(req,res)=>{
+
+    //Dashboard will shows all the posts posted by all companies to user
+    //as per latest one on top
 
     JobPost.find({},(err,posts)=>{
         res.render('developer/dashboard',{
@@ -191,10 +207,10 @@ router.get('/dashboard',ensureAuthenticated,(req,res)=>{
 })
 
 
-//route to portfolio of developer
+//This route handles GET request to view or change portfolio's details
 router.get('/portfolio',ensureAuthenticated,(req,res)=>{
 
-    //let find portfolio this developer
+    //let first find portfolio of this developer
     Portfolio.findOne({email:req.user.email})
     .then(portfolio=>{
         
@@ -210,9 +226,10 @@ router.get('/portfolio',ensureAuthenticated,(req,res)=>{
 
 //recommended jobs shows according what developers subscribed
 router.get('/recommended',ensureAuthenticated,(req,res)=>{
+
     JobPost.find({},(err,posts)=>{
         res.render('developer/recommended',{
-            user:req.user,
+            user:req.user,   //user contains its subscribed array also
             posts:posts
         })
     })
@@ -220,13 +237,13 @@ router.get('/recommended',ensureAuthenticated,(req,res)=>{
 })
 
 
-//route to statistics ,for which companies
-//developer have applied
+//route to statistics ,can see to which companies developer have applied
 router.get('/statistics',ensureAuthenticated,(req,res)=>{
     res.render('developer/statistics',{
         user:req.user
     });
 })
+
 
 //from here,user can subscribe companies
 router.get('/companies',ensureAuthenticated,(req,res)=>{
@@ -238,11 +255,14 @@ router.get('/companies',ensureAuthenticated,(req,res)=>{
     })
 })
 
+
 //on click ,subscribe the companies
 router.get('/subscribed/:id',(req,res)=>{
+
     var emailID=req.params.id;
     console.log(emailID);
 
+    //add emailID to array of subcribed company
     var subscribeDev=[];
     req.user.subscribed.forEach(function(email){
         if(email!=emailID){
@@ -250,8 +270,11 @@ router.get('/subscribed/:id',(req,res)=>{
         }
     })
     subscribeDev.push(emailID);
+
+    //asssign
     req.user.subscribed=subscribeDev;
 
+    //then Update the developer's schema
     Developer.updateOne({email:req.user.email},req.user,(err)=>{
         if(err){
             console.log(err);
@@ -267,6 +290,7 @@ router.get('/subscribed/:id',(req,res)=>{
 
 
 //route to notifications for developer
+// ------------Work in progress-----
 router.get('/notifications',ensureAuthenticated,(req,res)=>{
     res.render('developer/notifications',{
         user:req.user
@@ -274,6 +298,8 @@ router.get('/notifications',ensureAuthenticated,(req,res)=>{
 })
 
 
+
+//route to handle POST request to change the portfolio's details
 router.post('/portfolio',(req,res)=>{
      
     Portfolio.findOne({email:req.body.email})
@@ -295,6 +321,8 @@ router.post('/portfolio',(req,res)=>{
                 lastJob:req.body.lastJob,
                 date:Date.now()
             })
+
+            //push all top-3 skills
             newPortfolio.skills.push(req.body.skill_1)
             newPortfolio.skills.push(req.body.skill_2)
             newPortfolio.skills.push(req.body.skill_3)

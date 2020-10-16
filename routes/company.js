@@ -1,10 +1,22 @@
+//-----------------------------THis route file for Company,so all routes related to company are defined here------------
+//---------------------------------------/company/<someRoutePath>-----------------
+
+
+//------------List of all the required modules------
+
+//Express framework for server side programming
 const express=require("express");
 const path=require('path');
+
 const router=express.Router();
+
+//module for encryption of password
 const bcrypt=require('bcryptjs');
+//module for login authentication
 const passport=require('passport');
 
-//Bring the Company model
+
+//--------------Bring in all the models----------------
 const Developer=require('../models/Developer');
 const Company=require('../models/Company');
 const JobPost=require('../models/JobPost');
@@ -12,25 +24,32 @@ const Portfolio=require('../models/Portfolio');
 
 
 //bring auth-config file
+// =>ensureAuthenticated : Use to protect the routes 
+// =>forwardAuthenticated : by pass the routes without having authentication
 const {forwardAuthenticated,ensureAuthenticated}=require('../config/auth');
 
-// set public folder
+// set public folde for static files to load
 router.use(express.static(path.join("public")));
 
-//Handle req for registration form
+
+//Handle request for registration form (bypass authentication)
 router.get('/register',forwardAuthenticated,(req,res)=>{
     res.render("registerCom");
 });
 
 
-//Handle req for login form
+//Handle reqest for login form, (by pass authentication)
 router.get('/login',forwardAuthenticated,(req,res)=>{
     res.render('loginCom');
 })
 
-//Handle Post req to register new company
+
+//Handle Post request to register new company
 router.post('/register',(req,res)=>{
     //we extract all inputs form form
+
+    //password1=password
+    //password2=confirm password
     const {name,email,size,country,password1,password2}=req.body;
     let errors=[];
 
@@ -147,6 +166,10 @@ router.post('/register',(req,res)=>{
 
 
 //handle post request for company login page
+
+//here comes,passport.js 's 'Local strategy'
+// for company, we have create 'local.company' named to strategy
+//will authenticatec company and most imp , serialize it as a user
 router.post('/login',(req,res,next)=>{
     passport.authenticate('local.company',{
         successRedirect:'/company/dashboard',
@@ -171,26 +194,27 @@ router.get('/dashboard',ensureAuthenticated,(req,res)=>{
     })
 })
 
-
-router.get('/profile',(req,res)=>{
+//This route handles request for company's profile
+router.get('/profile',ensureAuthenticated,(req,res)=>{
     res.render('company/profile',{
         user:req.user
     })
 })
 
-router.get('/addPost',(req,res)=>{
+//This route handles request of addPost web page
+router.get('/addPost',ensureAuthenticated,(req,res)=>{
     res.render('company/addPost',{
         user:req.user
     });
 })
 
 
-//post a job
+//post a job,handles POST request of addPost webpage's form
 router.post('/addPost',(req,res)=>{
-    // res.send('form is submitted');
-
+    
     //in this case ,we just have to directly post the POST
     
+    //create a new object of 'JobPost' Schema
     const newpost=new JobPost({
         companyName:req.user.name,
         companyEmail:req.user.email,
@@ -202,6 +226,7 @@ router.post('/addPost',(req,res)=>{
         date:Date.now()
     })
 
+    //save this newly created object to database,with a success message
     newpost.save()
     .then(post=>{
         req.flash('success_msg','Job Application Posted');
@@ -211,25 +236,41 @@ router.post('/addPost',(req,res)=>{
 
 })
 
-router.get('/statistics',(req,res)=>{
-    JobPost.find({companyEmail:req.user.email},(err,posts)=>{
+
+
+//Handles request to show statistics of Posts posted by company 
+//   => Can check who have applied(requests)
+//   => can check their portfolio
+//   => can also decline their request,if found not suitable for job
+
+router.get('/statistics',ensureAuthenticated,(req,res)=>{
+    JobPost.find( { companyEmail : req.user.email } , ( err , posts ) => {
         res.render('company/statistics',{
             user:req.user,
             posts:posts
         })
     })
-    
 })
 
+
+
+//Handles request,if on statistics page,a company wants to check developer's portfolio
+//It will find portfolio using email (came with req.body) in Developer' Schema
 router.post('/devProfile',(req,res)=>{
 
-    //dev email id
+    //developer's email id
     const email=req.body.submit;
+
+    //find a developer
     Developer.findOne({'email':email})
     .then(developer=>{
         if(developer){
+
+            //if found,then find its portfolio also
             Portfolio.findOne({'email':email},(err,portfolio)=>{
                 res.render('company/devProfile',{
+
+                    //sends (i) portfolio, (ii) developer's profile,and (iii) authenticated user
                     user:req.user,
                     portfolio:portfolio,
                     developer:developer
@@ -240,12 +281,24 @@ router.post('/devProfile',(req,res)=>{
     
 })
 
-router.get('/declineRequest/:id1/:id2',(req,res)=>{
+
+//Handles,declining of request by company
+// It will update the array of appliedDev accordingly
+router.get('/declineRequest/:id1/:id2',ensureAuthenticated,(req,res)=>{
+
+    //extract PostID
     const jobID=req.params.id1;
+
+    //extract developer's email ID
     const dev=req.params.id2;
+
     console.log(jobID);
     console.log(dev);
+
+    //Find that post
     JobPost.findOne({"_id":jobID},(err,post)=>{
+
+        // and then change the array of applied developers
         appliedDevelopers=[];
         post.appliedDev.forEach(function(email){
             if(email!=dev){
@@ -253,8 +306,11 @@ router.get('/declineRequest/:id1/:id2',(req,res)=>{
             }
         })
 
+        //assign new array of developers
         post.appliedDev=appliedDevelopers;
 
+
+        //then Update the post and return to page again
         JobPost.updateOne({"_id":jobID},post,(err)=>{
 
             if(err){
@@ -271,14 +327,25 @@ router.get('/declineRequest/:id1/:id2',(req,res)=>{
 
 })
 
-router.get('/notifications',(req,res)=>{
+
+//Handles the GET request to view  notification section
+
+//Its work is not started yet <----Pending---->
+router.get('/notifications',ensureAuthenticated,(req,res)=>{
+
     res.render('company/notifications',{
         user:req.user
     });
+
 })
 
 
-router.get('/logout',(req,res)=>{
+
+//This route logout the company
+//deserialize it
+//and redirect to compnay's login page again
+//with a success flash message
+router.get('/logout',ensureAuthenticated,(req,res)=>{
     req.logout();
     req.flash('success_msg','You are logged out');
     res.redirect('/company/login');
