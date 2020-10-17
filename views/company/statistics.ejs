@@ -53,10 +53,15 @@
 
 <!-- naviagation bar ends here -->
 
+
+
 <!-- statistics section start from here -->
+
+<!-- 'posts' array of post object recieved  -->
 <div class="container">
   <div id="accordion">
 
+      <!--Iterate through all the post object,to show stats of all(who have applied) -->
       <% posts.forEach(function(post){ %>
           <div class="card mt-2 mb-2">
               <div class="card-header">
@@ -65,6 +70,10 @@
                   <button class="btn btn-success">Done</button>
                 </div>      
               </div>
+
+              <!-- 'appliedDev' contains email of all developer,so send them to route so 
+                   company can check their portfolio
+              -->
               <% post.appliedDev.forEach(function(email){ %>
                     <div class="card-body row">
                       <div class="">

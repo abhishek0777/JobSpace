@@ -198,10 +198,19 @@ router.get('/dashboard',ensureAuthenticated,(req,res)=>{
     //Dashboard will shows all the posts posted by all companies to user
     //as per latest one on top
 
+    let isCreated=-1;
+    Portfolio.findOne({email:req.user.email},(err,portfolio)=>{
+        if(portfolio){
+            isCreated=1;
+        }
+    })
+
     JobPost.find({},(err,posts)=>{
+        
         res.render('developer/dashboard',{
             user:req.user,
-            posts:posts
+            posts:posts,
+            isCreated:isCreated
         })
     })
 })

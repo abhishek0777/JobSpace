@@ -1,3 +1,5 @@
+<!------------------------------Shows only those posts of companies to which developer has subscribed------------------ -->
+
 <!-- navigation bar -->
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -63,9 +65,19 @@
 
 <!-- navigation bar ends here -->
 
-<div class="postTimeline">
 
-    <% user.subscribed.forEach(function(emailID){
+<!-- Recommended and dashboard have same CSS files -->
+
+<div class="postTimeline">
+    
+    <!-- when user haven't subscribed any company else show all latest posts-->
+    <% 
+      if(user.subscribed.length==0){ %>
+
+        <p style="color: white;">You haven't subscribed any company yet.Go to <a href="/developer/companies">here</a> to subscribe companies</p>
+
+      <%}
+      user.subscribed.forEach(function(emailID){
         posts.forEach(function(post){
             if(emailID==post.companyEmail){ %>
 
@@ -99,8 +111,9 @@
                       <h5 class="ml-3"> <%= post.expReq %></h6>
                     </div>
                     
-            
+                    <!-- Check whether he has already applied or not -->
                     <% var flag=1; 
+ 
                     post.appliedDev.forEach(function(email){
                       if(email==user.email){
                         flag=-1;

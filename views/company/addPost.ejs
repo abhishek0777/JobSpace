@@ -1,5 +1,6 @@
-<!-- navigation bar -->
+<!-- ---------------------------------This is a view of add Post to timeline ----------------------------------->
 
+<!-- navigation bar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href=""><img src="/images/logo.jpg" alt="logo" ></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,10 +54,16 @@
 
 <!-- naviagation bar ends here -->
 
+
+
+
+
 <!-- Upload a post for job -->
 <div class="fluid-container d-flex justify-content-center mt-3 bg-wallpaper">
     <div class="addPostForm">
         <h3 class="heading">Post a Job </h3>
+
+        <!-- form of POST request sends to route of company to save in database-->
         <form action='/company/addPost' method="POST">
                 
             <div class="form-group d-flex justify-content-center">
@@ -125,12 +132,13 @@
             </div>
 
                 
-
+            <!-- submit button -->
             <div class="form-group  d-flex justify-content-center">
                 <button  style="width:50%" name="submit" type="submit" class="btn btn-success">Post</button>
             </div>
 
-
         </form>
+
+
     </div>
 </div>

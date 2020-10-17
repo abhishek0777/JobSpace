@@ -1,3 +1,5 @@
+<!---------------------------------------- Contains list of companies to subscribe----------------------------- -->
+
 <!-- navigation bar -->
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -66,6 +68,7 @@
 <div class="container">
     <div class="row">
 
+        <!-- companies is array of company objects of 'Company Schema'-->
         <% companies.forEach(function(company){ %>
 
             <div class="col-md-4 col-sm-6 col-xs-12 mt-3">
@@ -76,6 +79,7 @@
                       <p class="card-text"><%= company.email %></p>
                       <p class="card-text"><%= company.country %></p>
 
+                      <!-- Check whether developer already subscribed or not -->
                       <% flag=1;
                             user.subscribed.forEach(function(emailID){
                             if(emailID==company.email){

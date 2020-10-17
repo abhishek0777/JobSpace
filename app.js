@@ -1,3 +1,11 @@
+// Project Name : JobSpace (Job recruitment portal)
+// Team Name    : npm-i-confidence
+// Only Member  : Abhishek Vaishnav
+// Year         : 2nd year
+// Branch       : IT,MNNIT
+
+//Tech-stack : MongoDB,Express,Node.js,Bootstrap
+
 const express=require("express");
 const path=require("path");
 const expressLayouts=require("express-ejs-layouts");
@@ -75,7 +83,7 @@ app.use((req,res,next)=>{
 });
 
 
-//temporary routes for frontend development
+//Route for home page(welcome)
 app.get('/',(req,res)=>{
     res.render('welcome');
 });
@@ -85,7 +93,7 @@ app.get('/',(req,res)=>{
 // 1. Route for companies
 app.use('/company',require('./routes/company.js'));
 
-//2.
+//2. Route for developer
 app.use('/developer',require('./routes/developer.js'));
 
 
