@@ -7,12 +7,13 @@
 //  (vi) Job type : Internship or Full-time
 // (vii) Experience Required
 //(viii) array of emails of developers who applied for job
+//  (ix) tells programmer whether application portal is still open to apply or not
 
 
 //ORM used is this project is mongoose,for simplicity
 //and each of interaction with Mongodb database
 const mongoose =require('mongoose');
-const Schema=mongoose.Schema;
+
 
 const JobPostSchema=new mongoose.Schema({
     companyName:{
@@ -50,9 +51,15 @@ const JobPostSchema=new mongoose.Schema({
     date:{
         type:Date,
         default:Date.now
+    },
+
+    //YES or NO
+    isContinue:{
+        type:String,
+        required:true
     }
 
-    //likes feature will be added later
+    
 
 
 })

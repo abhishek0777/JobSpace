@@ -62,35 +62,39 @@
   <div id="accordion">
 
       <!--Iterate through all the post object,to show stats of all(who have applied) -->
-      <% posts.forEach(function(post){ %>
-          <div class="card mt-2 mb-2">
-              <div class="card-header">
-                <div class="d-inline"><%= post.jobName %></div> 
-                <div class="d-inline d-flex flex-row-reverse">
-                  <button class="btn btn-success">Done</button>
-                </div>      
-              </div>
-
-              <!-- 'appliedDev' contains email of all developer,so send them to route so 
-                   company can check their portfolio
-              -->
-              <% post.appliedDev.forEach(function(email){ %>
-                    <div class="card-body row">
-                      <div class="">
-                        <form action="/company/devProfile" method="POST">
-                          <button class="btn btn-primary" id="declineEmail/<%= post._id %>/<%= email %>" type="submit" name="submit" value="<%= email %>"><%= email %></button>
-                        </form>
-                      </div>
-                      <div class="col-md-6 col-xs-12 justify-content-right"> 
-                        <button class="btn btn-danger" id="decline/<%= post._id %>/<%= email %>" onclick="declineFunction('<%= post._id %>/<%= email %>')" value="<%= email %>">
-                          <i class="fa fa-minus-circle"></i>
-                        </button>
-                      </div>
-                    </div>
-                      
-              <% }) %>
+      <% posts.forEach(function(post){
+            if(post.isContinue=='YES'){ %>
               
-          </div>
+              <div class="card mt-2 mb-2"  id="postDone/<%= post._id %>">
+                <div class="card-header">
+                  <div class="d-inline"><%= post.jobName %></div> 
+                  <div class="d-inline d-flex flex-row-reverse">
+                    <button class="btn btn-success" onclick="postDoneFunction('<%= post._id %>')">Done</button>
+                  </div>      
+                </div>
+  
+                <!-- 'appliedDev' contains email of all developer,so send them to route so 
+                     company can check their portfolio
+                -->
+                <% post.appliedDev.forEach(function(email){ %>
+                      <div class="card-body row">
+                        <div class="">
+                          <form action="/company/devProfile" method="POST">
+                            <button class="btn btn-primary" id="declineEmail/<%= post._id %>/<%= email %>" type="submit" name="submit" value="<%= email %>"><%= email %></button>
+                          </form>
+                        </div>
+                        <div class="col-md-6 col-xs-12 justify-content-right"> 
+                          <button class="btn btn-danger" id="decline/<%= post._id %>/<%= email %>" onclick="declineFunction('<%= post._id %>/<%= email %>')" value="<%= email %>">
+                            <i class="fa fa-minus-circle"></i>
+                          </button>
+                        </div>
+                      </div>
+                        
+                <% }) %>
+                
+            </div>
+           <% } %>
+
       <% }) %>
   
   </div>
@@ -98,3 +102,4 @@
 
 <!-- decline Javascript file -->
 <script src="/js/decline.js"></script>
+<script src="/js/postDone.js"></script>

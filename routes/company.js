@@ -223,7 +223,8 @@ router.post('/addPost',(req,res)=>{
         skillsReq:req.body.skillsReq,
         jobType:req.body.jobType,
         expReq:req.body.expReq,
-        date:Date.now()
+        date:Date.now(),
+        isContinue:'YES'
     })
 
     //save this newly created object to database,with a success message
@@ -325,6 +326,31 @@ router.get('/declineRequest/:id1/:id2',ensureAuthenticated,(req,res)=>{
 
     })
 
+})
+
+//When company done with the posted job
+router.post('/postDone/:id',ensureAuthenticated,(req,res)=>{
+    let postID=req.params.id;
+    console.log(postID);
+
+    JobPost.findOne({_id:postID},(err,post)=>{
+        post.isContinue='NO';
+
+        JobPost.updateOne({_id:postID},post,(err)=>{
+            if(err){
+                console.log(err);
+                return;
+            }
+            else{
+                console.log("update ho gya");
+                return res.status(200).end();
+            }
+        })
+    })
+
+
+
+    
 })
 
 

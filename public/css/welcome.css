@@ -1,10 +1,27 @@
+/* to all paragraph */
+p{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
 .card{
     background-color: transparent;
 }
 
+.custom-card{
+    border-left-width: 3px;
+    border-bottom-width: 3px;
+    border-right-width: 0px;
+    border-top-width: 0px;
+    border-color: #007bff;
+}
+
 .section-2
 {
-    background-color: #f0f0f0;
+    padding:5% 0%;
+    background-color: #d3e8f391;
+}
+
+.welcome-image-cartoon{
+    width: 315px;
 }
 
 .btn{
@@ -13,9 +30,10 @@
 
 .footer-bar
 {
-    background-color:#a2a2a2;
-    color:black;
+    background-color:#007bff;
+    color:#f0f0f0;
     font-weight: 500;
+    font-size: 18px;
     text-align: center;
     padding: 2%;
-}
+} 

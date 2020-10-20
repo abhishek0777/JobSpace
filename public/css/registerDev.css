@@ -1,32 +1,42 @@
 .registerSection{
-     background-color: #deebdd;
-    background-image: linear-gradient(315deg, #deebdd 0%, #bbdbbe 74%); 
+     /* background-color: #d3e8f391;
+    background-image: linear-gradient(315deg, #deebdd 0%, #d3e8f391 74%);  */
+    background-image: url('../images/loginBG.jpg');
+    
+    background-repeat: no-repeat;
+    background-size: cover;
 
    
     
 }
 .heading-register{
-    color:#28a745;
+    color:black;
     text-align: center;
-    font-weight: 600;
-    /* padding-top: 3%; */
+    font-weight: 800;
+    font-size: 40px;
+    padding-top: 3%;
 }
 
 .subHeading-Register{
     padding-top: 2%;
     text-align: center;
     font-weight: 450;
-    font-size: large;
+    font-size: 20px;
     color:black;
 }
 
 .formSection-register{
     padding-top: 1%;
+    padding-bottom: 1%;
+    
 }
 
 .infoHeading
 {
-    color:#212529;
+    color:#007bff;
+    background-color: white;
+    padding:1% 1%;
+    font-weight: 800;
 }
 
 .form-group
@@ -35,8 +45,12 @@
 }
 
 .list-group-item{
-    color:#a2a2a2;
+    color:black;
     font-weight: 400;
-    
 }
 
+.haveAnAccount{
+    font-size: 25px;
+    font-weight: 900;
+    color:white;
+}
