@@ -1,12 +1,11 @@
 
 .navbar-nav .nav-item .nav-link{
-    font-size: 17px;
-    font-weight: 500;
+    font-size: 15px;
+    font-weight: 350;
     color:#007bff;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .navbar-nav .nav-item .nav-link:hover{
     color:#0069d9;
-    
 }

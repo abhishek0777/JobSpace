@@ -12,7 +12,7 @@
 
         <li class="nav-item">
           <a class="nav-link" href="/developer/recommended">
-            <i class="fa fa-bullhorn"></i>
+            <i class="fa fa-delicious"></i>
             Recommended
           </a>
         </li>
@@ -25,7 +25,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="/developer/statistics">
+            <a style="color:#dc3545" class="nav-link" href="/developer/statistics">
                 <i class="fa fa-bar-chart"></i>
                 Statistics
             </a>
@@ -33,16 +33,16 @@
 
         <li class="nav-item">
           <a class="nav-link" href="/developer/companies">
-              <i class="fa fa-bar-chart"></i>
+              <i class="fa fa-group"></i>
               Companies
           </a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="/developer/notifications">
+            <button type="button" class="btn nav-link" data-toggle="modal"  data-target="#notificationModal" class="nav-link">
                 <i class="fa fa-calendar-check-o"></i>
                 Notifications
-            </a>
+            </button>
         </li>
 
         <li class="nav-item dropdown">
@@ -62,7 +62,72 @@
     </div>
 </nav>
 
+<!-- modal for notification section -->
+<%- include( "../partials/notifications" ) %>
 
-<!-- 
-          Work is pending
- -->
+
+<!-- navigation bar ends here -->
+
+<div class="fluid-container pt-3">
+  <div class="container">
+    <h3 class="developerStatsHeading"><%= user.name %></h3>
+    <p class="developerStatsSubHeading">Statistics</p>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope='col'>Job Name</th>
+          <th scope='col'>Job Type</th>
+          <th scope='col'>Company</th>
+          <th scope='col'>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 
+            if flag=1 Pending 
+            if flag=2 Accepted
+            if flag=-1 Rejected
+            and print only stats of those jobs which have flag!=0
+        -->
+        <% posts.forEach(function(post){ 
+
+          
+          var flag=0;
+          post.appliedDev.forEach(function(email){
+            if(email==user.email){flag=1;}
+          })
+          post.rejectedDev.forEach(function(email){
+            if(email==user.email){
+              flag=-1;
+            }
+          })
+
+          if(flag==1){
+            if(post.isContinue=='NO'){
+              flag=2;
+            }
+          }
+
+          var status='';
+          if(flag==1)status='Pending';
+          if(flag==-1)status='Rejected';
+          if(flag==2)status='Accepted';
+
+          if(flag!=0){ %> 
+
+            <tr>
+              <td class="tableData"><%= post.jobName %></td>
+              <td class="tableData"><%= post.jobType %></td>
+              <td class="tableData"><%= post.companyName %></td>
+              <td class=<%= status %> ><%= status %></td>
+            </tr>
+
+          <% } %>
+          
+        <% }) %>
+        
+      </tbody>
+      
+    </table>
+    
+  </div>
+</div>

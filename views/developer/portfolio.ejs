@@ -11,7 +11,7 @@
 
         <li class="nav-item">
             <a class="nav-link" href="/developer/recommended">
-              <i class="fa fa-bullhorn"></i>
+              <i class="fa fa-delicious"></i>
               Recommended
             </a>
         </li>
@@ -32,20 +32,20 @@
 
         <li class="nav-item">
             <a class="nav-link" href="/developer/companies">
-                <i class="fa fa-bar-chart"></i>
+                <i class="fa fa-group"></i>
                 Companies
             </a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="/">
+            <button type="button" class="btn nav-link" data-toggle="modal"  data-target="#notificationModal" class="nav-link">
                 <i class="fa fa-calendar-check-o"></i>
                 Notifications
-            </a>
+            </button>
         </li>
 
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a style="color:#dc3545" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-user-circle-o"></i>
                 <%= user.name %>
             </a>
@@ -59,12 +59,15 @@
 
 <!-- navigation bar ends here -->
 
+<!-- modal for notification section -->
+<%- include( "../partials/notifications" ) %>
+
 <!-- ---------------------------PORTFOLIO SECTION--------------------------------------- -->
 
 <!-- Portfolio starts here  -->
-<div class="container">
-    <div class="fluid-container portfolioHeading">
-        <h1 class="btn-primary"><%= user.name %></h1>
+<div class="fluid-container portfolioBG">
+    <div class="portfolioHeading">
+        <h1 class="bg-primary"><%= user.name %></h1>
         <h4>PORTFOLIO</h4>
 
 
@@ -84,6 +87,7 @@
 
     <!-- Portfolio form for updation -->
     </div>
+    <div class="container">
     <form action='/developer/portfolio' method='POST' class="portfolioForm">
 
         <div class="row">
@@ -158,7 +162,7 @@
                         </div>
                     </div>
                     <select
-                        name="skill_1" class="form-control" required="required" style="width:90%
+                        name="skill_1" class="form-control" required="required" style="width:90%"
                     >
                       <option value="JavaScript">JavaScript</option>
                       <option value="HTML/CSS">HTML/CSS</option>
@@ -341,9 +345,10 @@
                 
                 <!-- save changes button of portfolio -->
                 <div class="form-group  d-flex justify-content-center">
-                    <button  style="width:100%" name="submit" type="submit" class="btn btn-success">Save Changes</button>
+                    <button  style="width:100%" name="submit" type="submit" class="btn btn-primary">Save Changes</button>
                 </div>
             </div>
         </div>
     </form>
+    </div>
 </div>

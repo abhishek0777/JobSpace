@@ -17,6 +17,9 @@ function declineFunction(jobName_email){
     //(ii) Portfolio link
     var emailButton=document.getElementById('declineEmail/'+jobName_email);
     emailButton.remove();
+
+    var statsButton=document.getElementById('developerStats/'+jobName_email);
+    statsButton.remove();
     
 
     //----------------Make XML-http Request(xhr)-----------------------

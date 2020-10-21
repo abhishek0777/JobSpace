@@ -18,7 +18,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="/company/addPost">
+            <a style="color:#dc3545" class="nav-link" href="/company/addPost">
                 <i class="fa fa-bullhorn"></i>
                 Add Post
             </a>
@@ -61,7 +61,7 @@
 <!-- Upload a post for job -->
 <div class="fluid-container d-flex justify-content-center mt-3 bg-wallpaper">
     <div class="addPostForm">
-        <h3 class="heading">Post a Job </h3>
+        <h1 class="heading-addPost">Post a Job </h1>
 
         <!-- form of POST request sends to route of company to save in database-->
         <form action='/company/addPost' method="POST">
@@ -108,11 +108,11 @@
                         </div>
                     </div>
 
-                    <div class="custom-control custom-radio custom-control-inline ml-3">
+                    <div class="custom-control custom-radio custom-control-inline ml-3" style="color:white">
                         <input name="jobType" id="jobType_0" type="radio" class="custom-control-input" value="Internship" required="required"> 
                         <label for="jobType_0" class="custom-control-label">Internship</label>
                     </div>
-                    <div class="custom-control custom-radio custom-control-inline">
+                    <div class="custom-control custom-radio custom-control-inline" style="color:white">
                         <input name="jobType" id="jobType_1" type="radio" class="custom-control-input" value="Full-time" required="required"> 
                         <label for="jobType_1" class="custom-control-label">Full-time</label>
                     </div>
@@ -134,7 +134,7 @@
                 
             <!-- submit button -->
             <div class="form-group  d-flex justify-content-center">
-                <button  style="width:50%" name="submit" type="submit" class="btn btn-success">Post</button>
+                <button  style="width:50%" name="submit" type="submit" class="btn btn-primary">Post</button>
             </div>
 
         </form>

@@ -248,9 +248,13 @@ router.get('/recommended',ensureAuthenticated,(req,res)=>{
 
 //route to statistics ,can see to which companies developer have applied
 router.get('/statistics',ensureAuthenticated,(req,res)=>{
-    res.render('developer/statistics',{
-        user:req.user
-    });
+    JobPost.find({},(err,posts)=>{
+        res.render('developer/statistics',{
+            posts:posts,
+            user:req.user
+        });
+    })
+    
 })
 
 
@@ -259,6 +263,7 @@ router.get('/companies',ensureAuthenticated,(req,res)=>{
     Company.find({},(err,companies)=>{
         res.render('developer/companies',{
             user:req.user,
+            devEmail:req.user.email,
             companies:companies
         });
     })
@@ -398,8 +403,6 @@ router.get('/clicked/:id',(req,res)=>{
                     //   adding the developer ID to 
                     //   applied developer to a specific job
                     var appliedDevelopers=[];
-                    
-
                     post.appliedDev.forEach(function(email){
                         if(email!=req.user.email)
                         {
@@ -409,6 +412,16 @@ router.get('/clicked/:id',(req,res)=>{
                     
                     appliedDevelopers.push(req.user.email);
                     post.appliedDev=appliedDevelopers;
+
+                    //check if this user is rejected from this post or not
+                    //and accordingly remove him from database
+                    var rejectedDevelopers=[];
+                    post.rejectedDev.forEach(function(email){
+                        if(email!=req.user.email){
+                            rejectedDevelopers.push(email);
+                        }
+                    })
+                    post.rejectedDev=rejectedDevelopers;
 
 
 

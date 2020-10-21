@@ -47,6 +47,8 @@ const JobPostSchema=new mongoose.Schema({
 
     //String=email
     appliedDev:[String], 
+
+    rejectedDev:[String],
     
     date:{
         type:Date,
@@ -58,6 +60,8 @@ const JobPostSchema=new mongoose.Schema({
         type:String,
         required:true
     }
+
+
 
     
 

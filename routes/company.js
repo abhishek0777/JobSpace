@@ -282,6 +282,28 @@ router.post('/devProfile',(req,res)=>{
     
 })
 
+// companies can developer's stats who apply to their posts
+router.post('/developerStats',(req,res)=>{
+    const email=req.body.submit;
+
+    //find a developer
+    Developer.findOne({'email':email})
+    .then(developer=>{
+        if(developer){
+            JobPost.find({},(err,posts)=>{
+                res.render('company/developerStats',{
+
+                    //sends (i) posts (ii) developer and (ii) authenticated user
+                    user:req.user,
+                    developer:developer,
+                    posts:posts
+                })
+            })
+        }
+    })
+
+})
+
 
 //Handles,declining of request by company
 // It will update the array of appliedDev accordingly
@@ -309,6 +331,9 @@ router.get('/declineRequest/:id1/:id2',ensureAuthenticated,(req,res)=>{
 
         //assign new array of developers
         post.appliedDev=appliedDevelopers;
+
+        //and add this developer to rejected Developer array
+        post.rejectedDev.push(dev);
 
 
         //then Update the post and return to page again

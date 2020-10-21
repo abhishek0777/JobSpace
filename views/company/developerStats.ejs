@@ -1,0 +1,117 @@
+<!-- navigation bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href=""><img src="/images/logo.jpg" alt="logo" ></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto pr-4">
+          
+        <li class="nav-item">
+          <a class="nav-link" href="/company/dashboard">
+            <i class="fa fa-bar-chart"></i>
+            Timeline
+          </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/company/addPost">
+                <i class="fa fa-bullhorn"></i>
+                Add Post
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a style="color:#dc3545" class="nav-link" href="/company/statistics">
+                <i class="fa fa-bullhorn"></i>
+                Statistics
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/company/notifications">
+                <i class="fa fa-calendar-check-o"></i>
+                Notifications
+            </a>
+        </li>
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-user-circle-o"></i>
+                <%= user.name %>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/company/profile">Profile</a>
+              <a class="dropdown-item" href="/company/logout">Logout</a>
+        </li>
+               
+      </ul>   
+    </div>
+</nav>
+
+<!-- naviagation bar ends here -->
+
+<div class="fluid-container pt-3">
+    <div class="container">
+      <h3 class="developerStatsHeading"><%= developer.name %></h3>
+      <p class="developerStatsSubHeading">Statistics</p>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope='col'>Job Name</th>
+            <th scope='col'>Job Type</th>
+            <th scope='col'>Company</th>
+            <th scope='col'>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 
+              if flag=1 Pending 
+              if flag=2 Accepted
+              if flag=-1 Rejected
+              and print only stats of those jobs which have flag!=0
+          -->
+          <% posts.forEach(function(post){ 
+  
+            
+            var flag=0;
+            post.appliedDev.forEach(function(email){
+              if(email==developer.email){flag=1;}
+            })
+            post.rejectedDev.forEach(function(email){
+              if(email==developer.email){
+                flag=-1;
+              }
+            })
+  
+            if(flag==1){
+              if(post.isContinue=='NO'){
+                flag=2;
+              }
+            }
+  
+            var status='';
+            if(flag==1)status='Pending';
+            if(flag==-1)status='Rejected';
+            if(flag==2)status='Accepted';
+  
+            if(flag!=0){ %> 
+  
+              <tr>
+                <td class="tableData"><%= post.jobName %></td>
+                <td class="tableData"><%= post.jobType %></td>
+                <td class="tableData"><%= post.companyName %></td>
+                <td class=<%= status %> ><%= status %></td>
+              </tr>
+  
+            <% } %>
+            
+          <% }) %>
+          
+        </tbody>
+        
+      </table>
+      
+    </div>
+</div>

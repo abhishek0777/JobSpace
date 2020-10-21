@@ -12,8 +12,8 @@
       <ul class="navbar-nav ml-auto pr-4">
 
         <li class="nav-item">
-            <a class="nav-link" href="/developer/recommended">
-              <i class="fa fa-bullhorn"></i>
+            <a  class="nav-link" href="/developer/recommended">
+              <i class="fa fa-delicious"></i>
               Recommended
             </a>
         </li>
@@ -33,17 +33,17 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="/developer/companies">
-                <i class="fa fa-bar-chart"></i>
+            <a style="color:#dc3545" class="nav-link" href="/developer/companies">
+                <i class="fa fa-group"></i>
                 Companies
             </a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="/developer/notifications">
+            <button type="button" class="btn nav-link" data-toggle="modal"  data-target="#notificationModal" class="nav-link">
                 <i class="fa fa-calendar-check-o"></i>
                 Notifications
-            </a>
+            </button>
         </li>
 
         <li class="nav-item dropdown">
@@ -65,44 +65,55 @@
 
 <!-- navigation bar ends here -->
 
-<div class="container">
-    <div class="row">
+<!-- modal for notification section -->
+<%- include( "../partials/notifications" ) %>
 
-        <!-- companies is array of company objects of 'Company Schema'-->
-        <% companies.forEach(function(company){ %>
 
-            <div class="col-md-4 col-sm-6 col-xs-12 mt-3">
 
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                      <h5 class="card-title"><%= company.name %></h5>
-                      <p class="card-text"><%= company.email %></p>
-                      <p class="card-text"><%= company.country %></p>
+<div class="container-fluid companiesName">
+    <div class="container p-2">
+        <div class="row">
 
-                      <!-- Check whether developer already subscribed or not -->
-                      <% flag=1;
+            <!-- companies is array of company objects of 'Company Schema'-->
+            <% companies.forEach(function(company){ %>
+                
+                <div class="col-md-4 col-sm-6 col-xs-12 mt-3">
+
+                    <div class="card custom-card-subscription" style="width: 18rem;">
+                        <div class="card-body">
+                        <h5 class="card-title cardCompanyName"><%= company.name %></h5>
+                        <p class="card-text cardCompanyEmail"><%= company.email %></p>
+                        <p class="card-text cardCompanyCountry"><%= company.country %></p>
+
+                        <!-- Check whether developer already subscribed or not -->
+                        <% 
+                        flag=1;
                             user.subscribed.forEach(function(emailID){
-                            if(emailID==company.email){
-                                flag=-1;
-                            }
-                      })
-                      if(flag==-1){ %> 
-                            <button class="btn btn-danger">Subscribed</button>
-                      <% } 
-                      else { %>
-                            <button id="subscribe/<%= company.email %>" onclick="subscribeFunction('<%= company.email %>')" class="btn btn-primary"  >Subscribe</button>
-                        <% } %>
+                                if(emailID==company.email){
+                                    flag=-1;
+                                }
+                            })
+                        if(flag==-1){ %> 
+                                <button class="btn btn-danger" >Subscribed</button>
+                        <% } 
+                        else { %>
+                                <button id="subscribe/<%= company.email %>" onclick="subscribeFunction('<%= company.email %>')" class="btn btn-primary"  >Subscribe</button>
+                            <% } %>
+                        </div>
                     </div>
+        
                 </div>
-    
-            </div>
-        <% }) %>
-        
+                
+            %>
 
-        
+                
+            <% }) %>
+            
 
+        </div>
     </div>
 </div>
+
 
 
 <!-- on click function for subscribe button  -->

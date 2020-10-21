@@ -13,13 +13,13 @@
 
         <li class="nav-item">
           <a class="nav-link" href="/developer/recommended">
-            <i class="fa fa-bullhorn"></i>
+            <i class="fa fa-delicious"></i>
             Recommended
           </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="/developer/dashboard">
+          <a style="color:#dc3545" class="nav-link" href="/developer/dashboard">
             <i class="fa fa-bullhorn"></i>
             Job Posts
           </a>
@@ -34,16 +34,16 @@
 
         <li class="nav-item">
           <a class="nav-link" href="/developer/companies">
-              <i class="fa fa-bar-chart"></i>
+              <i class="fa fa-group"></i>
               Companies
           </a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="/developer/notifications">
-                <i class="fa fa-calendar-check-o"></i>
-                Notifications
-            </a>
+          <button type="button" class="btn nav-link" data-toggle="modal"  data-target="#notificationModal" class="nav-link">
+            <i class="fa fa-calendar-check-o"></i>
+            Notifications
+          </button>
         </li>
 
         <li class="nav-item dropdown">
@@ -64,6 +64,9 @@
 </nav>
 
 <!-- navigation bar ends here -->
+
+<!-- modal for notification section -->
+<%- include( "../partials/notifications" ) %>
 
 
 

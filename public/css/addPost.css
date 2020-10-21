@@ -7,9 +7,10 @@
     margin-bottom: 2%;
     width:60%;
 }
-.heading{
+.heading-addPost{
     text-align: center;
-    color:white;
+    color:#85c0ff;
+    font-weight: 600;
     padding-top: 2%;
     margin-bottom: 3%;
 }

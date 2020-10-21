@@ -1,5 +1,14 @@
 .stats-bg{
-    background-image: url(../images/stats.jpg);
+    /* background-image: url(../images/); */
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+.companyStats{
+    font-size: 21px;
+    font-weight: 500;
+}
+
+.card-header-stats{
+    background-color: #f2f2f2e1;
 }

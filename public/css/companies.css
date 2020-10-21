@@ -1,0 +1,25 @@
+.custom-card-subscription{
+    border-left-width: 3px;
+    border-bottom-width: 3px;
+    border-right-width: 3px;
+    border-top-width: 3px;
+    border-color: black;
+    background-color: #f5f5f59c;
+    
+}
+
+.companiesName{
+    background-image: url(../images/bg1.svg);
+    background-size: cover;
+    background-attachment:fixed;
+}
+
+.cardCompanyName{
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.cardCompnayEmail{
+    font-size: 20px;
+}

@@ -12,8 +12,8 @@
       <ul class="navbar-nav ml-auto pr-4">
         
         <li class="nav-item">
-            <a class="nav-link" href="/developer/recommended">
-              <i class="fa fa-bullhorn"></i>
+            <a style="color:#dc3545" class="nav-link" href="/developer/recommended">
+              <i class="fa fa-delicious"></i>
               Recommended
             </a>
         </li>
@@ -34,16 +34,16 @@
 
         <li class="nav-item">
             <a class="nav-link" href="/developer/companies">
-                <i class="fa fa-bar-chart"></i>
+                <i class="fa fa-group"></i>
                 Companies
             </a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="/developer/notifications">
-                <i class="fa fa-calendar-check-o"></i>
-                Notifications
-            </a>
+          <button type="button" class="btn nav-link" data-toggle="modal"  data-target="#notificationModal" class="nav-link">
+            <i class="fa fa-calendar-check-o"></i>
+            Notifications
+          </button>
         </li>
 
         <li class="nav-item dropdown">
@@ -64,6 +64,9 @@
 </nav>
 
 <!-- navigation bar ends here -->
+
+<!-- modal for notification section -->
+<%- include( "../partials/notifications" ) %>
 
 
 <!-- Recommended and dashboard have same CSS files -->
@@ -129,7 +132,7 @@
                        <% } else { %> 
                         
                         <div class="container applyHere">
-                          <button class="btn btn-success" id='applyButton' onclick='applyFunction("<%= post._id %>")' >Apply</button>
+                          <button class="btn btn-success" id='applyButton/<%= post._id %>' onclick='applyFunction("<%= post._id %>")' >Apply</button>
                         </div>
             
                         <%}

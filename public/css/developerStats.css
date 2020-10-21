@@ -1,0 +1,26 @@
+.developerStatsHeading{
+    text-align: center;
+    font-weight: 700;
+}
+.developerStatsSubHeading{
+    text-align: center;
+    padding-bottom: 2%;
+}
+.tableData{
+    font-size: 17px;
+    font-weight: 500;
+
+}
+.Pending{
+    color:red;
+    font-weight: 900;
+}
+.Accepted{
+    font-weight: 900;
+    color:green;
+}
+
+.Rejected{
+    font-weight: 900;
+    color:orange;
+}

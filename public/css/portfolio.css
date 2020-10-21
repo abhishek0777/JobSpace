@@ -1,12 +1,21 @@
+.portfolioBG{
+    background-image: url(../images/30-Sales-Contest-Ideas.png);
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
 .portfolioHeading{
-    padding:4%;
+    padding:2% 0%;
     text-align: center;
-    font-size: x-large;
-    font-weight: 500;
+    background-color: #007bffab; 
     
 }
+.portfolioHeading h1{
+    font-weight: 350;
+    color:white;
+}
 .portfolioForm{
-    background-color: #f2f2f2;
+    background-color: #f2f2f2e7;
     -webkit-box-shadow: -2px 4px 24px -2px rgba(10,10,10,1);
     -moz-box-shadow: -2px 4px 24px -2px rgba(10,10,10,1);
     box-shadow: -2px 4px 24px -2px rgba(10,10,10,1);

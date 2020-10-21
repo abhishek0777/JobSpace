@@ -24,7 +24,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="/company/statistics">
+            <a style="color:#dc3545" class="nav-link" href="/company/statistics">
                 <i class="fa fa-bullhorn"></i>
                 Statistics
             </a>
@@ -58,6 +58,7 @@
 <!-- statistics section start from here -->
 
 <!-- 'posts' array of post object recieved  -->
+<div class="fluid-container stats-bg">
 <div class="container">
   <div id="accordion">
 
@@ -65,9 +66,9 @@
       <% posts.forEach(function(post){
             if(post.isContinue=='YES'){ %>
               
-              <div class="card mt-2 mb-2"  id="postDone/<%= post._id %>">
+              <div class="card mt-3 mb-3"  id="postDone/<%= post._id %>">
                 <div class="card-header">
-                  <div class="d-inline"><%= post.jobName %></div> 
+                  <div class="d-inline companyStats"><%= post.jobName %></div> 
                   <div class="d-inline d-flex flex-row-reverse">
                     <button class="btn btn-success" onclick="postDoneFunction('<%= post._id %>')">Done</button>
                   </div>      
@@ -81,6 +82,11 @@
                         <div class="">
                           <form action="/company/devProfile" method="POST">
                             <button class="btn btn-primary" id="declineEmail/<%= post._id %>/<%= email %>" type="submit" name="submit" value="<%= email %>"><%= email %></button>
+                          </form>
+                        </div>
+                        <div class="ml-1">
+                          <form action="/company/developerStats" method="POST">
+                            <button class="btn btn-primary" id="developerStats/<%= post._id %>/<%= email %>" type="submit" name="submit" value="<%= email %>">Check Stats</button>
                           </form>
                         </div>
                         <div class="col-md-6 col-xs-12 justify-content-right"> 
@@ -98,6 +104,7 @@
       <% }) %>
   
   </div>
+</div>
 </div>
 
 <!-- decline Javascript file -->
