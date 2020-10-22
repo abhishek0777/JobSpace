@@ -175,7 +175,7 @@ router.post('/register',(req,res)=>{
                                     //save company's account
                                     newCompany.save()
                                     .then(company=>{
-                                        req.flash('sucess_msg',"You're now registerd,can Login");
+                                        req.flash('success_msg',"You're now registerd,can Login");
                                         res.redirect('/company/login')
                                     })
                                     .catch((err)=>{console.log(err)});
@@ -209,7 +209,9 @@ router.post('/OTP/:emailID',(req,res)=>{
     const output = `
       <p>Welcome to community of millions of developers.</p>
       <h3>One Time Password : ${OTP}</h3>
-      <h3>Details entered :</h3>
+      <h3>From :</h3>
+      <h3>JobSpace</h3>
+      <h3>Thank you for joining us as a recruiter!</h3>
     
     `;
   

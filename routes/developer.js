@@ -16,6 +16,9 @@ const bcrypt=require('bcryptjs');
 //module for login authentication
 const passport=require('passport');
 
+const nodemailer = require('nodemailer');
+const prompt = require('prompt');
+
 
 //--------------Bring in all the models----------------
 const Developer=require('../models/Developer');
@@ -55,7 +58,7 @@ router.get('/login',forwardAuthenticated,(req,res)=>{
 })
 
 
-
+let OTP;
 //route for POST req of registration/Sign Up
 router.post('/register',(req,res)=>{
 
@@ -69,6 +72,10 @@ router.post('/register',(req,res)=>{
     if(!name || !email || !password1 || !password2)
     {
         errors.push({msg:'Please fill in all fields'});
+    }
+
+    if(req.body.OTP==''){
+        errors.push({msg:'Verify your account first.'});
     }
 
     //we will come here if all fields are filled
@@ -135,9 +142,30 @@ router.post('/register',(req,res)=>{
                     }
                     else
                     {
+
+                        // if we reach here,then to verify this email we have to send OTP
+                        //to this email and re-enter by the user and then check whether OTP match or not
+                        //for this functionality,i will use 'node-mailer' module
+
+                        
                         
 
-                        //if there is no developer ,we will add it in database
+                        if(OTP!=req.body.OTP){
+                            errors.push({msg:'OOPS ! Your OTP was wrong, Try again'});
+                            res.render('registerCom',{
+                                errors,
+                                name,
+                                email,
+                                size,
+                                country,
+                                password1,
+                                password2
+                            })
+                        }
+
+                        
+                        else{
+                                //if there is no developer ,we will add it in database
                         const newDeveloper=new Developer({
                             name:name,
                             email:email,
@@ -167,6 +195,7 @@ router.post('/register',(req,res)=>{
                                 .catch((err)=>{console.log(err)});
                             })
                         })
+                        }
                     }
                     
                 })
@@ -190,7 +219,10 @@ router.post('/OTP/:emailID',(req,res)=>{
     const output = `
       <p>Welcome to community of millions of developers.</p>
       <h3>One Time Password : ${OTP}</h3>
-      <h3>Details entered :</h3>
+      <h3>From :</h3>
+      <h3>JobSpace</h3>
+      <h3>Thank you for joining us as a developer!</h3>
+      
     
     `;
   
@@ -223,7 +255,7 @@ router.post('/OTP/:emailID',(req,res)=>{
         console.log('Message sent: %s', info.messageId);   
         console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
   
-        // res.sendFile('views/contact.html',{root:__dirname})
+        
     });
 })
 
