@@ -15,6 +15,9 @@ const bcrypt=require('bcryptjs');
 //module for login authentication
 const passport=require('passport');
 
+const nodemailer = require('nodemailer');
+const prompt = require('prompt');
+
 
 //--------------Bring in all the models----------------
 const Developer=require('../models/Developer');
@@ -43,7 +46,7 @@ router.get('/login',forwardAuthenticated,(req,res)=>{
     res.render('loginCom');
 })
 
-
+let OTP;
 //Handle Post request to register new company
 router.post('/register',(req,res)=>{
     //we extract all inputs form form
@@ -57,6 +60,10 @@ router.post('/register',(req,res)=>{
     if(!name || !email || !password1 || !password2)
     {
         errors.push({msg:'Please fill in all fields'});
+    }
+
+    if(req.body.OTP==''){
+        errors.push({msg:'Verify your account first.'});
     }
 
     //confirm password
@@ -125,32 +132,57 @@ router.post('/register',(req,res)=>{
                     }
                     else
                     {
-                        //if not registerd,we will save this accound in Company model
-                        const newCompany=new Company({
-                            name:name,
-                            email:email,
-                            size:size,
-                            country:country,
-                            password:password1
-                        })
+                        // if we reach here,then to verify this email we have to send OTP
+                        //to this email and re-enter by the user and then check whether OTP match or not
+                        //for this functionality,i will use 'node-mailer' module
 
-                        //Using bcrypt, we will hash account's password
-                            bcrypt.genSalt(10,(err,salt)=>{
-                            bcrypt.hash(newCompany.password,salt,(err,hash)=>{
-                                if(err) throw err;
+                        
+                        
 
-                                //set password to hashed one
-                                newCompany.password=hash;
-
-                                //save company's account
-                                newCompany.save()
-                                .then(company=>{
-                                    req.flash('sucess_msg',"You're now registerd,can Login");
-                                    res.redirect('/company/login')
-                                })
-                                .catch((err)=>{console.log(err)});
+                        if(OTP!=req.body.OTP){
+                            errors.push({msg:'OOPS ! Your OTP was wrong, Try again'});
+                            res.render('registerCom',{
+                                errors,
+                                name,
+                                email,
+                                size,
+                                country,
+                                password1,
+                                password2
                             })
-                        })
+                        }
+
+                        /*-------------- Node mailer ends here-------------- */
+
+                        else{
+                                //if not registerd,we will save this accound in Company model
+                            const newCompany=new Company({
+                                name:name,
+                                email:email,
+                                size:size,
+                                country:country,
+                                password:password1
+                            })
+
+                            //Using bcrypt, we will hash account's password
+                                bcrypt.genSalt(10,(err,salt)=>{
+                                bcrypt.hash(newCompany.password,salt,(err,hash)=>{
+                                    if(err) throw err;
+
+                                    //set password to hashed one
+                                    newCompany.password=hash;
+
+                                    //save company's account
+                                    newCompany.save()
+                                    .then(company=>{
+                                        req.flash('sucess_msg',"You're now registerd,can Login");
+                                        res.redirect('/company/login')
+                                    })
+                                    .catch((err)=>{console.log(err)});
+                                })
+                            })
+                        }
+                        
 
 
                     }
@@ -162,6 +194,56 @@ router.post('/register',(req,res)=>{
 
 
 
+})
+
+
+router.post('/OTP/:emailID',(req,res)=>{
+    /* ------------Node mailer starts here -------------*/
+
+    const email=req.params.emailID;
+    
+
+    OTP=Math.floor((Math.random() * 100) + 54);
+
+    //create output for mail to new user
+    const output = `
+      <p>Welcome to community of millions of developers.</p>
+      <h3>One Time Password : ${OTP}</h3>
+      <h3>Details entered :</h3>
+    
+    `;
+  
+    // create reusable transporter object using the default SMTP transport
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'jobspace2020webster@gmail.com',
+        pass: 'jobspace@1234' // naturally, replace both with your real credentials or an application-specific password
+      }
+    });
+  
+    // setup email data with unicode symbols
+    
+    let mailOptions = {
+  
+        from: '"Nodemailer Contact"', // sender address
+        to: email, // list of receivers
+        subject: 'Node Contact Request', // Subject line
+        text: 'OTP for jobspace :'+OTP,
+        html:output // plain text body
+        // html: output // html body
+    };
+  
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return console.log(error);
+        }
+        console.log('Message sent: %s', info.messageId);   
+        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+  
+        // res.sendFile('views/contact.html',{root:__dirname})
+    });
 })
 
 

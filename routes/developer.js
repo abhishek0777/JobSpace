@@ -135,6 +135,7 @@ router.post('/register',(req,res)=>{
                     }
                     else
                     {
+                        
 
                         //if there is no developer ,we will add it in database
                         const newDeveloper=new Developer({
@@ -173,6 +174,57 @@ router.post('/register',(req,res)=>{
             
         })
     }
+})
+
+
+
+router.post('/OTP/:emailID',(req,res)=>{
+    /* ------------Node mailer starts here -------------*/
+
+    const email=req.params.emailID;
+    
+
+    OTP=Math.floor((Math.random() * 100) + 54);
+
+    //create output for mail to new user
+    const output = `
+      <p>Welcome to community of millions of developers.</p>
+      <h3>One Time Password : ${OTP}</h3>
+      <h3>Details entered :</h3>
+    
+    `;
+  
+    // create reusable transporter object using the default SMTP transport
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'jobspace2020webster@gmail.com',
+        pass: 'jobspace@1234' // naturally, replace both with your real credentials or an application-specific password
+      }
+    });
+  
+    // setup email data with unicode symbols
+    
+    let mailOptions = {
+  
+        from: '"Nodemailer Contact"', // sender address
+        to: email, // list of receivers
+        subject: 'Node Contact Request', // Subject line
+        text: 'OTP for jobspace :'+OTP,
+        html:output // plain text body
+        // html: output // html body
+    };
+  
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return console.log(error);
+        }
+        console.log('Message sent: %s', info.messageId);   
+        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+  
+        // res.sendFile('views/contact.html',{root:__dirname})
+    });
 })
 
 

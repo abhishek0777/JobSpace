@@ -109,6 +109,7 @@
                           </div> 
                           <input
                             name="email"
+                            id="email"
                             placeholder="Email"
                             type="email"
                             class="form-control"
@@ -152,6 +153,65 @@
                     </div>
 
 
+                    <!-- Send OTP button -->
+                    <div class="form-group  d-flex justify-content-center">
+                      <button id="getOTPButton" type="button" class="btn btn-primary nav-link" onclick="sendOTPFunction('developer')" data-toggle="modal"   class="nav-link">
+                        Verify
+                      </button>
+                    </div>
+                    
+
+                    <!-- Modal to enter OTP--> 
+                    <div class="modal fade" id="OTPModal" tabindex="-1" role="dialog" aria-labelledby="OTPModalTitle" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header bg-success">
+                            <h5 style="color:white" class="modal-title" id="OTPModalTitle">One Time Password Privacy</h5>
+                          </div>
+                          <div class="modal-body">
+                            <ul class="list-group list-group-flush">
+                              <li class="list-group-item">Check your mail-box for OTP </li>      
+                            </ul>
+                            <div class="form-group d-flex justify-content-center">
+                              <div class="input-group" style="width:70%">
+                                <div class="input-group-prepend">
+                                  <div class="input-group-text">
+                                    <i class="fa fa-user-secret"></i>
+                                  </div>
+                                </div> 
+                                <input type="password" name='OTP' placeholder="Enter OTP here..." />
+                              </div>
+                            </div>
+                            <button type="button"  class="btn btn-success" data-dismiss="modal" aria-label="Close">
+                              Done
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <!-- MOdal box to show error related to OTP -->
+                    <div class="modal fade" id="OTPErrorModal" tabindex="-1" role="dialog" aria-labelledby="OTPErrorModalTitle" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header bg-danger">
+                            <h5 style="color:white" class="modal-title" id="OTPErrorModalTitle">OOPS !!! Error</h5>
+                          </div>
+                          <div class="modal-body">
+                            <ul class="list-group list-group-flush">
+                              <li class="list-group-item">Please,Enter your valid Email address.</li>      
+                            </ul>
+                            <button type="button"  class="btn btn-danger" data-dismiss="modal" aria-label="Close">
+                              Okay
+                            </button>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+
+
                     <div class="form-group d-flex justify-content-center">
                         <div class="custom-controls-stacked" style="width:70%">
                             <div class="custom-control custom-checkbox">
@@ -173,3 +233,5 @@
 
 </div>
 
+
+<script src="/js/OTP.js"></script>
