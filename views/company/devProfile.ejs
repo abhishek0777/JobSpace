@@ -32,10 +32,10 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="/company/notifications">
-                <i class="fa fa-calendar-check-o"></i>
-                Notifications
-            </a>
+          <button type="button" class="btn nav-link" data-toggle="modal"  data-target="#notificationModal" class="nav-link">
+            <i class="fa fa-calendar-check-o"></i>
+            Notifications
+          </button>
         </li>
 
         <li class="nav-item dropdown">
@@ -55,6 +55,9 @@
     </div>
 </nav>
 <!---------- navigation bar ends here ------------>
+
+<!-- include partial of notification -->
+<%- include( "../partials/notifications" ) %>
 
 
 <!-- Developer's Profile starts from here -->

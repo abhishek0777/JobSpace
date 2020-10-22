@@ -32,8 +32,8 @@ const DeveloperSchema=new mongoose.Schema({
     // subscribed companies to get their latest updates
     //store email
     subscribed:[String],
+    
     notifications:[String]
-
 
 });
 

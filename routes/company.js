@@ -211,6 +211,28 @@ router.get('/addPost',ensureAuthenticated,(req,res)=>{
 
 //post a job,handles POST request of addPost webpage's form
 router.post('/addPost',(req,res)=>{
+
+
+    // notifications to all users,who subscribed this company
+    Developer.find({},(err,developers)=>{
+        developers.forEach(function(developer){
+            developer.subscribed.forEach(function(companyEmail){
+                if(companyEmail==req.user.email){
+                    developer.notifications.unshift('Your subscribed company '+req.user.name+' posted a '+req.body.jobName+' job.');
+                }
+                
+            })
+
+            //now update this developer
+            Developer.updateOne({email:developer.email},developer,(err)=>{
+                if(err){
+                    console.log(err);
+                    return;
+                }
+               
+            });
+        })
+    })
     
     //in this case ,we just have to directly post the POST
     
@@ -267,6 +289,16 @@ router.post('/devProfile',(req,res)=>{
     .then(developer=>{
         if(developer){
 
+            //send this notification to developer
+            developer.notifications.unshift('Your portfolio has been checked by '+req.user.name+'.');
+            Developer.updateOne({email:email},developer,(err)=>{
+                if(err){
+                    console.log(err);
+                    return;
+                }
+            })
+
+
             //if found,then find its portfolio also
             Portfolio.findOne({'email':email},(err,portfolio)=>{
                 res.render('company/devProfile',{
@@ -286,10 +318,21 @@ router.post('/devProfile',(req,res)=>{
 router.post('/developerStats',(req,res)=>{
     const email=req.body.submit;
 
+
     //find a developer
     Developer.findOne({'email':email})
     .then(developer=>{
         if(developer){
+
+            //send this notification to developer
+            developer.notifications.unshift('Your stats has been reviewed by '+req.user.name+'.');
+            Developer.updateOne({email:email},developer,(err)=>{
+                if(err){
+                    console.log(err);
+                    return;
+                }
+            })
+
             JobPost.find({},(err,posts)=>{
                 res.render('company/developerStats',{
 
@@ -317,6 +360,21 @@ router.get('/declineRequest/:id1/:id2',ensureAuthenticated,(req,res)=>{
 
     console.log(jobID);
     console.log(dev);
+    
+    //send notifications to all users,who applied to this post
+    JobPost.findOne({"_id":jobID},(err,post)=>{
+        Developer.find({email:dev},(err,developer)=>{
+            developer.notifications.unshift("Your application for "+post.jobName+" got rejected from "+post.companyName+".");
+
+            Developer.updateOne({email:dev},developer,(err)=>{
+                if(err){
+                    console.log(err);
+                    return;
+                }
+            })
+        })
+    })
+    
 
     //Find that post
     JobPost.findOne({"_id":jobID},(err,post)=>{
@@ -370,6 +428,22 @@ router.post('/postDone/:id',ensureAuthenticated,(req,res)=>{
                 console.log("update ho gya");
                 return res.status(200).end();
             }
+        })
+
+        // also send notifications to all user,that they get selected
+        post.appliedDev.forEach(function(email){
+            Developer.findOne({email:email},(err,developer)=>{
+                developer.notifications.unshift('Congratulations '+developer.name+', your application for '+post.jobName+' has accepted.Keep eyes on notifications for further assessments.')
+            })
+
+            //update the developer
+            Developer.updateOne({email:dev},developer,(err)=>{
+                if(err){
+                    console.log(err);
+                    return;
+                }
+            })
+
         })
     })
 

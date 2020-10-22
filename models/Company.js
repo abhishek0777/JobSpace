@@ -30,7 +30,9 @@ const CompanySchema=mongoose.Schema({
     password:{
         type:String,
         required:true
-    }
+    },
+    notifications:[String]
+
 
 });
 

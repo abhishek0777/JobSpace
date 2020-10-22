@@ -276,6 +276,19 @@ router.get('/subscribed/:id',(req,res)=>{
     var emailID=req.params.id;
     console.log(emailID);
 
+    //add to the notification of company
+    Company.findOne({email:emailID},(err,company)=>{
+        company.notifications.unshift(req.user.name+' has subscribed your organization.');
+
+        //update the company object
+        Company.updateOne({email:emailID},company,(err)=>{
+            if(err){
+                console.log(err);
+                return;
+            }
+        })
+    })
+
     //add emailID to array of subcribed company
     var subscribeDev=[];
     req.user.subscribed.forEach(function(email){
@@ -436,6 +449,21 @@ router.get('/clicked/:id',(req,res)=>{
                             return res.status(200).end();
                         }
                     })
+
+                    //add it to the notifications of company
+                    Company.findOne({email:post.companyEmail},(err,company)=>{
+                        company.notifications.unshift(req.user.name+' has applied to '+post.jobName+'.');
+
+                        //update the company object
+                        Company.updateOne({email:post.companyEmail},company,(err)=>{
+                            if(err){
+                                console.log(err);
+                                return;
+                            }
+                        })
+                    })
+
+                    
     })
 
 
