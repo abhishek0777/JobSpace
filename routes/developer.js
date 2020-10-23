@@ -58,7 +58,7 @@ router.get('/login',forwardAuthenticated,(req,res)=>{
 })
 
 
-let OTP;
+let OTP='';
 //route for POST req of registration/Sign Up
 router.post('/register',(req,res)=>{
 
@@ -152,12 +152,10 @@ router.post('/register',(req,res)=>{
 
                         if(OTP!=req.body.OTP){
                             errors.push({msg:'OOPS ! Your OTP was wrong, Try again'});
-                            res.render('registerCom',{
+                            res.render('registerDev',{
                                 errors,
                                 name,
                                 email,
-                                size,
-                                country,
                                 password1,
                                 password2
                             })
@@ -166,42 +164,45 @@ router.post('/register',(req,res)=>{
                         
                         else{
                                 //if there is no developer ,we will add it in database
-                        const newDeveloper=new Developer({
-                            name:name,
-                            email:email,
-                            password:password1
-                        });
-        
-                        //We will encrypt the password 
-                        // so that no one can see developer's 
-                        //password in database too
-        
-                        //Hash the password
-                        bcrypt.genSalt(10,(err,salt)=>{
-                            bcrypt.hash(newDeveloper.password,salt,(err,hash)=>{
-                                if(err) throw err;
-        
-                                //set password to hash
-                                newDeveloper.password=hash;
-        
-        
-                                //now its perfect time to save developer
-                                //in database
-                                newDeveloper.save()
-                                .then(user=>{
-                                    req.flash('success_msg','You are now registerd,can Login');
-                                    res.redirect('/developer/login');
+                            const newDeveloper=new Developer({
+                                name:name,
+                                email:email,
+                                password:password1
+                            });
+            
+                            //We will encrypt the password 
+                            // so that no one can see developer's 
+                            //password in database too
+            
+                            //Hash the password
+                            bcrypt.genSalt(10,(err,salt)=>{
+                                bcrypt.hash(newDeveloper.password,salt,(err,hash)=>{
+                                    if(err) throw err;
+            
+                                    //set password to hash
+                                    newDeveloper.password=hash;
+            
+            
+                                    //now its perfect time to save developer
+                                    //in database
+                                    newDeveloper.save()
+                                    .then(user=>{
+                                        req.flash('success_msg','You are now registerd,can Login');
+                                        res.redirect('/developer/login');
+                                    })
+                                    .catch((err)=>{console.log(err)});
                                 })
-                                .catch((err)=>{console.log(err)});
                             })
-                        })
+
                         }
                     }
                     
                 })
+                .catch((err)=>{console.log(err)});
             }
             
         })
+        .catch((err)=>{console.log(err)});
     }
 })
 
@@ -211,9 +212,16 @@ router.post('/OTP/:emailID',(req,res)=>{
     /* ------------Node mailer starts here -------------*/
 
     const email=req.params.emailID;
+    OTP='';
+    var string = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'; 
     
+    // Find the length of string 
+    var len = string.length; 
+    for (let i = 0; i < 6; i++ ) { 
+        OTP += string[Math.floor(Math.random() * len)]; 
+    } 
 
-    OTP=Math.floor((Math.random() * 100) + 54);
+    
 
     //create output for mail to new user
     const output = `
@@ -265,11 +273,27 @@ router.post('/OTP/:emailID',(req,res)=>{
 //Using Local strategy to authenticate user
 //we have defined strategy named 'local.developer' for developers to authenticate
 router.post('/login',(req,res,next)=>{
-    passport.authenticate('local.developer',{
-        successRedirect:'/developer/dashboard',
-        failureRedirect:'/developer/login',
-        failureFlash:true
-    })(req,res,next)
+    
+    console.log(req.body.email);
+    Portfolio.findOne({email:req.body.email},(err,portfolio)=>{
+        if(portfolio){
+            passport.authenticate('local.developer',{
+                successRedirect:'/developer/dashboard',
+                failureRedirect:'/developer/login',
+                failureFlash:true
+            })(req,res,next)
+        }
+        else{
+            passport.authenticate('local.developer',{
+                successRedirect:'/developer/portfolio',
+                failureRedirect:'/developer/login',
+                failureFlash:true
+            })(req,res,next)
+        }
+    })
+
+    
+    
 })
 
 
@@ -282,21 +306,16 @@ router.get('/dashboard',ensureAuthenticated,(req,res)=>{
     //Dashboard will shows all the posts posted by all companies to user
     //as per latest one on top
 
-    let isCreated=-1;
-    Portfolio.findOne({email:req.user.email},(err,portfolio)=>{
-        if(portfolio){
-            isCreated=1;
-        }
-    })
-
+    
     JobPost.find({},(err,posts)=>{
-        
         res.render('developer/dashboard',{
             user:req.user,
             posts:posts,
-            isCreated:isCreated
         })
     })
+    
+    
+    
 })
 
 

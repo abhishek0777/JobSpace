@@ -77,11 +77,15 @@
     <% 
       if(user.subscribed.length==0){ %>
 
-        <p style="color: white;">You haven't subscribed any company yet.Go to <a href="/developer/companies">here</a> to subscribe companies</p>
+        <h3>You haven't subscribed any company yet.Go to <a href="/developer/companies">here</a> to subscribe companies</h3>
 
-      <%}
+      <% }
+      var Posts=[];
+      Posts=posts;
+      Posts.reverse();
+      
       user.subscribed.forEach(function(emailID){
-        posts.forEach(function(post){
+        Posts.forEach(function(post){
             if(emailID==post.companyEmail){ %>
 
                 <div class="container justify-content-center postbox">

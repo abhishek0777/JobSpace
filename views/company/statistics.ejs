@@ -79,26 +79,31 @@
                 <!-- 'appliedDev' contains email of all developer,so send them to route so 
                      company can check their portfolio
                 -->
-                <% post.appliedDev.forEach(function(email){ %>
-                      <div class="card-body row">
-                        <div class="">
-                          <form action="/company/devProfile" method="POST">
-                            <button class="btn btn-primary" id="declineEmail/<%= post._id %>/<%= email %>" type="submit" name="submit" value="<%= email %>"><%= email %></button>
-                          </form>
-                        </div>
-                        <div class="ml-1">
-                          <form action="/company/developerStats" method="POST">
-                            <button class="btn btn-primary" id="developerStats/<%= post._id %>/<%= email %>" type="submit" name="submit" value="<%= email %>">Check Stats</button>
-                          </form>
-                        </div>
-                        <div class="col-md-6 col-xs-12 justify-content-right"> 
-                          <button class="btn btn-danger" id="decline/<%= post._id %>/<%= email %>" onclick="declineFunction('<%= post._id %>/<%= email %>')" value="<%= email %>">
-                            <i class="fa fa-minus-circle"></i>
-                          </button>
-                        </div>
-                      </div>
+                <% if(post.appliedDev.length==0){ %> 
+                  <div class="container p-2"><h5>No one applied yet !!</h5></div>
+                  <% } 
+                  else 
+                      {
+                        post.appliedDev.forEach(function(email){ %>
+                              <div class="card-body row">
+                                <div class="">
+                                  <form action="/company/devProfile" method="POST">
+                                    <button class="btn btn-primary" id="declineEmail/<%= post._id %>/<%= email %>" type="submit" name="submit" value="<%= email %>"><%= email %></button>
+                                  </form>
+                                </div>
+                                <div class="ml-1">
+                                  <form action="/company/developerStats" method="POST">
+                                    <button class="btn btn-primary" id="developerStats/<%= post._id %>/<%= email %>" type="submit" name="submit" value="<%= email %>">Check Stats</button>
+                                  </form>
+                                </div>
+                                <div class="col-md-6 col-xs-12 justify-content-right"> 
+                                  <button class="btn btn-danger" id="decline/<%= post._id %>/<%= email %>" onclick="declineFunction('<%= post._id %>/<%= email %>')" value="<%= email %>">
+                                    <i class="fa fa-minus-circle"></i>
+                                  </button>
+                                </div>
+                              </div>
                         
-                <% }) %>
+                <% }) } %>
                 
             </div>
            <% } %>

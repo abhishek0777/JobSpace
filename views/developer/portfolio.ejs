@@ -68,7 +68,7 @@
 <div class="fluid-container portfolioBG">
     <div class="portfolioHeading">
         <h1 class="bg-primary"><%= user.name %></h1>
-        <h4>PORTFOLIO</h4>
+        <h4 style="color:white">CREATE PORTFOLIO</h4>
 
 
         <!-- messaging for portfolio changes -->
@@ -130,14 +130,13 @@
                               Bio
                             </div>
                         </div>
-                        <input
+                        <textarea
                             name="bio"
                             type="bio"
-                            placeholder="Write about yourself"
                             class="form-control"
                             required="required"
-                            value="<%= typeof portfolio.bio !='undefined'? portfolio.bio :'' %>"
-                        />
+                            placeholder="<%= typeof portfolio.bio !='undefined'? portfolio.bio :'Write about yourself...' %>"
+                        ></textarea>
                     </div>
                 </div>
                 

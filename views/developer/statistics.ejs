@@ -88,7 +88,9 @@
             if flag=-1 Rejected
             and print only stats of those jobs which have flag!=0
         -->
-        <% posts.forEach(function(post){ 
+        <% 
+        var countsOfNotApplied=0;
+          posts.forEach(function(post){ 
 
           
           var flag=0;
@@ -121,9 +123,13 @@
               <td class=<%= status %> ><%= status %></td>
             </tr>
 
-          <% } %>
+          <% } else{ countsOfNotApplied++; } %>
           
-        <% }) %>
+          <% }) 
+              if(posts.length==countsOfNotApplied){ %> 
+                <p>You haven't applied to any job yet ! </p> 
+              <% }
+          %>
         
       </tbody>
       

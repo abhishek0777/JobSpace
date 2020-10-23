@@ -202,8 +202,14 @@ router.post('/OTP/:emailID',(req,res)=>{
 
     const email=req.params.emailID;
     
-
-    OTP=Math.floor((Math.random() * 100) + 54);
+    OTP='';
+    var string = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'; 
+    
+    // Find the length of string 
+    var len = string.length; 
+    for (let i = 0; i < 6; i++ ) { 
+        OTP += string[Math.floor(Math.random() * len)]; 
+    } 
 
     //create output for mail to new user
     const output = `
@@ -447,7 +453,7 @@ router.get('/declineRequest/:id1/:id2',ensureAuthenticated,(req,res)=>{
     
     //send notifications to all users,who applied to this post
     JobPost.findOne({"_id":jobID},(err,post)=>{
-        Developer.find({email:dev},(err,developer)=>{
+        Developer.findOne({email:dev},(err,developer)=>{
             developer.notifications.unshift("Your application for "+post.jobName+" got rejected from "+post.companyName+".");
 
             Developer.updateOne({email:dev},developer,(err)=>{

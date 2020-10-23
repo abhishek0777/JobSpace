@@ -37,3 +37,12 @@ p{
     text-align: center;
     padding: 2%;
 } 
+.officeAddress{
+    text-align:justify;
+}
+.forDevelopers{
+    text-align: justify;
+}
+.forCompany{
+    text-align: justify;
+}
