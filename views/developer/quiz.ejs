@@ -1,0 +1,37 @@
+<div class="fluid-container quiz-bg">
+    <div class="container quizSection">
+        <div class="quizHeading">
+            <h3>Joining Test</h3>
+        </div>
+        <div class="quizSubHeading">Dear <%= user.name %>, being a developer give this test. Score of this quiz plays important role during hiring process. </div>
+        <div class="quiz-header">
+            <p> <span style="color:black"> Mail query @ :</span><span style="color:gray">jobspace2020webster@gmail.com</span></p> 
+        </div>
+        <hr>
+        <form action="/developer/quizSubmission" method="POST">
+            <% for(let i=0;i!=10;i++){ %>
+                <div class="question">
+                    <p id='question<%= i %>'></p>
+        
+                    <ul> 
+                            <input  type="radio" name='ques<%= i %>options' id='ID<%= i %>option0'> <label id='<%= i %>option0'></label><br>
+                            <input  type="radio" name='ques<%= i %>options' id='ID<%= i %>option1'> <label id='<%= i %>option1'></label><br>
+                            <input  type="radio" name='ques<%= i %>options' id='ID<%= i %>option2'> <label id='<%= i %>option2'></label><br>
+                            <input  type="radio" name='ques<%= i %>options' id='ID<%= i %>option3'> <label id='<%= i %>option3'></label><br>        
+                    </ul>
+                </div>
+                
+        
+            <% } %>
+            <div>
+                <button type='submit' class='btn btn-primary'>Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+<script src="js/quizAPI.js"></script>

@@ -84,11 +84,13 @@
                   <% } 
                   else 
                       {
-                        post.appliedDev.forEach(function(email){ %>
+                        post.appliedDev.forEach(function(email){ 
+                          var developer=developers.find(developer=>{return developer.email===email})
+                        %>
                               <div class="card-body row">
                                 <div class="">
                                   <form action="/company/devProfile" method="POST">
-                                    <button class="btn btn-primary" id="declineEmail/<%= post._id %>/<%= email %>" type="submit" name="submit" value="<%= email %>"><%= email %></button>
+                                    <button class="btn btn-primary" id="declineEmail/<%= post._id %>/<%= email %>" type="submit" name="submit" value="<%= email %>"><%= developer.name %></button>
                                   </form>
                                 </div>
                                 <div class="ml-1">
@@ -96,6 +98,13 @@
                                     <button class="btn btn-primary" id="developerStats/<%= post._id %>/<%= email %>" type="submit" name="submit" value="<%= email %>">Check Stats</button>
                                   </form>
                                 </div>
+                                <% 
+                                  var priorityScore=developer.hiddenScore; 
+                                %>
+                                <div class="ml-1">
+                                  <button class="btn btn-dark">Priority Score: <%= priorityScore %></button>
+                                </div>
+    
                                 <div class="col-md-6 col-xs-12 justify-content-right"> 
                                   <button class="btn btn-danger" id="decline/<%= post._id %>/<%= email %>" onclick="declineFunction('<%= post._id %>/<%= email %>')" value="<%= email %>">
                                     <i class="fa fa-minus-circle"></i>

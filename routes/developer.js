@@ -164,10 +164,12 @@ router.post('/register',(req,res)=>{
                         
                         else{
                                 //if there is no developer ,we will add it in database
+                            let hiddenScore='';
                             const newDeveloper=new Developer({
                                 name:name,
                                 email:email,
-                                password:password1
+                                password:password1,
+                                hiddenScore:hiddenScore
                             });
             
                             //We will encrypt the password 
@@ -275,6 +277,15 @@ router.post('/OTP/:emailID',(req,res)=>{
 router.post('/login',(req,res,next)=>{
     
     console.log(req.body.email);
+    Developer.findOne({email:req.body.email},(err,developer)=>{
+        if(developer.hiddenScore==''){
+            passport.authenticate('local.developer',{
+                successRedirect:'/developer/quiz',
+                failureRedirect:'/developer/login',
+                failureFlash:true
+            })(req,res,next)
+        }
+    })
     Portfolio.findOne({email:req.body.email},(err,portfolio)=>{
         if(portfolio){
             passport.authenticate('local.developer',{
@@ -298,6 +309,46 @@ router.post('/login',(req,res,next)=>{
 
 
 //-------------------------------After Login by developer-------------------------------
+
+// quiz on first time login to calculate hidden score
+router.get('/quiz',(req,res)=>{
+    res.render('developer/quiz',{
+        user:req.user
+    });
+})
+
+//quiz submission
+router.post('/quizSubmission',(req,res)=>{
+    console.log(req.body);
+    
+    let marks=0;
+    var obj=req.body;
+
+    for(var propt in obj){
+        if(obj[propt]=='true')marks+=4;
+        else marks--;
+    }
+    
+    console.log(marks);
+
+    Developer.findOne({email:req.user.email},(err,developer)=>{
+        developer.hiddenScore=marks;
+
+        Developer.updateOne({email:req.user.email},developer,(err)=>{
+            if(err){
+                console.log(err);
+                return;
+            }
+            else{
+                res.render('developer/portfolio',{
+                    user:req.user,
+                    portfolio:"",
+                    msg:""
+                })
+            }
+        })
+    })
+})
 
 //all routes afterwards can be accessed only if developer have loggedin
 

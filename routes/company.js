@@ -30,6 +30,7 @@ const Portfolio=require('../models/Portfolio');
 // =>ensureAuthenticated : Use to protect the routes 
 // =>forwardAuthenticated : by pass the routes without having authentication
 const {forwardAuthenticated,ensureAuthenticated}=require('../config/auth');
+const { Script } = require("vm");
 
 // set public folde for static files to load
 router.use(express.static(path.join("public")));
@@ -358,10 +359,14 @@ router.post('/addPost',(req,res)=>{
 
 router.get('/statistics',ensureAuthenticated,(req,res)=>{
     JobPost.find( { companyEmail : req.user.email } , ( err , posts ) => {
-        res.render('company/statistics',{
-            user:req.user,
-            posts:posts
+        Developer.find({},(err,developers)=>{
+            res.render('company/statistics',{
+                user:req.user,
+                posts:posts,
+                developers:developers
+            })
         })
+        
     })
 })
 
@@ -391,15 +396,22 @@ router.post('/devProfile',(req,res)=>{
 
             //if found,then find its portfolio also
             Portfolio.findOne({'email':email},(err,portfolio)=>{
-                res.render('company/devProfile',{
+                if(portfolio){
+                    res.render('company/devProfile',{
 
-                    //sends (i) portfolio, (ii) developer's profile,and (iii) authenticated user
-                    user:req.user,
-                    portfolio:portfolio,
-                    developer:developer
-                })
+                        //sends (i) portfolio, (ii) developer's profile,and (iii) authenticated user
+                        user:req.user,
+                        portfolio:portfolio,
+                        developer:developer
+                    })
+                }
+                else{
+                    // when user haven't created his portfolio yet
+                }
+                
             })
         }
+        
     })
     
 })

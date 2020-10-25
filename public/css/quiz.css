@@ -1,0 +1,35 @@
+.quiz-bg{
+    background-image: url(../images/quiz.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    padding-top: 3%;
+    padding-bottom: 3%;
+}
+.quizSection{
+    padding:2% 4%;
+    background-color: #f2f2f2;
+    -webkit-box-shadow: -2px 4px 24px -2px rgba(10,10,10,1);
+    -moz-box-shadow: -2px 4px 24px -2px rgba(10,10,10,1);
+    box-shadow: -2px 4px 24px -2px rgba(10,10,10,1);
+
+}
+.quizHeading{
+    text-align: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    
+}
+
+.quizSubHeading{
+    margin-top: 2%;
+    font-size:18px;
+    color:#dc3545;
+}
+.quiz-header{
+    margin-top: 2%;
+    text-align: right;
+    
+}
+.question{
+    padding-top: 2%;
+}
