@@ -285,23 +285,26 @@ router.post('/login',(req,res,next)=>{
                 failureFlash:true
             })(req,res,next)
         }
-    })
-    Portfolio.findOne({email:req.body.email},(err,portfolio)=>{
-        if(portfolio){
-            passport.authenticate('local.developer',{
-                successRedirect:'/developer/dashboard',
-                failureRedirect:'/developer/login',
-                failureFlash:true
-            })(req,res,next)
-        }
         else{
-            passport.authenticate('local.developer',{
-                successRedirect:'/developer/portfolio',
-                failureRedirect:'/developer/login',
-                failureFlash:true
-            })(req,res,next)
+            Portfolio.findOne({email:req.body.email},(err,portfolio)=>{
+                if(portfolio){
+                    passport.authenticate('local.developer',{
+                        successRedirect:'/developer/dashboard',
+                        failureRedirect:'/developer/login',
+                        failureFlash:true
+                    })(req,res,next)
+                }
+                else{
+                    passport.authenticate('local.developer',{
+                        successRedirect:'/developer/portfolio',
+                        failureRedirect:'/developer/login',
+                        failureFlash:true
+                    })(req,res,next)
+                }
+            })
         }
     })
+    
 
     
     

@@ -30,7 +30,7 @@ const Portfolio=require('../models/Portfolio');
 // =>ensureAuthenticated : Use to protect the routes 
 // =>forwardAuthenticated : by pass the routes without having authentication
 const {forwardAuthenticated,ensureAuthenticated}=require('../config/auth');
-const { Script } = require("vm");
+
 
 // set public folde for static files to load
 router.use(express.static(path.join("public")));
@@ -535,16 +535,19 @@ router.post('/postDone/:id',ensureAuthenticated,(req,res)=>{
         // also send notifications to all user,that they get selected
         post.appliedDev.forEach(function(email){
             Developer.findOne({email:email},(err,developer)=>{
+                
                 developer.notifications.unshift('Congratulations '+developer.name+', your application for '+post.jobName+' has accepted.Keep eyes on notifications for further assessments.')
+
+                    //update the developer
+                Developer.updateOne({email:email},developer,(err)=>{
+                    if(err){
+                        console.log(err);
+                        return;
+                    }
+                })
             })
 
-            //update the developer
-            Developer.updateOne({email:dev},developer,(err)=>{
-                if(err){
-                    console.log(err);
-                    return;
-                }
-            })
+            
 
         })
     })
