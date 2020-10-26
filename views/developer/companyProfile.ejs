@@ -1,0 +1,30 @@
+<div class="fluid-container profileSection">
+    <div class="container profileForm mt-3">
+        <div class="fluid-container profileHeading">
+            <h5>RECRUITER</h5>
+            <h1 class="btn-primary"><%= company.name %></h1>
+        </div>
+        
+        <h5 class="Profileheading">COMPANY NAME</h5>
+        <h2 class="details"><%= company.name %></h1>
+
+        <h5 class="Profileheading">BUSINESS EMAIL</h5>
+        <h2 class="details" style="text-transform: lowercase;"><%= company.email %></h2>
+
+        <h5 class="Profileheading">COMPANY SIZE</h5>
+        <h2 class="details">
+
+            <!-- i have saved company size in (numbers),so showing accordingly -->
+            <% if(company.size==1000||company.size==2000||company.size==5000) { %>
+                less than <%= company.size %> employees
+            <% } 
+            else { %>
+                more than <%= company.size-1 %> employees
+            <% } %>
+        </h1>
+
+        <h5 class="Profileheading">COUNTRY</h5>
+        <h2 class="details"><%= company.country %></h2>
+
+    </div>
+</div>

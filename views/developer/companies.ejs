@@ -71,6 +71,18 @@
 
 
 <div class="container-fluid companiesName">
+    
+        <form action="/developer/searchCompany" method='POST'>
+            <div class="input-group p-3 ml-auto" style="width:30%">
+            <input name='companyName' class="form-control" type="text" id="searchName" placeholder="Type a company name here...">
+            <button type='submit' id='searchButton' class="btn btn-light ml-2">Search</button>
+            </div>
+            
+        </form>
+        
+    
+    
+
     <div class="container p-2">
         <div class="row">
 
@@ -79,7 +91,7 @@
                 
                 <div class="col-md-4 col-sm-6 col-xs-12 mt-3">
 
-                    <div class="card custom-card-subscription" style="width: 18rem;">
+                    <div id="<%= company.name %>" class="card custom-card-subscription" style="width: 18rem;">
                         <div class="card-body">
                         <h5 class="card-title cardCompanyName"><%= company.name %></h5>
                         <p class="card-text cardCompanyEmail"><%= company.email %></p>
@@ -118,3 +130,7 @@
 
 <!-- on click function for subscribe button  -->
 <script src="/js/subscribe.js"></script>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="/js/searchAutocomplete.js"></script>

@@ -72,6 +72,11 @@
 <!-- Recommended and dashboard have same CSS files -->
 
 <div class="postTimeline">
+    <button type="button" class="btn btn-dark" data-toggle="modal"  data-target="#filterModal">
+      Filter Posts
+    </button>
+
+    <%- include ( "../partials/filterRecommendation" ) %>
     
     <!-- when user haven't subscribed any company else show all latest posts-->
     <% 
@@ -86,9 +91,13 @@
       
       user.subscribed.forEach(function(emailID){
         Posts.forEach(function(post){
-            if(emailID==post.companyEmail){ %>
+            if(emailID==post.companyEmail){ 
+                if((post.companyName==filterCompanyName&&post.jobType==filterJobType)||
+                (post.companyName==filterCompanyName&&filterJobType=='both')||
+                (filterCompanyName=='all'&&filterJobType=='both')||
+                (filterCompanyName=='all'&&post.jobType==filterJobType)) { %> 
 
-                <div class="container justify-content-center postbox">
+                  <div class="container justify-content-center postbox">
         
         
                     <div class="container jobName">
@@ -148,7 +157,12 @@
                     </div>
                     
                     
-                </div>
+                  </div>
+
+                <%}     
+              %>
+
+                
             
             
 

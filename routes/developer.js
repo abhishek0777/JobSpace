@@ -390,6 +390,33 @@ router.post('/dashboard',(req,res)=>{
 })
 
 
+//recommended jobs shows according what developers subscribed
+router.get('/recommended',ensureAuthenticated,(req,res)=>{
+
+    JobPost.find({},(err,posts)=>{
+        res.render('developer/recommended',{
+            user:req.user,   //user contains its subscribed array also
+            posts:posts,
+            filterCompanyName:'all',
+            filterJobType:'both'
+
+        })
+    })
+    
+})
+
+router.post('/recommended',(req,res)=>{
+    JobPost.find({},(err,posts)=>{
+        res.render('developer/recommended',{
+            user:req.user,
+            posts:posts,
+            filterCompanyName:(req.body.companyName==undefined)?'all':req.body.companyName,
+            filterJobType:(req.body.jobType==undefined)?'both':req.body.jobType
+        })
+    })
+})
+
+
 //This route handles GET request to view or change portfolio's details
 router.get('/portfolio',ensureAuthenticated,(req,res)=>{
 
@@ -407,17 +434,7 @@ router.get('/portfolio',ensureAuthenticated,(req,res)=>{
     .catch(err=>console.log(err));
 })
 
-//recommended jobs shows according what developers subscribed
-router.get('/recommended',ensureAuthenticated,(req,res)=>{
 
-    JobPost.find({},(err,posts)=>{
-        res.render('developer/recommended',{
-            user:req.user,   //user contains its subscribed array also
-            posts:posts
-        })
-    })
-    
-})
 
 
 //route to statistics ,can see to which companies developer have applied
@@ -443,6 +460,46 @@ router.get('/companies',ensureAuthenticated,(req,res)=>{
     })
 })
 
+//search autocomplete feature on companies page
+router.get('/searchAutocomplete',(req,res,next)=>{
+    console.log('code is running here');
+    let regex=new RegExp(req.query['term'],'i');
+    let companyFilter=Company.find({name:regex},{'name':1}).sort({'updated_at':-1}).sort({'created_at':-1}).limit(20);
+    companyFilter.exec((err,data)=>{
+        console.log(data);
+        let result=[];
+        if(!err){
+            if(data && data.length && data.length>0){
+                data.forEach(company=>{
+                    let obj={
+                        id:company._id,
+                        label:company.name
+                    };
+                    result.push(obj);
+                });
+            }
+
+            res.jsonp(result);
+        }
+    })
+})
+
+//after clicking search button
+router.post('/searchCompany',(req,res)=>{
+    console.log('route k andr aagye');
+    let companyName=req.body.companyName;
+    console.log(companyName);
+    Company.findOne({name:companyName},(err,company)=>{
+        if(company){
+            console.log('mil gyi');
+            res.render('developer/companyProfile',{
+                user:req.user,
+                company:company
+            })
+        }
+    })
+    
+})
 
 //on click ,subscribe the companies
 router.get('/subscribed/:id',(req,res)=>{
