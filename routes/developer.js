@@ -360,16 +360,33 @@ router.get('/dashboard',ensureAuthenticated,(req,res)=>{
     //Dashboard will shows all the posts posted by all companies to user
     //as per latest one on top
 
+    //in this route there will be no filter on posts
     
     JobPost.find({},(err,posts)=>{
         res.render('developer/dashboard',{
             user:req.user,
             posts:posts,
+            filterCompanyName:'all',
+            filterJobType:'both'
         })
     })
+  
+})
+
+router.post('/dashboard',(req,res)=>{
     
-    
-    
+    console.log(req.body.companyName);
+    console.log(req.body.jobType);
+
+    JobPost.find({},(err,posts)=>{
+        res.render('developer/dashboard',{
+            user:req.user,
+            posts:posts,
+            filterCompanyName:(req.body.companyName==undefined)?'all':req.body.companyName,
+            filterJobType:(req.body.jobType==undefined)?'both':req.body.jobType
+        })
+    })
+
 })
 
 
@@ -473,13 +490,7 @@ router.get('/subscribed/:id',(req,res)=>{
 })
 
 
-//route to notifications for developer
-// ------------Work in progress-----
-router.get('/notifications',ensureAuthenticated,(req,res)=>{
-    res.render('developer/notifications',{
-        user:req.user
-    });
-})
+
 
 
 

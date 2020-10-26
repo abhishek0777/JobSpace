@@ -79,75 +79,90 @@
  <!-- iterate to all properties of post object 
       which are posted by company
 -->
+
+
+
 <div class="postTimeline">
 
-    
-  
+    <button type="button" class="btn btn-dark" data-toggle="modal"  data-target="#filterModal">
+      Filter Posts
+    </button>
+
+    <%- include ( "../partials/filterPosts" ) %>
+
     <% 
       var Posts=[];
       Posts=posts;
       Posts.reverse();
-      Posts.forEach(function(post){  %>
-    
-        <div class="container justify-content-center postbox">
-          
-          
-          <div class="container jobName">
-            <h2> <%= post.jobName %> </h2>
-          </div>
-      
-          <div class="container jobType">
-            <h4> <%= post.jobType %> </h4>
-          </div>
-      
-          <div class="container companyName">
-            <h3><%= post.companyName %></h3>
-          </div>
-      
-          <div class="container jobRole mb-2">
-            <button class="btn-danger">Job Role </button>
-            <h5  class="ml-3"> <%= post.jobRole %></h5>
-          </div>
-      
-          <div class="container skillsReq  mb-2">
-            <button class="btn-danger">Skills</button>
-            <h5 class="ml-3"> <%= post.skillsReq %></h5>
-          </div>
-      
-          <div class="container experience  mb-2">
-            <button class="btn-danger">Experience</button>
-            <h5 class="ml-3"> <%= post.expReq %></h6>
-          </div>
-          
-          <!-- Check whether developer already applied to that post or not -->
-          <% var flag=1; 
-          post.appliedDev.forEach(function(email){
-            if(email==user.email){
-              flag=-1;
-            }
-          })
+      Posts.forEach(function(post){  
+        if((post.companyName==filterCompanyName&&post.jobType==filterJobType)||
+           (post.companyName==filterCompanyName&&filterJobType=='both')||
+           (filterCompanyName=='all'&&filterJobType=='both')||
+           (filterCompanyName=='all'&&post.jobType==filterJobType)) { %>
 
-          if(flag==-1){ %> 
-
-            <div class="container applyHere">
-              <button class="btn btn-danger">Applied</button>
+          <div class="container justify-content-center postbox">
+          
+          
+            <div class="container jobName">
+              <h2> <%= post.jobName %> </h2>
             </div>
-
-            <% } else { %> 
-              
+        
+            <div class="container jobType">
+              <h4> <%= post.jobType %> </h4>
+            </div>
+        
+            <div class="container companyName">
+              <h3><%= post.companyName %></h3>
+            </div>
+        
+            <div class="container jobRole mb-2">
+              <button class="btn-danger">Job Role </button>
+              <h5  class="ml-3"> <%= post.jobRole %></h5>
+            </div>
+        
+            <div class="container skillsReq  mb-2">
+              <button class="btn-danger">Skills</button>
+              <h5 class="ml-3"> <%= post.skillsReq %></h5>
+            </div>
+        
+            <div class="container experience  mb-2">
+              <button class="btn-danger">Experience</button>
+              <h5 class="ml-3"> <%= post.expReq %></h6>
+            </div>
+            
+            <!-- Check whether developer already applied to that post or not -->
+            <% var flag=1; 
+            post.appliedDev.forEach(function(email){
+              if(email==user.email){
+                flag=-1;
+              }
+            })
+  
+            if(flag==-1){ %> 
+  
               <div class="container applyHere">
-                <button class="btn btn-success" id='applyButton/<%= post._id %>' onclick='applyFunction("<%= post._id %>")' >Apply</button>
+                <button class="btn btn-danger">Applied</button>
               </div>
-
-            <% } %>
-          
-      
-          <div class="container postTime">
-            <p>Posted at : <%= post.date %> </p>
+  
+              <% } else { %> 
+                
+                <div class="container applyHere">
+                  <button class="btn btn-success" id='applyButton/<%= post._id %>' onclick='applyFunction("<%= post._id %>")' >Apply</button>
+                </div>
+  
+              <% } %>
+            
+        
+            <div class="container postTime">
+              <p>Posted at : <%= post.date %> </p>
+            </div>
+            
+            
           </div>
-          
-          
-        </div>
+       <% }
+      %>
+    
+        
       
     <% }) %>
 </div>

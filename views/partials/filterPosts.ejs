@@ -1,0 +1,37 @@
+<div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="filterModalTitle">Filter</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+  
+          <form action="/developer/dashboard" method="POST">
+            <h4 style="color:#007bff">Job Type</h4>
+            <input type="radio" name="jobType" value='Internship'> <label for="jobType"> Internship</label><br>
+            <input type="radio" name="jobType" value='Full-time'> <label for="jobType"> Full-time</label><br>
+            <input type="radio" name="jobType" value='both'> <label for="jobType"> Both type</label><br>
+    
+            <h4 style="color:#007bff">Companies</h4>
+            <% let companyNameSet=new Set();
+              posts.forEach(function(post){
+                companyNameSet.add(post.companyName)
+            })
+              console.log(companyNameSet);
+              companyNameSet.forEach(function(company){ %>
+                <input type="radio" name="companyName" value='<%= company %>'> <label for="companyName"><%= company %></label><br>
+             <% })
+            %>
+            <br>
+            
+            <button type='submit' class="btn btn-primary">Filter</button>
+  
+          </form>
+             
+        </div> 
+      </div>
+    </div>
+  </div>
