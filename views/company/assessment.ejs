@@ -1,7 +1,4 @@
-<!-- ---------------------------Here company can check his profile----------------------- -->
-
 <!-- navigation bar -->
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href=""><img src="/images/logo.jpg" alt="logo" ></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,7 +7,7 @@
   
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto pr-4">
-
+          
         <li class="nav-item">
           <a class="nav-link" href="/company/dashboard">
             <i class="fa fa-bar-chart"></i>
@@ -31,9 +28,9 @@
                 Statistics
             </a>
         </li>
-
+        
         <li class="nav-item">
-            <a class="nav-link" href="/company/assessment">
+            <a style="color:#dc3545" class="nav-link" href="/company/assessment">
                 <i class="fa fa-lightbulb-o"></i>
                 Assessment
             </a>
@@ -47,7 +44,7 @@
         </li>
 
         <li class="nav-item dropdown">
-            <a style="color:#dc3545" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-user-circle-o"></i>
                 <%= user.name %>
             </a>
@@ -55,48 +52,11 @@
               <a class="dropdown-item" href="/company/profile">Profile</a>
               <a class="dropdown-item" href="/company/logout">Logout</a>
         </li>
-        
-          
-      </ul>
-      
+               
+      </ul>   
     </div>
 </nav>
-<!-- navigation bar ends here -->
 
-<!-- include partial of notification -->
-<%- include( "../partials/notifications" ) %>
+<!-- naviagation bar ends here -->
 
-
-
-<!-- ---------------------------Profile section starts here----------------------- -->
-
-<div class="fluid-container profileSection">
-    <div class="container profileForm mt-3">
-        <div class="fluid-container profileHeading">
-            <h5>RECRUITER</h5>
-            <h1 class="btn-primary"><%= user.name %></h1>
-        </div>
-        
-        <h5 class="Profileheading">COMPANY NAME</h5>
-        <h2 class="details"><%= user.name %></h1>
-
-        <h5 class="Profileheading">BUSINESS EMAIL</h5>
-        <h2 class="details" style="text-transform: lowercase;"><%= user.email %></h2>
-
-        <h5 class="Profileheading">COMPANY SIZE</h5>
-        <h2 class="details">
-
-            <!-- i have saved company size in (numbers),so showing accordingly -->
-            <% if(user.size==1000||user.size==2000||user.size==5000) { %>
-                less than <%= user.size %> employees
-            <% } 
-            else { %>
-                more than <%= user.size-1 %> employees
-            <% } %>
-        </h1>
-
-        <h5 class="Profileheading">COUNTRY</h5>
-        <h2 class="details"><%= user.country %></h2>
-
-    </div>
-</div>
+Assessment

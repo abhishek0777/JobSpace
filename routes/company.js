@@ -558,6 +558,13 @@ router.post('/postDone/:id',ensureAuthenticated,(req,res)=>{
 })
 
 
+router.get('/assessment',(req,res)=>{
+    res.render('company/assessment',{
+        user:req.user
+    })
+})
+
+
 //Handles the GET request to view  notification section
 
 //Its work is not started yet <----Pending---->
