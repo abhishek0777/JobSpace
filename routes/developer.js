@@ -25,6 +25,7 @@ const Developer=require('../models/Developer');
 const Company=require('../models/Company');
 const JobPost=require('../models/JobPost');
 const Portfolio=require('../models/Portfolio');
+const Message=require('../models/Message');
 
 
 //bring auth-config file
@@ -520,6 +521,7 @@ router.get('/subscribed/:id',(req,res)=>{
         })
     })
 
+
     //add emailID to array of subcribed company
     var subscribeDev=[];
     req.user.subscribed.forEach(function(email){
@@ -695,6 +697,34 @@ router.get('/clicked/:id',(req,res)=>{
     
 })
 
+
+
+// chat functionality
+router.get('/developersChat',(req,res)=>{
+    Message.find({},(err,messages)=>{
+        res.render('developersChat/chat',{
+            user:req.user,
+            messages:messages
+        })
+    })
+    
+})
+
+
+router.post('/addMsgToChat',(req,res)=>{
+        const newMsg=new Message({
+            senderName:req.body.senderName,
+            sendingTime:req.body.sendingTime,
+            senderMsg:req.body.senderMsg
+        })
+
+        newMsg.save()
+        .then(msg=>{
+            console.log(msg);
+            
+        })
+        .catch(err=>console.log(err));
+})
 
 
 

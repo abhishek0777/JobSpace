@@ -1,4 +1,4 @@
-<!-- -----------------------------Show stats of developers -->
+
 <!-- navigation bar -->
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -25,7 +25,7 @@
         </li>
 
         <li class="nav-item">
-            <a style="color:#dc3545" class="nav-link" href="/developer/statistics">
+            <a class="nav-link" href="/developer/statistics">
                 <i class="fa fa-bar-chart"></i>
                 Statistics
             </a>
@@ -39,7 +39,7 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="/developer/developersChat">
+          <a style="color:#dc3545" class="nav-link" href="/developer/developersChat">
               <i class="fa fa-wechat"></i>
               Dev-Chat
           </a>
@@ -68,79 +68,50 @@
       
     </div>
 </nav>
+<!-- navigation ends here -->
 
 <!-- modal for notification section -->
 <%- include( "../partials/notifications" ) %>
 
-
-<!-- navigation bar ends here -->
-
-<div class="fluid-container pt-3">
-  <div class="container">
-    <h3 class="developerStatsHeading"><%= user.name %></h3>
-    <p class="developerStatsSubHeading">Statistics</p>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope='col'>Job Name</th>
-          <th scope='col'>Job Type</th>
-          <th scope='col'>Company</th>
-          <th scope='col'>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- 
-            if flag=1 Pending 
-            if flag=2 Accepted
-            if flag=-1 Rejected
-            and print only stats of those jobs which have flag!=0
-        -->
-        <% 
-        var countsOfNotApplied=0;
-          posts.forEach(function(post){ 
-
-          
-          var flag=0;
-          post.appliedDev.forEach(function(email){
-            if(email==user.email){flag=1;}
-          })
-          post.rejectedDev.forEach(function(email){
-            if(email==user.email){
-              flag=-1;
-            }
-          })
-
-          if(flag==1){
-            if(post.isContinue=='NO'){
-              flag=2;
-            }
-          }
-
-          var status='';
-          if(flag==1)status='Pending';
-          if(flag==-1)status='Rejected';
-          if(flag==2)status='Accepted';
-
-          if(flag!=0){ %> 
-
-            <tr>
-              <td class="tableData"><%= post.jobName %></td>
-              <td class="tableData"><%= post.jobType %></td>
-              <td class="tableData"><%= post.companyName %></td>
-              <td class=<%= status %> ><%= status %></td>
-            </tr>
-
-          <% } else{ countsOfNotApplied++; } %>
-          
-          <% }) 
-              if(posts.length==countsOfNotApplied){ %> 
-                <p>You haven't applied to any job yet ! </p> 
-              <% }
-          %>
-        
-      </tbody>
+<div class="chat-container">
+    <header class="chat-header">
+      <h1><i class="fa fa-smile"></i>Jobspace's Chatroom</h1>
       
-    </table>
-    
-  </div>
+    </header>
+    <main class="chat-main">
+      <div class="chat-sidebar">
+        <h2>Why this chatroom?</h2>
+        <div class="">This chatroom is solely based on peer to peer architecture to help developers by other developers. Jobspace's chatroom aggregates all developers under single room to being vast community of developers.</div>
+        <br>
+        <h5 class="chatroom-quote">"Individually, we are one drop. Together, we are an ocean"</h5>
+        <div class="quoted-by">--Ryunosuke Satoro</div>
+      </div>
+      <div id="message-collection" class="chat-messages">
+                    <!-- here comes all the messages -->
+                <% messages.forEach(function(msg){ %>
+                    <div class="message">
+                        <p class="meta"><%= msg.senderName %> <br>
+                        <span><%= msg.sendingTime %></span></p>
+                        <p class="text"><%= msg.senderMsg %></p>
+                    </div>
+                <% }) %>
+                    
+      </div>
+    </main>
+    <div class="chat-form-container">
+        <div class="chat-form">
+            <input
+                id="msg"
+                type="text"
+                placeholder="Enter Message"
+                required
+                autocomplete="off"
+            />
+            <button id="sendMsgButton" onclick="appendNewMsg('<%= user.name %>')" class="btn btn-dark"><i class="fa fa-paper-plane"></i> Send</button>
+        </div>
+        
+     
+    </div>
 </div>
+
+<script src="/js/chat.js"></script>

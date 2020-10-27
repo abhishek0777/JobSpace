@@ -328,6 +328,20 @@ router.post('/addPost',(req,res)=>{
     //in this case ,we just have to directly post the POST
     
     //create a new object of 'JobPost' Schema
+    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    let d=new Date();
+    let timeString=timeFormat()+"   "+d.getDate()+", "+months[d.getMonth()];
+
+    function timeFormat(){
+        let hh=d.getHours();
+        let mm=d.getMinutes();
+        let a='am';
+        if(hh>12)hh-=12,a='pm';
+
+        return hh+":"+mm+" "+a;
+    }
+    
+
     const newpost=new JobPost({
         companyName:req.user.name,
         companyEmail:req.user.email,
@@ -336,7 +350,7 @@ router.post('/addPost',(req,res)=>{
         skillsReq:req.body.skillsReq,
         jobType:req.body.jobType,
         expReq:req.body.expReq,
-        date:Date.now(),
+        date:timeString,
         isContinue:'YES'
     })
 

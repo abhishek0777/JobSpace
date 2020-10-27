@@ -51,8 +51,8 @@ const JobPostSchema=new mongoose.Schema({
     rejectedDev:[String],
     
     date:{
-        type:Date,
-        default:Date.now
+        type:String,
+        required:true
     },
 
     //YES or NO
