@@ -1,3 +1,7 @@
+<!-- 
+  This partial used to take user's choice to filter posts 
+ -->
+
 <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -15,15 +19,17 @@
             <input type="radio" name="jobType" value='Full-time'> <label for="jobType"> Full-time</label><br>
             <input type="radio" name="jobType" value='both'> <label for="jobType"> Both type</label><br>
     
+            <!-- Show companies which have posted any post yet-->
             <h4 style="color:#007bff">Companies</h4>
             <% let companyNameSet=new Set();
               posts.forEach(function(post){
                 companyNameSet.add(post.companyName)
             })
-              console.log(companyNameSet);
+              
               companyNameSet.forEach(function(company){ %>
                 <input type="radio" name="companyName" value='<%= company %>'> <label for="companyName"><%= company %></label><br>
              <% })
+             
             %>
             <br>
             

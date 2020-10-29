@@ -115,6 +115,7 @@ router.post('/register',(req,res)=>{
             }
             else
             {
+                //check if this email already registered under developer type
                 Developer.findOne({email:email})
                 .then(developer=>{
                     if(developer)
@@ -152,8 +153,6 @@ router.post('/register',(req,res)=>{
                                 password2
                             })
                         }
-
-                        /*-------------- Node mailer ends here-------------- */
 
                         else{
                                 //if not registerd,we will save this accound in Company model
@@ -199,12 +198,14 @@ router.post('/register',(req,res)=>{
 
 
 router.post('/OTP/:emailID',(req,res)=>{
-    /* ------------Node mailer starts here -------------*/
 
+    /* ------------Node mailer starts here -------------*/
     const email=req.params.emailID;
     
     OTP='';
+    // string used to create 6 characters long OTP
     var string = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'; 
+
     
     // Find the length of string 
     var len = string.length; 
@@ -219,30 +220,31 @@ router.post('/OTP/:emailID',(req,res)=>{
       <h3>From :</h3>
       <h3>JobSpace</h3>
       <h3>Thank you for joining us as a recruiter!</h3>
-    
     `;
   
+
     // create reusable transporter object using the default SMTP transport
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
         user: 'jobspace2020webster@gmail.com',
-        pass: 'jobspace@1234' // naturally, replace both with your real credentials or an application-specific password
+        pass: 'jobspace@1234' 
       }
     });
   
+
     // setup email data with unicode symbols
-    
     let mailOptions = {
   
         from: '"Nodemailer Contact"', // sender address
         to: email, // list of receivers
-        subject: 'Node Contact Request', // Subject line
+        subject: 'Welcome to JobSpace', // Subject line
         text: 'OTP for jobspace :'+OTP,
-        html:output // plain text body
-        // html: output // html body
+        html:output 
+
     };
   
+
     // send mail with defined transport object
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
@@ -250,10 +252,14 @@ router.post('/OTP/:emailID',(req,res)=>{
         }
         console.log('Message sent: %s', info.messageId);   
         console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-  
-        // res.sendFile('views/contact.html',{root:__dirname})
+       
     });
+
+    /*-------------- Node mailer ends here-------------- */
 })
+
+
+
 
 
 //handle post request for company login page
@@ -269,7 +275,12 @@ router.post('/login',(req,res,next)=>{
     })(req,res,next)
 })
 
+
+
 // -------------------------Routes after login can be accessed ----------------------------------
+
+
+
 
 router.get('/dashboard',ensureAuthenticated,(req,res)=>{
     //check whether this company has posted any job or not yet
@@ -285,6 +296,9 @@ router.get('/dashboard',ensureAuthenticated,(req,res)=>{
     })
 })
 
+
+
+
 //This route handles request for company's profile
 router.get('/profile',ensureAuthenticated,(req,res)=>{
     res.render('company/profile',{
@@ -292,12 +306,17 @@ router.get('/profile',ensureAuthenticated,(req,res)=>{
     })
 })
 
+
+
+
 //This route handles request of addPost web page
 router.get('/addPost',ensureAuthenticated,(req,res)=>{
     res.render('company/addPost',{
         user:req.user
     });
 })
+
+
 
 
 //post a job,handles POST request of addPost webpage's form
@@ -327,21 +346,25 @@ router.post('/addPost',(req,res)=>{
     
     //in this case ,we just have to directly post the POST
     
-    //create a new object of 'JobPost' Schema
+
+    //time format custom method
     let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     let d=new Date();
-    let timeString=timeFormat()+"   "+d.getDate()+", "+months[d.getMonth()];
+    let timeString=timeFormat()+"   "+d.getDate()+" "+months[d.getMonth()];
 
     function timeFormat(){
         let hh=d.getHours();
         let mm=d.getMinutes();
         let a='am';
+        if(h==12&&mm>0)a='pm';
         if(hh>12)hh-=12,a='pm';
 
         return hh+":"+mm+" "+a;
     }
-    
+    // time format custom method ends here
 
+    
+    //create a new object of 'JobPost' Schema
     const newpost=new JobPost({
         companyName:req.user.name,
         companyEmail:req.user.email,
@@ -366,6 +389,8 @@ router.post('/addPost',(req,res)=>{
 
 
 
+
+
 //Handles request to show statistics of Posts posted by company 
 //   => Can check who have applied(requests)
 //   => can check their portfolio
@@ -383,6 +408,7 @@ router.get('/statistics',ensureAuthenticated,(req,res)=>{
         
     })
 })
+
 
 
 
@@ -464,6 +490,9 @@ router.post('/developerStats',(req,res)=>{
 })
 
 
+
+
+
 //Handles,declining of request by company
 // It will update the array of appliedDev accordingly
 router.get('/declineRequest/:id1/:id2',ensureAuthenticated,(req,res)=>{
@@ -474,9 +503,6 @@ router.get('/declineRequest/:id1/:id2',ensureAuthenticated,(req,res)=>{
     //extract developer's email ID
     const dev=req.params.id2;
 
-    console.log(jobID);
-    console.log(dev);
-    
     //send notifications to all users,who applied to this post
     JobPost.findOne({"_id":jobID},(err,post)=>{
         Developer.findOne({email:dev},(err,developer)=>{
@@ -490,7 +516,7 @@ router.get('/declineRequest/:id1/:id2',ensureAuthenticated,(req,res)=>{
             })
         })
     })
-    
+
 
     //Find that post
     JobPost.findOne({"_id":jobID},(err,post)=>{
@@ -527,8 +553,12 @@ router.get('/declineRequest/:id1/:id2',ensureAuthenticated,(req,res)=>{
 
 })
 
-//When company done with the posted job
-router.post('/postDone/:id',ensureAuthenticated,(req,res)=>{
+
+
+
+
+//handles post req when company done with the posted job
+router.post('/postDone/:id',(req,res)=>{
     let postID=req.params.id;
     console.log(postID);
 
@@ -572,15 +602,84 @@ router.post('/postDone/:id',ensureAuthenticated,(req,res)=>{
 })
 
 
+
 router.get('/assessment',(req,res)=>{
-    res.render('company/assessment',{
-        user:req.user
+    JobPost.find({},(err,posts)=>{
+        res.render('company/assessment',{
+            user:req.user,
+            posts:posts
+        })
+    })
+    
+})
+
+
+router.post('/sendTestLink',(req,res)=>{
+    JobPost.findOne({'_id':req.body.postID},(err,post)=>{
+        if(!err){
+            // now to send mail to all selected developers
+            //we have to create array of their emails,so
+            let mailList=[];
+            post.appliedDev.forEach(function(email){
+                mailList.push(email);
+            })
+            console.log(mailList);
+            let testlink=req.body.testlink;
+
+            // now we will use nodemailer to send mail
+            //create output for mail to new user
+            const output = `
+            <p>Congratulations, You are selected for test rounds of ${post.jobName}</p>
+            Here is the <a href="${testlink}">link </a>for test.
+            <h3>Instructions</h3>
+            <p>${req.body.testinstructions}</p>
+            <h3>Best of luck from JobSpace</h3>
+            `;
+
+
+            // create reusable transporter object using the default SMTP transport
+            const transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                user: 'jobspace2020webster@gmail.com',
+                pass: 'jobspace@1234' 
+                }
+            });
+
+
+            // setup email data with unicode symbols
+            let mailOptions = {
+
+                from: '"Nodemailer Contact"', // sender address
+                to: mailList, // list of receivers
+                subject: 'JobSpace Test', // Subject line
+                // text: 'OTP for jobspace :'+OTP,
+                html:output 
+
+            };
+
+
+            // send mail with defined transport object
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    return console.log(error);
+                }
+                console.log('Message sent: %s', info.messageId);   
+                console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+                
+            });
+
+            /*-------------- Node mailer ends here-------------- */
+
+        }
     })
 })
 
 
-//Handles the GET request to view  notification section
 
+
+
+//Handles the GET request to view  notification section
 //Its work is not started yet <----Pending---->
 router.get('/notifications',ensureAuthenticated,(req,res)=>{
 
@@ -589,6 +688,7 @@ router.get('/notifications',ensureAuthenticated,(req,res)=>{
     });
 
 })
+
 
 
 

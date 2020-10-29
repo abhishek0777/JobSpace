@@ -16,6 +16,8 @@
             <input type="radio" name="jobType" value='both'> <label for="jobType"> Both type</label><br>
     
             <h4 style="color:#007bff">Companies</h4>
+
+            <!-- In recommendation filter,we have to shows posts of only subscribed companies -->
             <% let companyNameSet=new Set();
               posts.forEach(function(post){
                   user.subscribed.forEach(function(Companyemail){
@@ -25,7 +27,7 @@
                   })
                 
             })
-              console.log(companyNameSet);
+              
               companyNameSet.forEach(function(company){ %>
                 <input type="radio" name="companyName" value='<%= company %>'> <label for="companyName"><%= company %></label><br>
              <% })
@@ -39,4 +41,4 @@
         </div> 
       </div>
     </div>
-  </div>
+</div>

@@ -1,3 +1,7 @@
+<!-- 
+    This partial used for mainly flash messaging  
+-->
+
 <% if(typeof errors != 'undefined') { %>
     <% errors.forEach(function(error) { %>
 
@@ -13,6 +17,8 @@
     <% }); %>
 <% } %>
 
+
+<!-- for event happens to be successful -->
 <% if(success_msg!='') { %>
     <div class="form-group d-flex justify-content-center" style="padding-bottom: 0%; padding-top: 0%;">
         <div class="alert alert-success alert-dismissible fade show " role="alert" style="width: 50%;">
@@ -24,6 +30,8 @@
     </div>
 <% } %>
 
+
+<!-- whenever occured any error -->
 <% if(error_msg!='') { %>
     <div class="form-group d-flex justify-content-center" style="padding-bottom: 0%; padding-top: 0%;">
         <div class="alert alert-warning alert-dismissible fade show " role="alert" style="width: 50%;">

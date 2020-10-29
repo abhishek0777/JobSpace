@@ -1,8 +1,11 @@
+// -------This function used to autocomplete the company name,when developer used to search company---
+
 console.log('search script is runnning');
 
 
-
 $(function(){
+
+    // auto-complete is a default function in jquery
     $('#searchName').autocomplete({
         source:function(req,res){
 
@@ -30,16 +33,19 @@ $(function(){
     })
 })
 
+
+// function triggered when search button clicked
 function searchByCompanyName(){
-    console.log('button clicked');
+
+    //extract input company name
     let nameInput=document.getElementById('searchName').value;
-    console.log(nameInput);
     
+    // make an xhr to get company profile page
     var xhr=new window.XMLHttpRequest();
-      
-      xhr.open('GET','/developer/searchCompany/'+nameInput,true);
-      xhr.setRequestHeader('Content-Type','application/json;charset=UTF-8');
-      xhr.send();
+    
+    xhr.open('GET','/developer/searchCompany/'+nameInput,true);
+    xhr.setRequestHeader('Content-Type','application/json;charset=UTF-8');
+    xhr.send();
 
 }
 

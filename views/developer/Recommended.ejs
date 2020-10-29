@@ -79,10 +79,12 @@
 <!-- Recommended and dashboard have same CSS files -->
 
 <div class="postTimeline">
+
+    <!-- button used to filter posts according to user choice -->
     <button type="button" class="btn btn-dark" data-toggle="modal"  data-target="#filterModal">
       Filter Posts
     </button>
-
+    <!-- bring filter partial -->
     <%- include ( "../partials/filterRecommendation" ) %>
     
     <!-- when user haven't subscribed any company else show all latest posts-->

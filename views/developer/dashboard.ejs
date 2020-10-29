@@ -91,12 +91,15 @@
 
 <div class="postTimeline">
 
+    <!-- this button used to filter the posts according to user input -->
     <button type="button" class="btn btn-dark" data-toggle="modal"  data-target="#filterModal">
       Filter Posts
     </button>
-
+    <!-- bring filterPosts partial -->
     <%- include ( "../partials/filterPosts" ) %>
 
+
+    <!-- Algorithm to filter posts according to user input -->
     <% 
       var Posts=[];
       Posts=posts;

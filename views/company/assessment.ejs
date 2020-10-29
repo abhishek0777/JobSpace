@@ -59,4 +59,142 @@
 
 <!-- naviagation bar ends here -->
 
-Assessment
+<!-- include partial of notification -->
+<%- include( "../partials/notifications" ) %>
+
+
+
+<section class="p-3">
+
+<h3 class="assessment-heading mt-3">Job's Assessment</h3>  
+
+<div class="d-flex justify-content-center">
+  <div id="accordion" class=" jobs-accordion">
+
+    <% let count=0;
+      posts.forEach(function(post){ 
+      if((post.companyEmail==user.email)&&(post.isContinue=='NO')){ count++; %>
+        <div class="card">
+          <div class="card-header bg-primary" id="heading<%= post.jobName %>">
+            <h5 class="mb-0">
+              <button class="btn btn-link" style="text-decoration: none; color:white" data-toggle="collapse" data-target="#<%= post.jobName %>" aria-expanded="true" aria-controls="<%= post.jobName %>">
+                <%= post.jobName %>
+              </button>
+            </h5>
+          </div>
+    
+          <div id="<%= post.jobName %>" class="collapse show" aria-labelledby="heading<%= post.jobName %>" data-parent="#accordion">
+            <div class="container pt-2">
+              <h4>Developers</h4>
+              <h6>These are the developers you selected from statistics section.</h6>
+            </div>
+
+            <div class="card-body assessment-devEmail">
+              <% post.appliedDev.forEach(function(email){ %>
+                  <p class="assessment-devEmail"><%= email %></p>
+              <% }) %>
+            </div>
+          </div>
+        </div>
+        <br>
+     <% }
+    %>
+      
+    <% })  %>
+    <% if(count==0){ %>
+      <p class="assessment-subheading">You haven't done any post from statistics section !!</p>
+    <% } %>
+    
+  </div>
+</div> 
+
+
+
+</section>
+
+<hr style="height:3px">
+
+
+<section class="p-3">
+  <h3 class="assessment-heading">Create Test</h3>
+
+  <div class="d-flex justify-content-center">
+    <div class="form-group d-flex justify-content-center">
+      <div class="input-group">
+        <h4 class="assessment-subheading">Following are some ways to create test link</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <ul class="list-group">
+      <li class="list-group-item bg-success mb-3" style="color:white">Google Forms : Collect and organise quiz/test with Google Forms. Free of charge.Click <a  style="color:black" href="https://docs.google.com/forms/u/0/" target="_blank">here</a></li>
+      <li class="list-group-item bg-success mb-3" style="color:white">Hackerrank: Conduct online coding test and quiz. To know more how to conduct, Click <a  style="color:black" href="https://help.hackerrank.com/hc/en-us/articles/115011780507-How-to-create-a-challenge-for-a-private-or-college-contest" target="_blank">here</a></li>
+      <li class="list-group-item bg-success mb-3" style="color:white">Hackerearth: Conduct online coding test and quiz. To know more how to conduct, Click <a  style="color:black" href="https://help.hackerearth.com/hc/en-us/articles/360003414273-Creating-and-publishing-tests" target="_blank">here</a></li>
+    </ul>
+  </div>
+
+
+
+</section>
+
+<hr style="height:3px">
+
+<section id='assessment_Section_3'  class="p-3">
+  <div class="container">
+    <h3 class="assessment-heading mt-3">Organize Test</h3>
+    <div class="form-group d-flex justify-content-center">
+      <div class="input-group" style="width:50%">
+        <p class="assessment-subheading">For further assessment of developers to hire, go here, after you done with stats section, choose Job with it's name for which you want to hire developers.Paste test link and write instructions and give a thumbs up for test.</p>
+      </div>
+    </div>
+      
+    
+    
+    <form action="">
+      <div class="form-group d-flex justify-content-center">
+        <div class="input-group" style="width:50%">
+          <select name="jobName" class="form-control" id="jobName">
+            <!-- it have all the option of jobs which this logged company posted and done from stats section -->
+            <% posts.forEach(function(post){
+              
+              if((post.companyName==user.name)&&(post.isContinue=='NO'))
+              {
+                  %>
+                    <option value="<%= post._id %>"><%= post.jobName %></option>
+                  <%  
+              }
+              
+            }) %>
+            
+          </select>
+        </div>
+      </div>
+    
+      
+      <div class="form-group d-flex justify-content-center">
+        <div class="input-group" style="width:50%">
+
+            <input type="text" id='test-link' name='test-link' class="form-control" placeholder="Paste test link here..." autocomplete="off">
+        </div>
+      </div>
+
+      <div class="form-group d-flex justify-content-center">
+        <div class="input-group" style="width:50%">
+            <textarea name="test-instructions" id="test-instructions" class="form-control" rows="5" placeholder="Write instructions for test here.."></textarea>
+        </div>
+      </div>
+
+      <div class="form-group  d-flex justify-content-center">
+        <button style="width:50%" type='submit' onclick="sendMailToAll()" class='btn btn-primary'><i class="fa fa-paper-plane"></i> SEND MAIL</button>
+      </div>
+      
+
+    </form>
+    
+  </div>
+</section>
+
+
+
+<script src="/js/assessment.js"></script>

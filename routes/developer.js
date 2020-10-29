@@ -1,5 +1,5 @@
 //-----------------------------This route file for Developer,so all routes related to developer are defined here------------
-//---------------------------------------/developer/<someRoutePath>-----------------
+//--------------------------------------------------/developer/<someRoutePath>----------------------------------------------
 
 
 //------------List of all the required modules------
@@ -28,10 +28,13 @@ const Portfolio=require('../models/Portfolio');
 const Message=require('../models/Message');
 
 
+
+
 //bring auth-config file
 // =>ensureAuthenticated : Use to protect the routes 
 // =>forwardAuthenticated : by pass the routes without having authentication
 const {forwardAuthenticated,ensureAuthenticated}=require('../config/auth');
+
 
 
 //bring in middleware for image uploading in portfolio
@@ -53,10 +56,13 @@ router.get('/register',forwardAuthenticated,(req,res)=>{
 
 
 
+
 //route for login form
 router.get('/login',forwardAuthenticated,(req,res)=>{
     res.render('loginDev');
 })
+
+
 
 
 let OTP='';
@@ -211,17 +217,23 @@ router.post('/register',(req,res)=>{
 
 
 
+
+
+// This post request route used to send OTP via mail to registering user 
 router.post('/OTP/:emailID',(req,res)=>{
+
     /* ------------Node mailer starts here -------------*/
 
     const email=req.params.emailID;
     OTP='';
+    // string used to generate random OTP of 6 characters
     var string = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'; 
     
     // Find the length of string 
-    var len = string.length; 
+    var len = string.length;
+
     for (let i = 0; i < 6; i++ ) { 
-        OTP += string[Math.floor(Math.random() * len)]; 
+        OTP+=string[Math.floor(Math.random()*len)]; 
     } 
 
     
@@ -233,29 +245,27 @@ router.post('/OTP/:emailID',(req,res)=>{
       <h3>From :</h3>
       <h3>JobSpace</h3>
       <h3>Thank you for joining us as a developer!</h3>
-      
-    
-    `;
+      `;
   
-    // create reusable transporter object using the default SMTP transport
+
+    //create reusable transporter object using the default SMTP transport
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
         user: 'jobspace2020webster@gmail.com',
-        pass: 'jobspace@1234' // naturally, replace both with your real credentials or an application-specific password
+        pass: 'jobspace@1234' 
       }
     });
   
     // setup email data with unicode symbols
-    
     let mailOptions = {
   
         from: '"Nodemailer Contact"', // sender address
         to: email, // list of receivers
-        subject: 'Node Contact Request', // Subject line
+        subject: 'Welcome to JobSpace', // Subject line
         text: 'OTP for jobspace :'+OTP,
-        html:output // plain text body
-        // html: output // html body
+        html:output 
+        
     };
   
     // send mail with defined transport object
@@ -265,10 +275,11 @@ router.post('/OTP/:emailID',(req,res)=>{
         }
         console.log('Message sent: %s', info.messageId);   
         console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-  
-        
+      
     });
 })
+
+
 
 
 
@@ -278,41 +289,58 @@ router.post('/OTP/:emailID',(req,res)=>{
 router.post('/login',(req,res,next)=>{
     
     console.log(req.body.email);
+    // ALGORITHM when user login
+    // Condition 1 :if user login first time then he have give quiz first for hidden score
+    // Condition 2 :if he had done with quiz but didn't create portfolio,then it redirects to portfolio page
+    // Condition 3 :if he had done with both quiz and portfolio ,then it redirects to dashboard
+
     Developer.findOne({email:req.body.email},(err,developer)=>{
+
+        // condition 1
         if(developer.hiddenScore==''){
+
             passport.authenticate('local.developer',{
                 successRedirect:'/developer/quiz',
                 failureRedirect:'/developer/login',
                 failureFlash:true
             })(req,res,next)
+
         }
         else{
+
             Portfolio.findOne({email:req.body.email},(err,portfolio)=>{
+
+                // condition 3
                 if(portfolio){
+
                     passport.authenticate('local.developer',{
                         successRedirect:'/developer/dashboard',
                         failureRedirect:'/developer/login',
                         failureFlash:true
                     })(req,res,next)
+
                 }
+
+                // condition 2
                 else{
+
                     passport.authenticate('local.developer',{
                         successRedirect:'/developer/portfolio',
                         failureRedirect:'/developer/login',
                         failureFlash:true
                     })(req,res,next)
+
                 }
             })
         }
     })
-    
-
-    
-    
+      
 })
 
 
 //-------------------------------After Login by developer-------------------------------
+
+
 
 // quiz on first time login to calculate hidden score
 router.get('/quiz',(req,res)=>{
@@ -321,13 +349,19 @@ router.get('/quiz',(req,res)=>{
     });
 })
 
-//quiz submission
+
+
+
+
+//------POST req of quiz submission-----
 router.post('/quizSubmission',(req,res)=>{
-    console.log(req.body);
+    
     
     let marks=0;
+
     var obj=req.body;
 
+    // calculate total marks
     for(var propt in obj){
         if(obj[propt]=='true')marks+=4;
         else marks--;
@@ -335,6 +369,7 @@ router.post('/quizSubmission',(req,res)=>{
     
     console.log(marks);
 
+    //find that developer and save his/her hidden score and then update that developer in db
     Developer.findOne({email:req.user.email},(err,developer)=>{
         developer.hiddenScore=marks;
 
@@ -354,7 +389,11 @@ router.post('/quizSubmission',(req,res)=>{
     })
 })
 
-//all routes afterwards can be accessed only if developer have loggedin
+
+
+
+
+//-------all routes afterwards can be accessed only if developer have loggedin----------
 
 router.get('/dashboard',ensureAuthenticated,(req,res)=>{
 
@@ -364,16 +403,23 @@ router.get('/dashboard',ensureAuthenticated,(req,res)=>{
     //in this route there will be no filter on posts
     
     JobPost.find({},(err,posts)=>{
+
         res.render('developer/dashboard',{
             user:req.user,
             posts:posts,
-            filterCompanyName:'all',
-            filterJobType:'both'
+            filterCompanyName:'all',     //by default,it shows posts of all companies
+            filterJobType:'both'        //and shows jobs of both the types(internship,fulltime)
+
         })
     })
   
 })
 
+
+
+
+
+// POST req for filtering the posts according to user demand
 router.post('/dashboard',(req,res)=>{
     
     console.log(req.body.companyName);
@@ -391,6 +437,9 @@ router.post('/dashboard',(req,res)=>{
 })
 
 
+
+
+
 //recommended jobs shows according what developers subscribed
 router.get('/recommended',ensureAuthenticated,(req,res)=>{
 
@@ -398,24 +447,35 @@ router.get('/recommended',ensureAuthenticated,(req,res)=>{
         res.render('developer/recommended',{
             user:req.user,   //user contains its subscribed array also
             posts:posts,
-            filterCompanyName:'all',
-            filterJobType:'both'
+            filterCompanyName:'all',  //by default,it shows posts of all companies
+            filterJobType:'both'      //and shows jobs of both the types(internship,fulltime)
 
         })
     })
     
 })
 
+
+
+
+
+// POST req used to filter recommended posts
 router.post('/recommended',(req,res)=>{
     JobPost.find({},(err,posts)=>{
         res.render('developer/recommended',{
             user:req.user,
             posts:posts,
+
+            // Filter according to user request
             filterCompanyName:(req.body.companyName==undefined)?'all':req.body.companyName,
             filterJobType:(req.body.jobType==undefined)?'both':req.body.jobType
         })
     })
 })
+
+
+
+
 
 
 //This route handles GET request to view or change portfolio's details
@@ -438,8 +498,10 @@ router.get('/portfolio',ensureAuthenticated,(req,res)=>{
 
 
 
+
 //route to statistics ,can see to which companies developer have applied
 router.get('/statistics',ensureAuthenticated,(req,res)=>{
+
     JobPost.find({},(err,posts)=>{
         res.render('developer/statistics',{
             posts:posts,
@@ -450,7 +512,10 @@ router.get('/statistics',ensureAuthenticated,(req,res)=>{
 })
 
 
-//from here,user can subscribe companies
+
+
+
+//from here,user can subscribe companies and can search companies
 router.get('/companies',ensureAuthenticated,(req,res)=>{
     Company.find({},(err,companies)=>{
         res.render('developer/companies',{
@@ -461,11 +526,21 @@ router.get('/companies',ensureAuthenticated,(req,res)=>{
     })
 })
 
+
+
+
+
+
 //search autocomplete feature on companies page
 router.get('/searchAutocomplete',(req,res,next)=>{
-    console.log('code is running here');
+
+    // 'i' is regExp method
     let regex=new RegExp(req.query['term'],'i');
+
+    //filter companies according to typed characters on search bar
     let companyFilter=Company.find({name:regex},{'name':1}).sort({'updated_at':-1}).sort({'created_at':-1}).limit(20);
+
+
     companyFilter.exec((err,data)=>{
         console.log(data);
         let result=[];
@@ -485,6 +560,10 @@ router.get('/searchAutocomplete',(req,res,next)=>{
     })
 })
 
+
+
+
+
 //after clicking search button
 router.post('/searchCompany',(req,res)=>{
     console.log('route k andr aagye');
@@ -498,9 +577,23 @@ router.post('/searchCompany',(req,res)=>{
                 company:company
             })
         }
+        else{
+            Company.find({},(err,companies)=>{
+                res.render('developer/companies',{
+                    user:req.user,
+                    devEmail:req.user.email,
+                    companies:companies
+                });
+            })
+        }
+        
     })
     
 })
+
+
+
+
 
 //on click ,subscribe the companies
 router.get('/subscribed/:id',(req,res)=>{
@@ -634,6 +727,9 @@ router.post('/portfolio',(req,res)=>{
 })
 
 
+
+
+
 //on click ,apply to jobs route
 router.get('/clicked/:id',(req,res)=>{
     var postID=req.params.id;
@@ -689,18 +785,20 @@ router.get('/clicked/:id',(req,res)=>{
                             }
                         })
                     })
-
-                    
+               
     })
 
-
-    
+ 
 })
+
+
 
 
 
 // chat functionality
 router.get('/developersChat',(req,res)=>{
+
+    //send all messages to chat page
     Message.find({},(err,messages)=>{
         res.render('developersChat/chat',{
             user:req.user,
@@ -711,7 +809,12 @@ router.get('/developersChat',(req,res)=>{
 })
 
 
+
+
+
+// used to save message to database
 router.post('/addMsgToChat',(req,res)=>{
+
         const newMsg=new Message({
             senderName:req.body.senderName,
             sendingTime:req.body.sendingTime,
@@ -736,5 +839,7 @@ router.get('/logout',ensureAuthenticated,(req,res)=>{
     req.flash('success_msg','You are logged out');
     res.redirect('/developer/login');
 })
+
+
 
 module.exports=router;

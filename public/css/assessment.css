@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+.assessment-heading{
+    text-align: center;
+    margin-bottom: 2%;
+    font-weight: 600;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.assessment-subheading{
+    text-align: center;
+    /* width: 50%;  */
+    color:#667aff;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 19px;
+}
+
+.jobs-accordion{
+    width:50%;
+}
+
+.assessment-devEmail{
+    font-family:'Roboto',sans-serif ;
+    font-weight: 500;
+    color:#6e9cff
+}

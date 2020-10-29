@@ -15,7 +15,6 @@ function subscribeFunction(companyEmail){
       button.classList.add('btn-danger');
 
       
-      console.log(companyEmail);
     
       //---------------Make XML-http Request(xhr)-------------------
 

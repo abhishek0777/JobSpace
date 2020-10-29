@@ -1,28 +1,33 @@
 <!-- we will use it as a partial -->
-<!-- Modal -->
+<!-- notification Modal -->
 <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalTitle" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
+    <div  class="modal-dialog" role="document">
+      <div style="background-color: #e6e9ff;" class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="notificationModalTitle">Notifications</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
+        <div style="background-color: #5cb85c;" class="modal-body">
+          <!-- When there is no notification -->
           <% if(user.notifications.length==0){%> 
             <ul class="list-group list-group-flush">
-              <li class="list-group-item">
+              <li style="background-color: #9bd69bf6;" class="list-group-item">
                 No notifications yet. Create portfolio and apply to jobs.
               </li>      
             </ul> 
-          <% }else{ 
+          <% } else { 
             user.notifications.forEach(function(notification){ %>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><%= notification %></li>      
+                    <div style="border:2px; border-color: #5cb85c;">
+                      <li style="background-color: #9bd69bf6;" class="list-group-item"><%= notification %></li> 
+                    </div>
+                         
                 </ul>
            <% }) %>
           <% } %>
+
         </div>
         
       </div>

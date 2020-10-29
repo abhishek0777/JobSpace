@@ -1,3 +1,5 @@
+<!-- This page render when any developer login first time,used to take quiz and calculate his score as hidden marks -->
+
 <div class="fluid-container quiz-bg">
     <div class="container quizSection">
         <div class="quizHeading">
@@ -9,6 +11,8 @@
         </div>
         <hr>
         <form action="/developer/quizSubmission" method="POST">
+
+            <!-- Print 10 question,comes from 'Trivia api' -->
             <% for(let i=0;i!=10;i++){ %>
                 <div class="question">
                     <p id='question<%= i %>'></p>
@@ -23,6 +27,7 @@
                 
         
             <% } %>
+            
             <div>
                 <button type='submit' class='btn btn-primary'>Submit</button>
             </div>
