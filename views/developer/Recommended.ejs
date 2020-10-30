@@ -3,71 +3,71 @@
 <!-- navigation bar -->
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href=""><img src="/images/logo.jpg" alt="logo" ></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto pr-4">
-        
-        <li class="nav-item">
-            <a style="color:#dc3545" class="nav-link" href="/developer/recommended">
-              <i class="fa fa-delicious"></i>
-              Recommended
-            </a>
-        </li>
+  <a class="navbar-brand" href=""><img src="/images/logo.jpg" alt="logo" ></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-        <li class="nav-item">
-          <a class="nav-link" href="/developer/dashboard">
-            <i class="fa fa-bullhorn"></i>
-            Job Posts
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto pr-4">
+
+      <li class="nav-item btn btn-danger">
+          <a  class="nav-link activeNavLink" href="/developer/recommended">
+            <i class="fa fa-delicious"></i>
+            Recommended
           </a>
-        </li>
+      </li>
 
-        <li class="nav-item">
-            <a class="nav-link" href="/developer/statistics">
-                <i class="fa fa-bar-chart"></i>
-                Statistics
-            </a>
-        </li>
+      <li class="nav-item btn btn-outline-primary">
+        <a class="nav-link" href="/developer/dashboard">
+          <i class="fa fa-bullhorn"></i>
+          Job Posts
+        </a>
+      </li>
 
-        <li class="nav-item">
-            <a class="nav-link" href="/developer/companies">
-                <i class="fa fa-group"></i>
-                Companies
-            </a>
-        </li>
+      <li class="nav-item btn btn-outline-primary">
+          <a class="nav-link" href="/developer/statistics">
+              <i class="fa fa-bar-chart"></i>
+              Statistics
+          </a>
+      </li>
 
-        <li class="nav-item">
+      <li class="nav-item btn btn-outline-primary">
+          <a class="nav-link" href="/developer/companies">
+              <i class="fa fa-group"></i>
+              Companies
+          </a>
+      </li>
+
+      <li class="nav-item btn btn-outline-primary">
           <a class="nav-link" href="/developer/developersChat">
               <i class="fa fa-wechat"></i>
               Dev-Chat
           </a>
-        </li>
+      </li>
 
-        <li class="nav-item">
+      <li class="nav-item btn btn-outline-primary">
           <button type="button" class="btn nav-link" data-toggle="modal"  data-target="#notificationModal" class="nav-link">
-            <i class="fa fa-calendar-check-o"></i>
-            Notifications
+              <i class="fa fa-calendar-check-o"></i>
+              Notifications
           </button>
-        </li>
+      </li>
 
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-user-circle-o"></i>
-                <%= user.name %>
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="/developer/portfolio">PortFolio</a>
-              <a class="dropdown-item" href="/developer/logout">Logout</a>
-        </li>
-        
-        
-        
-      </ul>
+      <li class="nav-item dropdown btn btn-outline-primary">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-user-circle-o"></i>
+              <%= user.name %>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/developer/portfolio">PortFolio</a>
+            <a class="dropdown-item" href="/developer/logout">Logout</a>
+      </li>
       
-    </div>
+      
+      
+    </ul>
+    
+  </div>
 </nav>
 
 <!-- navigation bar ends here -->
@@ -81,8 +81,8 @@
 <div class="postTimeline">
 
     <!-- button used to filter posts according to user choice -->
-    <button type="button" class="btn btn-dark" data-toggle="modal"  data-target="#filterModal">
-      Filter Posts
+    <button type="button" class="filterButton btn btn-dark" data-toggle="modal"  data-target="#filterModal">
+      <i class="fa fa-filter"></i> Filter Posts
     </button>
     <!-- bring filter partial -->
     <%- include ( "../partials/filterRecommendation" ) %>
@@ -148,13 +148,13 @@
                     if(flag==-1){ %> 
             
                       <div class="container applyHere">
-                        <button class="btn btn-danger">Applied</button>
+                        <button class="appliedButton btn btn-danger">Applied</button>
                       </div>
             
                        <% } else { %> 
                         
                         <div class="container applyHere">
-                          <button class="btn btn-success" id='applyButton/<%= post._id %>' onclick='applyFunction("<%= post._id %>")' >Apply</button>
+                          <button class="applyButton btn btn-success" id='applyButton/<%= post._id %>' onclick='applyFunction("<%= post._id %>")' >Apply</button>
                         </div>
             
                         <%}

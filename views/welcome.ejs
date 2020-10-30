@@ -2,21 +2,22 @@
 
 <!-- navigation bar -->
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href=""><img src="/images/logo.jpg" alt="logo" ></a>
+<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+    <!-- <a class="navbar-brand" href=""><img src="/images/logo.jpg" alt="logo" ></a> -->
+    <a style="color:white" class="navbar-brand" href=""><i class="fa fa-suitcase"></i> JobSpace</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
   
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto pr-4">
-        <li class="nav-item">
-          <a style="color:#dc3545" class="nav-link" href="/">
+        <li class="nav-item btn btn-danger">
+          <a  class="nav-link activeNavLink" href="/">
             <i class="fa fa-home"></i> Home
           </a>
         </li>
         
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown btn btn-outline-primary">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-user-plus"></i>
             Sign Up
@@ -26,7 +27,7 @@
             <a class="dropdown-item" href="/developer/register">Developer</a>
         </li>
 
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown  btn btn-outline-primary">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fa fa-sign-in"></i>
               Login

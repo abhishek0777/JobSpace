@@ -1,0 +1,16 @@
+@media (max-width:768px){
+    .input-group{
+        width:90%;
+    }
+    
+    #SubmitButton{
+        width:90%;
+    }
+    .haveAnAccount{
+        width:80%;
+        font-size:20px;
+    }
+    .footer-bar{
+        width:100vw;
+    }
+}

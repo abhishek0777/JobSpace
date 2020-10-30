@@ -20,6 +20,9 @@ function declineFunction(jobName_email){
 
     var statsButton=document.getElementById('developerStats/'+jobName_email);
     statsButton.remove();
+
+    var scoreButton=document.getElementById('priorityScore/'+jobName_email);
+    scoreButton.remove();
     
 
     //----------------Make XML-http Request(xhr)-----------------------

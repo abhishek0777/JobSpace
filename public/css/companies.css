@@ -1,15 +1,10 @@
 .custom-card-subscription{
-    border-left-width: 3px;
-    border-bottom-width: 3px;
-    border-right-width: 3px;
-    border-top-width: 3px;
-    border-color: black;
     background-color: #f5f5f59c;
     
 }
 
 .companiesName{
-    background-image: url(../images/bg1.svg);
+    /* background-image: url(../images/bg1.svg); */
     background-size: cover;
     background-attachment:fixed;
 }
@@ -22,4 +17,51 @@
 
 .cardCompnayEmail{
     font-size: 20px;
+}
+
+.subscribeButton{
+    border-color: black;
+    border-width: 3px;
+    border-style:solid;
+    padding:1% 6%;
+}
+
+.subscribedButton{
+    border-color: black;
+    border-width: 3px;
+    border-style:solid;
+    padding:1% 6%;
+    border-radius: 0%;
+}
+
+.searchSection{
+    margin-top: 4%;
+    padding:2%;
+    
+}
+.border-gradient {
+    border: 10px solid;
+    border-image-slice: 1;
+    border-width: 5px;
+}
+
+.border-gradient-purple {
+    border-image-source: linear-gradient(to left, #743ad5, #d53a9d);
+}
+
+.border-gradient-green {
+    border-image-source: linear-gradient(to left, #00C853, #B2FF59);
+}
+
+.searchInputTag{
+    border-radius: 0%;
+    border-color: black;
+    border-style: solid;
+    margin-right: 0%;
+}
+
+#searchButton{
+    color:white;
+    
+    background:linear-gradient(to left, #743ad5, #d53a9d);
 }

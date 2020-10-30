@@ -2,7 +2,7 @@
     /* background-color: #2d3436;
     background-image: linear-gradient(315deg, #2d3436 0%, #000000 74%); */
     background-image: url(../images/loginBG.jpg);
-    position: relative;
+    /* position: relative; */
 }
 
 .heading-login{
@@ -22,5 +22,17 @@
 
 .formSection{
     padding-top: 3%;
+    
 }
 
+.input-group{
+    width:50%;
+}
+
+#SubmitButton{
+    width:50%
+}
+
+.haveAnAccount{
+    width:50%;
+}

@@ -356,7 +356,7 @@ router.post('/addPost',(req,res)=>{
         let hh=d.getHours();
         let mm=d.getMinutes();
         let a='am';
-        if(h==12&&mm>0)a='pm';
+        if(hh==12&&mm>0)a='pm';
         if(hh>12)hh-=12,a='pm';
 
         return hh+":"+mm+" "+a;

@@ -11,49 +11,49 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto pr-4">
 
-        <li class="nav-item">
+        <li class="nav-item btn btn-outline-primary">
             <a  class="nav-link" href="/developer/recommended">
               <i class="fa fa-delicious"></i>
               Recommended
             </a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item btn btn-outline-primary">
           <a class="nav-link" href="/developer/dashboard">
             <i class="fa fa-bullhorn"></i>
             Job Posts
           </a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item btn btn-outline-primary">
             <a class="nav-link" href="/developer/statistics">
                 <i class="fa fa-bar-chart"></i>
                 Statistics
             </a>
         </li>
 
-        <li class="nav-item">
-            <a style="color:#dc3545" class="nav-link" href="/developer/companies">
+        <li class="nav-item btn btn-danger">
+            <a class="nav-link activeNavLink" href="/developer/companies">
                 <i class="fa fa-group"></i>
                 Companies
             </a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item btn btn-outline-primary">
             <a class="nav-link" href="/developer/developersChat">
                 <i class="fa fa-wechat"></i>
                 Dev-Chat
             </a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item btn btn-outline-primary">
             <button type="button" class="btn nav-link" data-toggle="modal"  data-target="#notificationModal" class="nav-link">
                 <i class="fa fa-calendar-check-o"></i>
                 Notifications
             </button>
         </li>
 
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown btn btn-outline-primary">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-user-circle-o"></i>
                 <%= user.name %>
@@ -76,20 +76,22 @@
 <%- include( "../partials/notifications" ) %>
 
 
-
-<div class="container-fluid companiesName">
-    
-        <!-- form used to search companies profile -->
-        <form action="/developer/searchCompany" method='POST'>
-            <div class="input-group p-3 ml-auto" style="width:30%">
-            <input name='companyName' class="form-control" type="text" id="searchName" placeholder="Type a company name here...">
-            <button type='submit' id='searchButton' class="btn btn-light ml-2">Search</button>
-            </div>
-            
-        </form>
+<!-- form used to search companies profile -->
         
+<div class="container searchSection border-gradient border-gradient-purple">
+    <h3>Search Company Profile</h3>
+    <form action="/developer/searchCompany" method='POST'>
+        <div class="input-group p-3">
+        <input name='companyName' class="form-control searchInputTag" type="text" id="searchName" placeholder="Type a company name here...">
+        <button type='submit' id='searchButton' class="btn btn-light ml-2"><i class="fa fa-paper-plane"></i> Search</button>
+        </div>
+        
+    </form>
+</div>
+
+<div class="container companiesName">
     
-    
+
 
     <div class="container p-2">
         <div class="row">
@@ -99,7 +101,7 @@
                 
                 <div class="col-md-4 col-sm-6 col-xs-12 mt-3">
 
-                    <div id="<%= company.name %>" class="card custom-card-subscription" style="width: 18rem;">
+                    <div id="<%= company.name %>" class="card custom-card-subscription border-gradient border-gradient-purple" style="width: 18rem;">
                         <div class="card-body">
                         <h5 class="card-title cardCompanyName"><%= company.name %></h5>
                         <p class="card-text cardCompanyEmail"><%= company.email %></p>
@@ -114,10 +116,10 @@
                                 }
                             })
                         if(flag==-1){ %> 
-                                <button class="btn btn-danger" >Subscribed</button>
+                                <button class="subscribedButton btn btn-danger" >Subscribed <i class="fa fa-bell"></i></button>
                         <% } 
                         else { %>
-                                <button id="subscribe/<%= company.email %>" onclick="subscribeFunction('<%= company.email %>')" class="btn btn-primary"  >Subscribe</button>
+                                <button classs="subscribeButton" id="subscribe/<%= company.email %>" onclick="subscribeFunction('<%= company.email %>')" class="btn btn-primary"  >Subscribe <i class="fa fa-bell"></i></button>
                             <% } %>
                         </div>
                     </div>

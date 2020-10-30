@@ -3,65 +3,63 @@
 <!-- navigation bar -->
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href=""><img src="/images/logo.jpg" alt="logo" ></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto pr-4">
+  <a class="navbar-brand" href=""><img src="/images/logo.jpg" alt="logo" ></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-        <li class="nav-item"> 
-          <a style="color:#dc3545" class="nav-link" href="/company/dashboard">
-            <i class="fa fa-bar-chart"></i>
-            Timeline
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto pr-4">
+        
+      <li class="nav-item btn btn-danger">
+        <a class="nav-link activeNavLink" href="/company/dashboard">
+          <i class="fa fa-bar-chart"></i>
+          Timeline
+        </a>
+      </li>
+
+      <li class="nav-item btn btn-outline-primary">
+          <a class="nav-link" href="/company/addPost">
+              <i class="fa fa-bullhorn"></i>
+              Add Post
           </a>
-        </li>
+      </li>
 
-        <li class="nav-item">
-            <a class="nav-link" href="/company/addPost">
-                <i class="fa fa-bullhorn"></i>
-                Add Post
-            </a>
-        </li>
-
-        <li class="nav-item">
+      <li class="nav-item btn btn-outline-primary">
           <a class="nav-link" href="/company/statistics">
               <i class="fa fa-bullhorn"></i>
               Statistics
           </a>
-        </li>
+      </li>
 
-        <li class="nav-item">
+      <li class="nav-item btn btn-outline-primary">
           <a class="nav-link" href="/company/assessment">
               <i class="fa fa-lightbulb-o"></i>
               Assessment
           </a>
-        </li>
+      </li>
 
-        <li class="nav-item">
+      <li class="nav-item btn btn-outline-primary">
           <button type="button" class="btn nav-link" data-toggle="modal"  data-target="#notificationModal" class="nav-link">
-            <i class="fa fa-calendar-check-o"></i>
-            Notifications
+              <i class="fa fa-calendar-check-o"></i>
+              Notifications
           </button>
-        </li>
+      </li>
 
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-user-circle-o"></i>
-                <%= user.name %>
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="/company/profile">Profile</a>
-              <a class="dropdown-item" href="/company/logout">Logout</a>
-        </li>
-        
-        
-        
-      </ul>
-      
-    </div>
+      <li class="nav-item dropdown btn btn-outline-primary">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-user-circle-o"></i>
+              <%= user.name %>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/company/profile">Profile</a>
+            <a class="dropdown-item" href="/company/logout">Logout</a>
+      </li>
+             
+    </ul>   
+  </div>
 </nav>
+
 <!---------- navigation bar ends here ------------>
 
 <!-- include partial of notification -->

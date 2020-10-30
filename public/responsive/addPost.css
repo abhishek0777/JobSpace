@@ -1,0 +1,8 @@
+@media (max-width:768px){
+    .addPostForm{
+        width:95%;
+    }
+    #addPostButton{
+        width:90%;
+    }
+}

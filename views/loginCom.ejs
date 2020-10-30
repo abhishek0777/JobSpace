@@ -10,12 +10,12 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto pr-4">
-      <li class="nav-item">
+      <li class="nav-item btn btn-outline-primary">
         <a class="nav-link" href="/">
           <i class="fa fa-home"></i> Home</a>
       </li>
       
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown btn btn-outline-primary">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-user-plus"></i> Sign Up
         </a>
@@ -24,8 +24,8 @@
           <a class="dropdown-item" href="/developer/register">Developer</a>
       </li>
 
-      <li class="nav-item dropdown">
-          <a style="color:#dc3545" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <li class="nav-item dropdown btn btn-danger">
+          <a class="nav-link dropdown-toggle activeNavLink" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-sign-in"></i> Login
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -58,7 +58,7 @@
            
     
             <div class="form-group d-flex justify-content-center">
-                <div class="input-group" style="width:50%">
+                <div class="input-group">
                   <div class="input-group-prepend">
                     <div class="input-group-text">
                       <i class="fa fa-envelope"></i>
@@ -69,7 +69,7 @@
             </div>
     
             <div class="form-group d-flex justify-content-center">
-                <div class="input-group" style="width:50%">
+                <div class="input-group">
                   <div class="input-group-prepend">
                     <div class="input-group-text">
                       <i class="fa fa-key"></i>
@@ -82,7 +82,7 @@
 
 
             <div class="form-group d-flex justify-content-center">
-                <div class="custom-controls-stacked" style="width:50%">
+                <div class="custom-controls-stacked">
                     <div class="custom-control custom-checkbox">
                       <input type="checkbox" checked="checked" class="custom-control-input" onclick="return false"> 
                       <label for="agree_0" class="custom-control-label">Agree to our Term of Service and Privacy Policy</label>
@@ -93,11 +93,11 @@
             
     
             <div class="form-group  d-flex justify-content-center">
-                <button  style="width:50%" name="submit" type="submit" class="btn btn-primary">Sign Up</button>
+                <button id='SubmitButton' name="submit" type="submit" class="btn btn-primary">Sign Up</button>
             </div>
 
-            <div class="form-group  d-flex justify-content-center">
-                <p class="haveAnAccount" style="width: 50%; color:white">Don't have an Account? <a href="/company/register">Sign Up</a></p>
+            <div class="d-flex justify-content-center">
+                <p class="haveAnAccount" style=" color:white">Don't have an Account? <a href="/company/register">Sign Up</a></p>
             </div>
 
         </form>

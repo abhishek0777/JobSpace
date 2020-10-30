@@ -10,49 +10,49 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto pr-4">
 
-        <li class="nav-item">
+        <li class="nav-item btn btn-outline-primary">
             <a  class="nav-link" href="/developer/recommended">
               <i class="fa fa-delicious"></i>
               Recommended
             </a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item btn btn-outline-primary">
           <a class="nav-link" href="/developer/dashboard">
             <i class="fa fa-bullhorn"></i>
             Job Posts
           </a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item btn btn-outline-primary">
             <a class="nav-link" href="/developer/statistics">
                 <i class="fa fa-bar-chart"></i>
                 Statistics
             </a>
         </li>
 
-        <li class="nav-item">
-            <a style="color:#dc3545" class="nav-link" href="/developer/companies">
+        <li class="nav-item btn btn-danger">
+            <a class="nav-link activeNavLink" href="/developer/companies">
                 <i class="fa fa-group"></i>
                 Companies
             </a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item btn btn-outline-primary">
             <a class="nav-link" href="/developer/developersChat">
                 <i class="fa fa-wechat"></i>
                 Dev-Chat
             </a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item btn btn-outline-primary">
             <button type="button" class="btn nav-link" data-toggle="modal"  data-target="#notificationModal" class="nav-link">
                 <i class="fa fa-calendar-check-o"></i>
                 Notifications
             </button>
         </li>
 
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown btn btn-outline-primary">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-user-circle-o"></i>
                 <%= user.name %>
@@ -70,6 +70,9 @@
 </nav>
 
 <!-- navigation bar ends here -->
+
+<!-- modal for notification section -->
+<%- include( "../partials/notifications" ) %>
 
 <div class="fluid-container profileSection">
     <div class="container profileForm mt-3">
