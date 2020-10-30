@@ -2,7 +2,7 @@
 const moment=require('moment');
 
 function formattedDate(){
-    return moment().format('h:mm a');
+    return moment().format('hh:mm a');
 }
 
 module.exports=formattedDate;
