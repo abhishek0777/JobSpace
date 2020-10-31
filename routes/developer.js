@@ -296,43 +296,55 @@ router.post('/login',(req,res,next)=>{
 
     Developer.findOne({email:req.body.email},(err,developer)=>{
 
-        // condition 1
-        if(developer.hiddenScore==''){
+        if(developer){
+            // condition 1
+            if(developer.hiddenScore==''){
+
+                passport.authenticate('local.developer',{
+                    successRedirect:'/developer/quiz',
+                    failureRedirect:'/developer/login',
+                    failureFlash:true
+                })(req,res,next)
+
+            }
+            else{
+
+                Portfolio.findOne({email:req.body.email},(err,portfolio)=>{
+
+                    // condition 3
+                    if(portfolio){
+
+                        passport.authenticate('local.developer',{
+                            successRedirect:'/developer/dashboard',
+                            failureRedirect:'/developer/login',
+                            failureFlash:true
+                        })(req,res,next)
+
+                    }
+
+                    // condition 2
+                    else{
+
+                        passport.authenticate('local.developer',{
+                            successRedirect:'/developer/portfolio',
+                            failureRedirect:'/developer/login',
+                            failureFlash:true
+                        })(req,res,next)
+
+                    }
+                })
+            }
+        }
+        // when developer is not registered
+        else{
 
             passport.authenticate('local.developer',{
-                successRedirect:'/developer/quiz',
+                successRedirect:'/',
                 failureRedirect:'/developer/login',
                 failureFlash:true
             })(req,res,next)
-
         }
-        else{
-
-            Portfolio.findOne({email:req.body.email},(err,portfolio)=>{
-
-                // condition 3
-                if(portfolio){
-
-                    passport.authenticate('local.developer',{
-                        successRedirect:'/developer/dashboard',
-                        failureRedirect:'/developer/login',
-                        failureFlash:true
-                    })(req,res,next)
-
-                }
-
-                // condition 2
-                else{
-
-                    passport.authenticate('local.developer',{
-                        successRedirect:'/developer/portfolio',
-                        failureRedirect:'/developer/login',
-                        failureFlash:true
-                    })(req,res,next)
-
-                }
-            })
-        }
+        
     })
       
 })

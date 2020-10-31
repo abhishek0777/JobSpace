@@ -1,0 +1,12 @@
+/* class mainly used for quiz question not to drag,copy the question */
+
+/* Prevent cheating in quiz  */
+
+.hide {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
