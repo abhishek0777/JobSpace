@@ -603,7 +603,7 @@ router.post('/postDone/:id',(req,res)=>{
 
 
 
-router.get('/assessment',(req,res)=>{
+router.get('/assessment',ensureAuthenticated,(req,res)=>{
     JobPost.find({},(err,posts)=>{
         res.render('company/assessment',{
             user:req.user,

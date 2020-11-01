@@ -355,7 +355,7 @@ router.post('/login',(req,res,next)=>{
 
 
 // quiz on first time login to calculate hidden score
-router.get('/quiz',(req,res)=>{
+router.get('/quiz',ensureAuthenticated,(req,res)=>{
     res.render('developer/quiz',{
         user:req.user
     });
