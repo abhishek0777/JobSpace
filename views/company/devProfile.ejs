@@ -97,7 +97,7 @@
               
               <!-- email -->
               <div class="form-group d-flex justify-content-center mt-3">
-                  <div class="input-group">
+                  <div class="input-group" style="width:100%"> 
                       <div class="input-group-prepend">
                           <div class="input-group-text">
                             Email
@@ -113,7 +113,7 @@
 
               <!--bio  -->
               <div class="form-group d-flex justify-content-center mt-3">
-                  <div class="input-group">
+                  <div class="input-group" style="width:100%">
                       <div class="input-group-prepend">
                           <div class="input-group-text">
                             Bio
@@ -143,7 +143,7 @@
               
               <div class="form-group d-flex justify-content-center">
                 <% portfolio.skills.forEach(function(skill){ %>
-                  <div class="input-group">
+                  <div class="input-group" style="width:100%">
                     <input
                         class="form-control"
                         value="<%= typeof skill !='undefined'? skill :'NA' %>"
@@ -163,7 +163,7 @@
                           Years
                         </div>
                     </div>
-                      <div class="input-group">
+                      <div class="input-group" style="width:90%">
                         <input
                             class="form-control"
                             value="<%= typeof portfolio.experience !='undefined'? portfolio.experience :'NA' %>"
@@ -181,7 +181,7 @@
                       Education @
                     </div>
                   </div>
-                  <div class="input-group">
+                  <div class="input-group"  style="width:90%">
                       <input
                           class="form-control"
                           value="<%= typeof portfolio.college !=undefined ? portfolio.college : 'NA' %> "
@@ -199,7 +199,7 @@
                         Degree
                       </div>
                   </div>
-                  <div class="input-group">
+                  <div class="input-group" style="width:90%">
                     <input
                         class="form-control"
                         value="<%= portfolio.degree !='undefined'? portfolio.degree :'NA' %>"
@@ -212,7 +212,7 @@
               <!-- last job  -->
               <h4>Last Job(if any) :</h4>
               <div class="form-group d-flex justify-content-center mt-3">
-                  <div class="input-group">
+                  <div class="input-group"  style="width:100%">
                       <div class="input-group-prepend">
                           <div class="input-group-text">
                             Last Job
