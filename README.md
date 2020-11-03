@@ -48,8 +48,7 @@ Bootstrap v4 Library
 
 1. Chatroom for developers as help desk
 2. Recommend openings to developers as per they subscribe companies.
-3. Filters for selection of candidates by companies after receiving applications (such as
-minimum CPGA)
+3. Filters for selection of candidates by companies after receiving applications
 4. Assign developers a hidden score based on an evaluation test on joining the platform.
 5. Sort the applications on the hidden score so that developers with high score have more chances to get shortlisted.
 6. Prevent abuse of this testing criteria.
