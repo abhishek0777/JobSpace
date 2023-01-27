@@ -31,9 +31,6 @@ mongoose.connect(db,
     .then(()=>{console.log("Connectd to MongoDB")})
     .catch(err=>console.log(err));
 
-
-
-
 //app init
 const app=express();
 

@@ -40,7 +40,6 @@ function sendOTPFunction(userType){
           document.getElementById('getOTPButton').setAttribute("data-target","#OTPErrorModal");
       }
       
-    
-      
+       
 
 }

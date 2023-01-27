@@ -249,13 +249,15 @@ router.post('/OTP/:emailID',(req,res)=>{
   
 
     //create reusable transporter object using the default SMTP transport
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: 'jobspace2020webster@gmail.com',
-        pass: 'jobspace@1234' 
-      }
+    const transporter = nodemailer.createTransport({  
+        // host:'smtp.gmail.com',
+        service:'gmail',  
+        auth:{
+            user: 'jobspace2020webster@gmail.com',
+            pass:'rlbrnngltkczlxxa'
+        }
     });
+    // pass: 'rlbrnngltkczlxxa'
   
     // setup email data with unicode symbols
     let mailOptions = {

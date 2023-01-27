@@ -228,7 +228,8 @@ router.post('/OTP/:emailID',(req,res)=>{
       service: 'gmail',
       auth: {
         user: 'jobspace2020webster@gmail.com',
-        pass: 'jobspace@1234' 
+        // pass: 'jobspace@1234'
+        pass: 'nayipvtewekfxiog' 
       }
     });
   
